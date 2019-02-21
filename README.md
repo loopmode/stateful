@@ -2,15 +2,19 @@
 
 This repository contains the `@loopmode/stateful` package and its development workspace.
 
-The main package is `packages/stateful`, but there is also a `create-react-app`-based application with examples in `packages/examples`.
-
 ## Installation
 
 Clone this repository. Then, execute `yarn` or `yarn install` in the root to install the dependencies.
+Please note that quite a lot of dependencies will be installed because the examples showcase the usage with e.g. `semantic-ui-react` or `react-bootstrap`.
 
 ## Usage
 
+This repository contains the main package in `packages/stateful`, but there is also an examples application in `packages/examples` as well as some helper packages.
+Its use-case is development and testing of the `@loopmode/stateful` library.
+
 ### Scripts
+
+The top-level package scripts utilize some helpers (like `lerna` or `npm-run-all`) to orchestrate scripts that are actually defined in the nested packages (`packages/*`).
 
 #### `yarn build`
 
