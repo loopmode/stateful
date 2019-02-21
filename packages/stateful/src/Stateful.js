@@ -14,30 +14,29 @@ import {
     omitProps
 } from './utils/createProps';
 
-const Shapes = {
-    def: PropTypes.oneOfType([
-        PropTypes.func,
-        PropTypes.string,
-        PropTypes.arrayOf(PropTypes.string)
-    ])
-};
+const PolyType = PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string)
+]);
+
 Stateful.propTypes = {
     children: PropTypes.node,
 
-    callbacks: Shapes.def,
+    callbacks: PolyType,
 
-    pendingProps: Shapes.def,
-    pendingClasses: Shapes.def,
+    pendingProps: PolyType,
+    pendingClasses: PolyType,
 
     busyDelay: PropTypes.number,
-    busyProps: Shapes.def,
-    busyClasses: Shapes.def,
+    busyProps: PolyType,
+    busyClasses: PolyType,
 
-    successProps: Shapes.def,
-    successClasses: Shapes.def,
+    successProps: PolyType,
+    successClasses: PolyType,
 
-    errorProps: Shapes.def,
-    errorClasses: Shapes.def,
+    errorProps: PolyType,
+    errorClasses: PolyType,
 
     hintDuration: PropTypes.number,
 

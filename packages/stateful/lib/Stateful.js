@@ -49,21 +49,20 @@ function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = 
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-var Shapes = {
-  def: _propTypes.default.oneOfType([_propTypes.default.func, _propTypes.default.string, _propTypes.default.arrayOf(_propTypes.default.string)])
-};
+var PolyType = _propTypes.default.oneOfType([_propTypes.default.func, _propTypes.default.string, _propTypes.default.arrayOf(_propTypes.default.string)]);
+
 Stateful.propTypes = {
   children: _propTypes.default.node,
-  callbacks: Shapes.def,
-  pendingProps: Shapes.def,
-  pendingClasses: Shapes.def,
+  callbacks: PolyType,
+  pendingProps: PolyType,
+  pendingClasses: PolyType,
   busyDelay: _propTypes.default.number,
-  busyProps: Shapes.def,
-  busyClasses: Shapes.def,
-  successProps: Shapes.def,
-  successClasses: Shapes.def,
-  errorProps: Shapes.def,
-  errorClasses: Shapes.def,
+  busyProps: PolyType,
+  busyClasses: PolyType,
+  successProps: PolyType,
+  successClasses: PolyType,
+  errorProps: PolyType,
+  errorClasses: PolyType,
   hintDuration: _propTypes.default.number,
   delimiter: _propTypes.default.string
 }; // Note that we use the keys of the defaultProps object to omit
