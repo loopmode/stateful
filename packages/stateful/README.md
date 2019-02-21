@@ -1,9 +1,13 @@
 # @loopmode/stateful
 
-A react component for visually indicating the state of asynchronous operations.
+A react component for visual indication of async state.
 
 This component is meant as an unobtrusive, opt-in helper that doesn't require significant changes in your code.
 The idea is that you simply wrap it around an existing component in your JSX, without changing or adding any props, and the rest should "just work".
+
+<img src="https://github.com/loopmode/stateful/raw/master/stateful-success.gif" />
+
+<img src="https://github.com/loopmode/stateful/raw/master/stateful-error.gif" />
 
 ## Installation
 
@@ -29,6 +33,79 @@ import Stateful from '@loopmode/stateful';
         <button onClick={this.handleClick}>load</button>
     </Stateful>
 ...
+```
+
+## Supported props
+
+_Note: The `Poly` type is described below._
+
+| Prop           | Type   | Default                       | Description                                                                                             |
+| -------------- | ------ | ----------------------------- | ------------------------------------------------------------------------------------------------------- |
+| callbacks      | Poly   | `['onClick', 'onTouchStart']` | Names of callbacks to intercept and check for promises                                                  |
+| pendingProps   | Poly   | `['disabled']`                | Names of props to add for `Status.PENDING`                                                              |
+| pendingClasses | Poly   | `[]`                          | Names of CSS classes to add for `Status.PENDING`                                                        |
+| busyDelay      | Number | `0`                           | Duration in milliseconds to wait after `Status.PENDING` and before `Status.BUSY`                        |
+| busyProps      | Poly   | `['disabled']`                | Names of props to add for `Status.BUSY`                                                                 |
+| busyClasses    | Poly   | `[]`                          | Names of CSS classes to add for `Status.BUSY`                                                           |
+| errorProps     | Poly   | `[]`                          | Names of props to add for `Status.ERROR`                                                                |
+| errorClasses   | Poly   | `['error']`                   | Names of CSS classes to add for `Status.ERROR`                                                          |
+| successProps   | Poly   | `[]`                          | Names of props to add for `Status.SUCCESS`                                                              |
+| successClasses | Poly   | `['success']`                 | Names of CSS classes to add for `Status.SUCCESS`                                                        |
+| hintDuration   | Number | `1000`                        | Duration in milliseconds for `Status.SUCCESS` and `Status.ERROR` before returning to the default status |
+| delimiter      | String | `' '`                         | Delimiter for splitting `Poly` props of type `String` into multiple strings                             |
+
+### Polymorphic prop types
+
+Most of the props accept values of multiple types: `String`, `Array` or `Function`, and depending on your use case, some might be preferrable over others.
+We call this prop type `PolyType` and it's defined in the code like this:
+
+```
+const PolyType = PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string)
+]);
+```
+
+**String**
+
+In most cases, you can stick with the `String` type, as it supports both single and multiple values, but in a primitive type that works well with pure components.
+
+Single values are typed as a simple string, while multiple values are delimiter-separated strings. The default delimiter is a space (``), but you can change that using the `delimiter` prop.
+
+```
+<Stateful pendingProps="disabled" />
+<Stateful pendingProps="disabled pending" />
+```
+
+**Array**
+
+In some cases, it might be preferrable to provide the props as an array. While this interferes with rendering of pure components when typed inline (e.g. `pendingClasses={['pending', 'inactive']}`), in many cases you do have an array that you can pass on directly.
+
+```
+<Stateful pendingProps={['disabled']} />
+<Stateful pendingProps={['disabled', 'pending']} />
+<Stateful pendingProps={myPropsArray} />
+```
+
+**Function**
+
+Sometimes, the component you need to wrap just doesn't support a simple boolean flag to get the job done. For example, `react-bootstraps` wants to receive `variant="success"` or `variant="danger"` - the same prop, but with a different value.
+In these cases, you can provide a function that receives the current `status` and returns an object with as many properties and values as needed.
+
+```
+<Stateful
+    pendingProps={() => ({status: 'pending'})}
+    successProps={() => ({status: 'success'})}
+ />
+<Stateful pendingProps={status => {
+    console.log({ status });
+    return {
+        status,
+        foo: 'bar',
+        bar: 'baz
+    }
+}} />
 ```
 
 ## Explanation
@@ -113,59 +190,4 @@ Most UI libraries and frameworks come prepared for these situations and provide 
 While `@loopmode/stateful` makes it easy to write a custom wrapper for any library you use, it comes with a couple of presets for popular frameworks.
 (Suggestions and especially pull requests for more support are highly welcome!)
 
-To use the pre-configured components, you should import the specific components from `lib` instead of the default.
-
-### Semantic UI
-
-#### Button
-
-The `semantic-ui-react` buttons provide `positive`, `negative` and `loading` flags. They do not need CSS classes.
-
-```
-import Stateful from '@loopmode/stateful/lib/semantic-ui'
-```
-
-Under the hood, this is the `Stateful` configuration:
-
-```
-export const StatefulButton = props => (
-    <Stateful
-        pendingClasses={null}
-        successClasses={null}
-        errorClasses={null}
-        pendingProps="disabled"
-        busyProps="loading disabled"
-        successProps="positive"
-        errorProps="negative"
-        {...props}
-    />
-);
-```
-
-#### Form
-
-The `semantic-ui-react` form provides `loading`, `success` and `error` flags.
-
-```
-import Stateful from '@loopmode/stateful/lib/semantic-ui'
-```
-
-Under the hood, this is the `Stateful` configuration:
-
-```
-export const StatefulForm = props => (
-    <Stateful
-        callbacks="onSubmit"
-        pendingClasses={null}
-        busyClasses={null}
-        successClasses={null}
-        errorClasses={null}
-        pendingProps="disabled"
-        busyProps="loading disabled"
-        successProps="success"
-        errorProps="error"
-        hintDuration={5000}
-        {...props}
-    />
-);
-```
+To use the pre-configured components, you should import the specific components from `lib` instead of the default. Have a look at the different examples.
