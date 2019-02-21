@@ -13,8 +13,8 @@
 .example code {
     font-size: small;
 }
-div.info {
-    font-style: italic;
+.push {
+    display: block;
     margin-top: 20px;
     margin-bottom: 20px;
 }
@@ -84,16 +84,4 @@ button {
 }
 button + button {
     margin-left: 10px;
-}
-button.success {
-    background: green;
-    color: white;
-}
-button.error {
-    background: red;
-    color: white;
-}
-
-button.busy {
-    border-color: orange;
 }

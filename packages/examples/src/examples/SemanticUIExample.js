@@ -13,7 +13,7 @@ export default class SemanticUIExample extends Component {
     render() {
         return (
             <Container text>
-                <h1>Semantic UI Examples</h1>
+                <h1>Semantic UI Example</h1>
 
                 <h3>Buttons</h3>
                 <div>
@@ -31,11 +31,11 @@ export default class SemanticUIExample extends Component {
                     is understood by at least the <code>Button</code> component.
                 </div>
 
-                <div className="info">
+                <i className="push">
                     Click any of the buttons below. Using random durations and
                     outcomes, the dummy callback will sometimes succeed and
                     sometimes fail.
-                </div>
+                </i>
 
                 <Stateful>
                     <Button icon="undo" onClick={this.handleSubmit} />
