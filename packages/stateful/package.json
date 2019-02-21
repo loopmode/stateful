@@ -1,0 +1,26 @@
+{
+    "name": "@loopmode/stateful",
+    "version": "0.0.1",
+    "main": "lib/index.js",
+    "scripts": {
+        "build": "cross-env NODE_ENV=production babel src --out-dir lib --copy-files",
+        "watch": "yarn build --watch",
+        "lint": "eslint src"
+    },
+    "eslintConfig": {
+        "extends": "@loopmode/stateful"
+    },
+    "babel": {
+        "extends": "@loopmode/babel-config-stateful"
+    },
+    "peerDependencies": {
+        "react": ">= 16.8.0"
+    },
+    "dependencies": {
+        "@loopmode/bind": "^1.0.1",
+        "@rooks/use-did-mount": "^1.1.0",
+        "@rooks/use-timeout": "^1.2.0",
+        "@rooks/use-will-unmount": "^1.1.0",
+        "classnames": "^2.2.6"
+    }
+}

@@ -1,0 +1,101 @@
+.content {
+    padding: 20px;
+}
+.example > header {
+    margin-bottom: 20px;
+}
+.example h3 {
+    margin-bottom: 5px;
+}
+.example li + li {
+    margin-top: 20px;
+}
+.example code {
+    font-size: small;
+}
+.App-logo {
+    animation: App-logo-spin infinite 20s linear;
+    height: 3vmin;
+}
+
+.App-header {
+    background-color: #282c34;
+    min-height: 6vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+}
+
+.App-link {
+    color: #61dafb;
+}
+
+nav {
+    background: #eee;
+    margin-bottom: 20px;
+}
+nav ul {
+    display: flex;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    justify-content: center;
+}
+nav ul li {
+    display: flex;
+}
+nav ul li + li {
+    margin-left: 10px;
+}
+nav li a {
+    padding: 5px;
+}
+@keyframes App-logo-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+form {
+    padding: 10px;
+}
+form[disabled] * {
+    pointer-events: none;
+}
+form[disabled] button {
+    opacity: 0.9;
+}
+
+button {
+    border: 1px solid #ccc;
+    appearance: none;
+    outline: none;
+}
+button + button {
+    margin-left: 10px;
+}
+button.success {
+    background: green;
+    color: white;
+}
+button.error {
+    background: red;
+    color: white;
+}
+
+form.success {
+    outline: 1px solid green;
+}
+form.error {
+    outline: 1px solid red;
+}
+
+.busy {
+    border-color: orange;
+}

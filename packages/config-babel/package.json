@@ -1,0 +1,11 @@
+{
+    "private": true,
+    "name": "@loopmode/babel-config-stateful",
+    "version": "1.0.0",
+    "main": ".babelrc",
+    "dependencies": {
+        "@babel/cli": "^7.2.3",
+        "@babel/core": "7.1.6",
+        "@babel/plugin-proposal-class-properties": "^7.1.0"
+    }
+}
