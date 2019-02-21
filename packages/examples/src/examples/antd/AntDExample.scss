@@ -1,0 +1,10 @@
+:local(.AntDExample) {
+    .ant-btn.success {
+        border-color: green;
+        color: green;
+    }
+    .ant-btn.ant-btn.ant-btn-primary.success {
+        background: green;
+        color: white;
+    }
+}

@@ -1,6 +1,6 @@
 export default function dummyCall({
     successRate = 0.5,
-    min = 0,
+    min = 100,
     max = 2000
 } = {}) {
     const duration = Math.floor(min + Math.random() * (max - min));
