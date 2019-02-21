@@ -32,7 +32,7 @@ function createStatusClasses(status, props) {
   var _flags;
 
   var flags = (_flags = {}, _defineProperty(_flags, Status.PENDING, props.pendingClasses), _defineProperty(_flags, Status.BUSY, props.busyClasses), _defineProperty(_flags, Status.SUCCESS, props.successClasses), _defineProperty(_flags, Status.ERROR, props.errorClasses), _flags);
-  return createProps(flags[status], true, props.delimiter);
+  return createProps(flags[status], props.delimiter);
 }
 /**
  * Creates an object with boolean flags for the defined props.
@@ -48,20 +48,19 @@ function createStatusProps(status, props) {
   var _flags2;
 
   var flags = (_flags2 = {}, _defineProperty(_flags2, Status.PENDING, props.pendingProps), _defineProperty(_flags2, Status.BUSY, props.busyProps), _defineProperty(_flags2, Status.SUCCESS, props.successProps), _defineProperty(_flags2, Status.ERROR, props.errorProps), _flags2);
-  return createProps(flags[status], true, props.delimiter);
+  return createProps(flags[status], props.delimiter);
 }
 /**
  * Takes one or more string keys together with a value and returns an object.
  * If `key` contains multiple values, the returned object contains a property for each key.
  *
  * @param {String | String[]} key One or more names for properties in the returned object
- * @param {*} value The value for all properties of the returned object
  * @param {String} delimiter A string for splitting multi-value `key` strings into an array
  * @returns {Object} An object that has a property for each `key` provided and contains the `value`
  */
 
 
-function createProps(key, value, delimiter) {
+function createProps(key, delimiter) {
   var keys = (0, _asArray.default)(key, delimiter);
 
   if (!keys) {
@@ -69,7 +68,7 @@ function createProps(key, value, delimiter) {
   }
 
   return keys.reduce(function (result, propName) {
-    return _objectSpread({}, result, _defineProperty({}, propName, value));
+    return _objectSpread({}, result, _defineProperty({}, propName, true));
   }, {});
 }
 /**

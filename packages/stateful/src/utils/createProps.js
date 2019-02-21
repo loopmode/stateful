@@ -16,7 +16,7 @@ export function createStatusClasses(status, props) {
         [Status.SUCCESS]: props.successClasses,
         [Status.ERROR]: props.errorClasses
     };
-    return createProps(flags[status], true, props.delimiter);
+    return createProps(flags[status], props.delimiter);
 }
 
 /**
@@ -34,7 +34,7 @@ export function createStatusProps(status, props) {
         [Status.SUCCESS]: props.successProps,
         [Status.ERROR]: props.errorProps
     };
-    return createProps(flags[status], true, props.delimiter);
+    return createProps(flags[status], props.delimiter);
 }
 
 /**
@@ -42,11 +42,10 @@ export function createStatusProps(status, props) {
  * If `key` contains multiple values, the returned object contains a property for each key.
  *
  * @param {String | String[]} key One or more names for properties in the returned object
- * @param {*} value The value for all properties of the returned object
  * @param {String} delimiter A string for splitting multi-value `key` strings into an array
  * @returns {Object} An object that has a property for each `key` provided and contains the `value`
  */
-export function createProps(key, value, delimiter) {
+export function createProps(key, delimiter) {
     const keys = asArray(key, delimiter);
     if (!keys) {
         return {};
@@ -54,7 +53,7 @@ export function createProps(key, value, delimiter) {
     return keys.reduce((result, propName) => {
         return {
             ...result,
-            [propName]: value
+            [propName]: true
         };
     }, {});
 }
