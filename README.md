@@ -22,7 +22,7 @@ Running `yarn build` transpiles `packages/stateful/src` to `packages/stateful/li
 
 Builds and watches the main package.
 
-Running `yarn watch` performs `yarn build` and repeat the operation whenever a file in `packages/stateful/src` is changed.
+Running `yarn watch` performs `yarn build` and repeats the operation whenever a file in `packages/stateful/src` is changed.
 
 #### `yarn examples`
 
@@ -32,9 +32,8 @@ Running `yarn examples` launches the examples app on port 3000. If that port is 
 
 #### `yarn start`
 
-The main development script - starts watching the main package and launches the examples application in parallel.
-
-Running `yarn start` simply runs `yarn watch` and `yarn examples` in parallel.
+The main development script - starts watching the main package and launches the examples application development server.
+It simply executes `yarn watch` and `yarn examples` in parallel.
 
 #### `yarn lint`
 
