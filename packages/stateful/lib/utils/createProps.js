@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.createStatusClasses = createStatusClasses;
 exports.createStatusProps = createStatusProps;
 exports.createProps = createProps;
+exports.createFlags = createFlags;
 exports.omitProps = omitProps;
 
 var Status = _interopRequireWildcard(require("./Status"));
@@ -32,7 +33,7 @@ function createStatusClasses(status, props) {
   var _flags;
 
   var flags = (_flags = {}, _defineProperty(_flags, Status.PENDING, props.pendingClasses), _defineProperty(_flags, Status.BUSY, props.busyClasses), _defineProperty(_flags, Status.SUCCESS, props.successClasses), _defineProperty(_flags, Status.ERROR, props.errorClasses), _flags);
-  return createProps(flags[status], props.delimiter);
+  return createProps(flags, status, props.delimiter);
 }
 /**
  * Creates an object with boolean flags for the defined props.
@@ -48,19 +49,31 @@ function createStatusProps(status, props) {
   var _flags2;
 
   var flags = (_flags2 = {}, _defineProperty(_flags2, Status.PENDING, props.pendingProps), _defineProperty(_flags2, Status.BUSY, props.busyProps), _defineProperty(_flags2, Status.SUCCESS, props.successProps), _defineProperty(_flags2, Status.ERROR, props.errorProps), _flags2);
-  return createProps(flags[status], props.delimiter);
+  return createProps(flags, status, props.delimiter);
+}
+
+function createProps(flags, status, delimiter) {
+  var statusFlags = flags[status];
+
+  if (typeof statusFlags === 'function') {
+    return statusFlags(status);
+  } else {
+    return createFlags(statusFlags, delimiter);
+  }
 }
 /**
- * Takes one or more string keys together with a value and returns an object.
+ * Takes one or more string keys and returns an object with boolean flags for each key.
  * If `key` contains multiple values, the returned object contains a property for each key.
  *
  * @param {String | String[]} key One or more names for properties in the returned object
  * @param {String} delimiter A string for splitting multi-value `key` strings into an array
+ * @param {*} [value=true] The value for each property of the returned object
  * @returns {Object} An object that has a property for each `key` provided and contains the `value`
  */
 
 
-function createProps(key, delimiter) {
+function createFlags(key, delimiter) {
+  var value = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
   var keys = (0, _asArray.default)(key, delimiter);
 
   if (!keys) {
@@ -68,7 +81,7 @@ function createProps(key, delimiter) {
   }
 
   return keys.reduce(function (result, propName) {
-    return _objectSpread({}, result, _defineProperty({}, propName, true));
+    return _objectSpread({}, result, _defineProperty({}, propName, value));
   }, {});
 }
 /**

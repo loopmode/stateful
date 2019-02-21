@@ -50,20 +50,20 @@ function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 var Shapes = {
-  strings: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.arrayOf(_propTypes.default.string)])
+  def: _propTypes.default.oneOfType([_propTypes.default.func, _propTypes.default.string, _propTypes.default.arrayOf(_propTypes.default.string)])
 };
 Stateful.propTypes = {
   children: _propTypes.default.node,
-  callbacks: Shapes.strings,
-  pendingProps: Shapes.strings,
-  pendingClasses: Shapes.strings,
+  callbacks: Shapes.def,
+  pendingProps: Shapes.def,
+  pendingClasses: Shapes.def,
   busyDelay: _propTypes.default.number,
-  busyProps: Shapes.strings,
-  busyClasses: Shapes.strings,
-  successProps: Shapes.strings,
-  successClasses: Shapes.strings,
-  errorProps: Shapes.strings,
-  errorClasses: Shapes.strings,
+  busyProps: Shapes.def,
+  busyClasses: Shapes.def,
+  successProps: Shapes.def,
+  successClasses: Shapes.def,
+  errorProps: Shapes.def,
+  errorClasses: Shapes.def,
   hintDuration: _propTypes.default.number,
   delimiter: _propTypes.default.string
 }; // Note that we use the keys of the defaultProps object to omit
@@ -74,7 +74,7 @@ Stateful.defaultProps = {
   callbacks: ['onClick', 'onTouchStart'],
   pendingProps: ['disabled'],
   pendingClasses: [],
-  busyDelay: 250,
+  busyDelay: 0,
   busyProps: ['disabled'],
   busyClasses: ['busy'],
   successProps: [],

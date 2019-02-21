@@ -15,7 +15,8 @@ import {
 } from './utils/createProps';
 
 const Shapes = {
-    strings: PropTypes.oneOfType([
+    def: PropTypes.oneOfType([
+        PropTypes.func,
         PropTypes.string,
         PropTypes.arrayOf(PropTypes.string)
     ])
@@ -23,20 +24,20 @@ const Shapes = {
 Stateful.propTypes = {
     children: PropTypes.node,
 
-    callbacks: Shapes.strings,
+    callbacks: Shapes.def,
 
-    pendingProps: Shapes.strings,
-    pendingClasses: Shapes.strings,
+    pendingProps: Shapes.def,
+    pendingClasses: Shapes.def,
 
     busyDelay: PropTypes.number,
-    busyProps: Shapes.strings,
-    busyClasses: Shapes.strings,
+    busyProps: Shapes.def,
+    busyClasses: Shapes.def,
 
-    successProps: Shapes.strings,
-    successClasses: Shapes.strings,
+    successProps: Shapes.def,
+    successClasses: Shapes.def,
 
-    errorProps: Shapes.strings,
-    errorClasses: Shapes.strings,
+    errorProps: Shapes.def,
+    errorClasses: Shapes.def,
 
     hintDuration: PropTypes.number,
 
@@ -52,7 +53,7 @@ Stateful.defaultProps = {
     pendingProps: ['disabled'],
     pendingClasses: [],
 
-    busyDelay: 250,
+    busyDelay: 0,
     busyProps: ['disabled'],
     busyClasses: ['busy'],
 
