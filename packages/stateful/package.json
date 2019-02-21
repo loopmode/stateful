@@ -2,6 +2,7 @@
     "name": "@loopmode/stateful",
     "version": "0.0.1",
     "main": "lib/index.js",
+    "license": "MIT",
     "scripts": {
         "build": "cross-env NODE_ENV=production babel src --out-dir lib --copy-files",
         "watch": "yarn build --watch",
