@@ -15,22 +15,22 @@ export default () => (
             <nav>
                 <ul>
                     <li>
-                        <Link to="/">Readme</Link>
+                        <Link to="./">Readme</Link>
                     </li>
                     <li>
-                        <Link to="/vanilla">Vanilla</Link>
+                        <Link to="./vanilla">Vanilla</Link>
                     </li>
                     <li>
-                        <Link to="/semantic-ui">Semantic UI</Link>
+                        <Link to="./semantic-ui">Semantic UI</Link>
                     </li>
                     <li>
-                        <Link to="/antd">AntD</Link>
+                        <Link to="./antd">AntD</Link>
                     </li>
                     <li>
-                        <Link to="/bootstrap">Bootstrap</Link>
+                        <Link to="./bootstrap">Bootstrap</Link>
                     </li>
                     <li>
-                        <Link to="/material-ui">Material UI</Link>
+                        <Link to="./material-ui">Material UI</Link>
                     </li>
                 </ul>
             </nav>
