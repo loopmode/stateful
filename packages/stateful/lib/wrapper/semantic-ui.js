@@ -16,6 +16,7 @@ function _extends() { _extends = Object.assign || function (target) { for (var i
 var StatefulButton = function StatefulButton(props) {
   return _react.default.createElement(_Stateful.default, _extends({
     pendingClasses: null,
+    busyClasses: null,
     successClasses: null,
     errorClasses: null,
     pendingProps: "disabled",

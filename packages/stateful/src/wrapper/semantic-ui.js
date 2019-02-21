@@ -4,6 +4,7 @@ import Stateful from '../Stateful';
 export const StatefulButton = props => (
     <Stateful
         pendingClasses={null}
+        busyClasses={null}
         successClasses={null}
         errorClasses={null}
         pendingProps="disabled"
