@@ -30,7 +30,4 @@ export const StatefulForm = props => (
     />
 );
 
-export default {
-    Button: StatefulButton,
-    Form: StatefulForm
-};
+export default StatefulButton;

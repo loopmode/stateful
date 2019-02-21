@@ -1,35 +1,76 @@
 import React, { Component } from 'react';
 
-import { Button, Form, Container, Message } from 'semantic-ui-react';
+import 'semantic-ui-css/semantic.min.css';
+import { Button, Form, Container, Message, Segment } from 'semantic-ui-react';
 
 import dummyCall from './dummyCall';
 
-import Stateful from '@loopmode/stateful/lib/semantic-ui';
+import Stateful, {
+    StatefulForm
+} from '@loopmode/stateful/lib/wrapper/semantic-ui';
 
 export default class SemanticUIExample extends Component {
     render() {
         return (
             <Container text>
                 <h1>Semantic UI Examples</h1>
+
                 <h3>Buttons</h3>
-                <Stateful.Button>
+                <div>
+                    The default <code>semantic-ui-react</code> wrapper can be
+                    used via:
+                    <Segment>
+                        <code>
+                            {
+                                "import Stateful from '@loopmode/stateful/lib/wrapper/semantic-ui';"
+                            }
+                        </code>
+                    </Segment>
+                    It provides <code>loading</code>, <code>positive</code> and{' '}
+                    <code>negative</code> flags to the wrapped component - which
+                    is understood by at least the <code>Button</code> component.
+                </div>
+
+                <div className="info">
+                    Click any of the buttons below. Using random durations and
+                    outcomes, the dummy callback will sometimes succeed and
+                    sometimes fail.
+                </div>
+
+                <Stateful>
                     <Button icon="undo" onClick={this.handleSubmit} />
-                </Stateful.Button>
-                <Stateful.Button>
+                </Stateful>
+                <Stateful>
                     <Button
                         icon="upload"
                         content="Upload"
                         labelPosition="left"
                         onClick={this.handleSubmit}
                     />
-                </Stateful.Button>
-                <Stateful.Button>
-                    <Button onClick={this.handleSubmit}>Submit</Button>
-                </Stateful.Button>
+                </Stateful>
+                <Stateful busyDelay={1000}>
+                    <Button onClick={this.handleSubmit}>
+                        With 1s busy delay
+                    </Button>
+                </Stateful>
 
                 <h3>Form</h3>
 
-                <Stateful.Form>
+                <div>
+                    There is an additional wrapper for forms:
+                    <Segment>
+                        <code>
+                            {
+                                "import { StatefulForm } from '@loopmode/stateful/lib/wrapper/semantic-ui';"
+                            }
+                        </code>
+                    </Segment>
+                    It provides <code>loading</code>, <code>success</code> and{' '}
+                    <code>error</code> flags. Note that this also triggers{' '}
+                    <code>&lt;Message success&gt;</code> and{' '}
+                    <code>&lt;Message error&gt;</code> visibility.
+                </div>
+                <StatefulForm>
                     <Form onSubmit={this.handleSubmit}>
                         <Form.Field inline>
                             <label>First Name</label>
@@ -51,13 +92,13 @@ export default class SemanticUIExample extends Component {
                             content="An unexpected error occurred. Please try again."
                         />
                     </Form>
-                </Stateful.Form>
+                </StatefulForm>
             </Container>
         );
     }
 
     handleSubmit = e => {
         e.preventDefault();
-        return dummyCall({ successRate: 0.5, min: 2000, max: 2500 });
+        return dummyCall({ successRate: 0.5, min: 500, max: 2500 });
     };
 }

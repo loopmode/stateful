@@ -43,8 +43,5 @@ var StatefulForm = function StatefulForm(props) {
 };
 
 exports.StatefulForm = StatefulForm;
-var _default = {
-  Button: StatefulButton,
-  Form: StatefulForm
-};
+var _default = StatefulButton;
 exports.default = _default;

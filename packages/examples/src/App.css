@@ -13,6 +13,11 @@
 .example code {
     font-size: small;
 }
+div.info {
+    font-style: italic;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
 .App-logo {
     animation: App-logo-spin infinite 20s linear;
     height: 3vmin;
@@ -89,13 +94,6 @@ button.error {
     color: white;
 }
 
-form.success {
-    outline: 1px solid green;
-}
-form.error {
-    outline: 1px solid red;
-}
-
-.busy {
+button.busy {
     border-color: orange;
 }
