@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 import HTMLExample from './plain-html/HTMLExample';
 import SemanticUIExample from './semantic-ui/SemanticUIExample';
+import MaterialUIExample from './material-ui/MaterialUIExample';
 import BootstrapExample from './bootstrap/BootstrapExample';
 
 const Home = () => (
@@ -27,6 +28,9 @@ const Examples = () => (
                         <Link to="/semantic-ui">Semantic UI</Link>
                     </li>
                     <li>
+                        <Link to="/material-ui">Material UI</Link>
+                    </li>
+                    <li>
                         <Link to="/plain-html">Plain HTML</Link>
                     </li>
                 </ul>
@@ -35,6 +39,7 @@ const Examples = () => (
                 <Route exact path="/" component={Home} />
                 <Route path="/bootstrap" component={BootstrapExample} />
                 <Route path="/semantic-ui" component={SemanticUIExample} />
+                <Route path="/material-ui" component={MaterialUIExample} />
                 <Route path="/plain-html" component={HTMLExample} />
             </div>
         </div>
