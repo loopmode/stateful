@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import 'semantic-ui-css/semantic.min.css';
 import { Button, Form, Container, Message, Segment } from 'semantic-ui-react';
 
-import dummyCall from './dummyCall';
+import dummyCall from '../dummyCall';
 
 import Stateful, {
     StatefulForm

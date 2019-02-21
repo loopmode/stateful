@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { Button, Container, Form } from 'react-bootstrap';
 
-import dummyCall from './dummyCall';
+import dummyCall from '../dummyCall';
 
 import Stateful from '@loopmode/stateful/lib/wrapper/bootstrap';
 

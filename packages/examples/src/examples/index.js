@@ -2,9 +2,9 @@ import React from 'react';
 
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
-import HTMLExample from './HTMLExample';
-import SemanticUIExample from './SemanticUIExample';
-import BootstrapExample from './BootstrapExample';
+import HTMLExample from './plain-html/HTMLExample';
+import SemanticUIExample from './semantic-ui/SemanticUIExample';
+import BootstrapExample from './bootstrap/BootstrapExample';
 
 const Home = () => (
     <div>
