@@ -10,6 +10,18 @@
     color: white;
 }
 
+table {
+    width: 100%;
+}
+table td,
+table th {
+    padding: 5px;
+    border-bottom: 1px solid #eee;
+}
+table thead th {
+    border-bottom: 1px solid #ccc;
+}
+
 h2:not(:first-child),
 h3:not(:first-child) {
     margin-top: 40px;
@@ -79,4 +91,9 @@ button + button {
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
         monospace;
+}
+.readme pre {
+    padding: 10px;
+    background: #333;
+    color: white;
 }

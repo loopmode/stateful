@@ -10,10 +10,11 @@
     ],
     "scripts": {
         "start": "npm-run-all --parallel examples watch",
-        "examples": "lerna run start --scope @loopmode/stateful-examples",
+        "examples": "cd packages/examples && yarn start",
         "build": "lerna run build --parallel --stream --no-private",
         "watch": "lerna run watch --parallel --stream --no-private",
-        "lint": "lerna run lint --parallel --stream"
+        "lint": "lerna run lint --parallel --stream",
+        "docs": "cd packages/examples && yarn build && cp -r build/* ../../docs"
     },
     "devDependencies": {
         "cross-env": "^5.2.0",

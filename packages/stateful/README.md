@@ -5,9 +5,8 @@ A react component for visual indication of async state.
 This component is meant as an unobtrusive, opt-in helper that doesn't require significant changes in your code.
 The idea is that you simply wrap it around an existing component in your JSX, without changing or adding any props, and the rest should "just work".
 
-<img src="https://github.com/loopmode/stateful/raw/master/stateful-success.gif" />
-
-<img src="https://github.com/loopmode/stateful/raw/master/stateful-error.gif" />
+![success gif](https://github.com/loopmode/stateful/raw/master/stateful-success.gif 'Example of loading and success indication')
+![error gif](https://github.com/loopmode/stateful/raw/master/stateful-error.gif 'Example of loading and error indication')
 
 ## Installation
 
@@ -30,7 +29,7 @@ import Stateful from '@loopmode/stateful';
 
 ...
     <Stateful>
-        <button onClick={this.handleClick}>load</button>
+        <button onClick={somePromiseHandler}>load</button>
     </Stateful>
 ...
 ```
@@ -190,4 +189,6 @@ Most UI libraries and frameworks come prepared for these situations and provide 
 While `@loopmode/stateful` makes it easy to write a custom wrapper for any library you use, it comes with a couple of presets for popular frameworks.
 (Suggestions and especially pull requests for more support are highly welcome!)
 
-To use the pre-configured components, you should import the specific components from `lib` instead of the default. Have a look at the different examples.
+To use the pre-configured components, you should import the specific components from `lib` instead of the default.
+
+Have a look at the different [examples](https://github.com/loopmode/stateful/tree/master/packages/examples/src/examples).
