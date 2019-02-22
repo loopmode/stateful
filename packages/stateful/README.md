@@ -49,7 +49,7 @@ import Stateful from '@loopmode/stateful';
 | successClasses | PolyType | `['success']`                 | Names of CSS classes to add for `Status.SUCCESS`                                                        |
 | hintDuration   | Number   | `1000`                        | Duration in milliseconds for `Status.SUCCESS` and `Status.ERROR` before returning to the default status |
 | busyDelay      | Number   | `0`                           | Duration in milliseconds to wait after `Status.PENDING` and before `Status.BUSY`                        |
-| delimiter      | String   | `' '`                         | Delimiter for splitting `Poly` props of type `String` into multiple strings                             |
+| delimiter      | String   | `' '`                         | Delimiter for splitting `PolyType` props of type `String` into multiple values                          |
 
 ## "PolyType" props
 

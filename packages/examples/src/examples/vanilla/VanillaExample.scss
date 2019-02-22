@@ -23,12 +23,10 @@
     button.success {
         background: limegreen;
         color: white;
-        animation: pulse-success 1s 1 ease-in-out;
     }
     button.error {
         background: red;
         color: white;
-        animation: pulse-error 1s 1 ease-in-out;
     }
 }
 
@@ -44,29 +42,5 @@
     100% {
         transform: scale(0.9);
         opacity: 0.7;
-    }
-}
-
-@keyframes pulse-success {
-    0% {
-        opacity: 0.7;
-        box-shadow: 0 0 0 0 rgba(0, 255, 42, 0.5);
-    }
-    100% {
-        transform: scale(1);
-        opacity: 1;
-        box-shadow: 0 0 6px 6px rgba(0, 255, 42, 0.5);
-    }
-}
-
-@keyframes pulse-error {
-    0% {
-        opacity: 0.7;
-        box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.5);
-    }
-    100% {
-        transform: scale(1);
-        opacity: 1;
-        box-shadow: 0 0 6px 6px rgba(255, 0, 0, 0.5);
     }
 }

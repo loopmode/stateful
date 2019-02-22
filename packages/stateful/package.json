@@ -8,6 +8,12 @@
         "watch": "yarn build --watch",
         "lint": "eslint src"
     },
+    "homepage": "https://loopmode.github.io/stateful/",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/loopmode/stateful.git",
+        "directory": "packages/stateful"
+    },
     "eslintConfig": {
         "extends": "@loopmode/stateful"
     },
@@ -18,7 +24,6 @@
         "react": ">= 16.8.0"
     },
     "dependencies": {
-        "@loopmode/bind": "^1.0.1",
         "@rooks/use-did-mount": "^1.1.0",
         "@rooks/use-timeout": "^1.2.0",
         "@rooks/use-will-unmount": "^1.1.0",
