@@ -13,6 +13,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
+// Stateful wrapper for Semantic UI buttons
 var StatefulButton = function StatefulButton(props) {
   return _react.default.createElement(_Stateful.default, _extends({
     pendingClasses: null,
@@ -24,7 +25,8 @@ var StatefulButton = function StatefulButton(props) {
     successProps: "positive",
     errorProps: "negative"
   }, props));
-};
+}; // Stateful wrapper for Semantic UI forms
+
 
 exports.StatefulButton = StatefulButton;
 

@@ -30,7 +30,8 @@ var errorProps = function errorProps() {
   return {
     variant: 'danger'
   };
-};
+}; // Stateful wrapper for Bootstrap buttons
+
 
 var StatefulButton = function StatefulButton(props) {
   return _react.default.createElement(_Stateful.default, _extends({

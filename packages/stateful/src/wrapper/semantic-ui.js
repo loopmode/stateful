@@ -1,6 +1,7 @@
 import React from 'react';
 import Stateful from '../Stateful';
 
+// Stateful wrapper for Semantic UI buttons
 export const StatefulButton = props => (
     <Stateful
         pendingClasses={null}
@@ -15,6 +16,7 @@ export const StatefulButton = props => (
     />
 );
 
+// Stateful wrapper for Semantic UI forms
 export const StatefulForm = props => (
     <Stateful
         callbacks="onSubmit"

@@ -36,27 +36,27 @@ import Stateful from '@loopmode/stateful';
 
 ## Supported props
 
-_Note: The `Poly` type is described below._
+| Prop           | Type                  | Default                       | Description                                                                                             |
+| -------------- | --------------------- | ----------------------------- | ------------------------------------------------------------------------------------------------------- |
+| callbacks      | [PolyType](#PolyType) | `['onClick', 'onTouchStart']` | Names of callbacks to intercept and check for promises                                                  |
+| pendingProps   | [PolyType](#PolyType) | `['disabled']`                | Names of props to add for `Status.PENDING`                                                              |
+| pendingClasses | [PolyType](#PolyType) | `[]`                          | Names of CSS classes to add for `Status.PENDING`                                                        |
+| busyDelay      | Number                | `0`                           | Duration in milliseconds to wait after `Status.PENDING` and before `Status.BUSY`                        |
+| busyProps      | [PolyType](#PolyType) | `['disabled']`                | Names of props to add for `Status.BUSY`                                                                 |
+| busyClasses    | [PolyType](#PolyType) | `[]`                          | Names of CSS classes to add for `Status.BUSY`                                                           |
+| errorProps     | [PolyType](#PolyType) | `[]`                          | Names of props to add for `Status.ERROR`                                                                |
+| errorClasses   | [PolyType](#PolyType) | `['error']`                   | Names of CSS classes to add for `Status.ERROR`                                                          |
+| successProps   | [PolyType](#PolyType) | `[]`                          | Names of props to add for `Status.SUCCESS`                                                              |
+| successClasses | [PolyType](#PolyType) | `['success']`                 | Names of CSS classes to add for `Status.SUCCESS`                                                        |
+| hintDuration   | Number                | `1000`                        | Duration in milliseconds for `Status.SUCCESS` and `Status.ERROR` before returning to the default status |
+| delimiter      | String                | `' '`                         | Delimiter for splitting `Poly` props of type `String` into multiple strings                             |
 
-| Prop           | Type   | Default                       | Description                                                                                             |
-| -------------- | ------ | ----------------------------- | ------------------------------------------------------------------------------------------------------- |
-| callbacks      | Poly   | `['onClick', 'onTouchStart']` | Names of callbacks to intercept and check for promises                                                  |
-| pendingProps   | Poly   | `['disabled']`                | Names of props to add for `Status.PENDING`                                                              |
-| pendingClasses | Poly   | `[]`                          | Names of CSS classes to add for `Status.PENDING`                                                        |
-| busyDelay      | Number | `0`                           | Duration in milliseconds to wait after `Status.PENDING` and before `Status.BUSY`                        |
-| busyProps      | Poly   | `['disabled']`                | Names of props to add for `Status.BUSY`                                                                 |
-| busyClasses    | Poly   | `[]`                          | Names of CSS classes to add for `Status.BUSY`                                                           |
-| errorProps     | Poly   | `[]`                          | Names of props to add for `Status.ERROR`                                                                |
-| errorClasses   | Poly   | `['error']`                   | Names of CSS classes to add for `Status.ERROR`                                                          |
-| successProps   | Poly   | `[]`                          | Names of props to add for `Status.SUCCESS`                                                              |
-| successClasses | Poly   | `['success']`                 | Names of CSS classes to add for `Status.SUCCESS`                                                        |
-| hintDuration   | Number | `1000`                        | Duration in milliseconds for `Status.SUCCESS` and `Status.ERROR` before returning to the default status |
-| delimiter      | String | `' '`                         | Delimiter for splitting `Poly` props of type `String` into multiple strings                             |
+<p id="PolyType"></p>
 
-### Polymorphic prop types
+## PolyType props
 
 Most of the props accept values of multiple types: `String`, `Array` or `Function`, and depending on your use case, some might be preferrable over others.
-We call this prop type `PolyType` and it's defined in the code like this:
+Let's just call it `PolyType` and it's defined in the code like this:
 
 ```
 const PolyType = PropTypes.oneOfType([
@@ -189,6 +189,11 @@ Most UI libraries and frameworks come prepared for these situations and provide 
 While `@loopmode/stateful` makes it easy to write a custom wrapper for any library you use, it comes with a couple of presets for popular frameworks.
 (Suggestions and especially pull requests for more support are highly welcome!)
 
-To use the pre-configured components, you should import the specific components from `lib` instead of the default.
+To use the pre-configured wrapper components, you should import them specifically from `lib/wrapper`.
+Ideally, you would do this only once for the local `Stateful` component of a project, configure it there, and import that one across your codebase.
 
-Have a look at the different [examples](https://github.com/loopmode/stateful/tree/master/packages/examples/src/examples).
+| name        | usage                                                                | implementation                                                                                                          | examples                                                  |
+| ----------- | -------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
+| antd        | `import Stateful from '@loopmode/stateful/lib/wrapper/antd';`        | [wrapper/antd.js](https://github.com/loopmode/stateful/blob/master/packages/stateful/src/wrapper/antd.js)               | [example](http://loopmode.github.io/stateful/antd)        |
+| bootstrap   | `import Stateful from '@loopmode/stateful/lib/wrapper/bootstrap';`   | [wrapper/bootstrap.js](https://github.com/loopmode/stateful/blob/master/packages/stateful/src/wrapper/bootstrap.js)     | [example](http://loopmode.github.io/stateful/bootstrap)   |
+| semantic-ui | `import Stateful from '@loopmode/stateful/lib/wrapper/semantic-ui';` | [wrapper/semantic-ui.js](https://github.com/loopmode/stateful/blob/master/packages/stateful/src/wrapper/semantic-ui.js) | [example](http://loopmode.github.io/stateful/semantic-ui) |

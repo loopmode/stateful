@@ -5,6 +5,7 @@ const pendingProps = () => ({ children: 'Loading...', disabled: true });
 const successProps = () => ({ variant: 'success' });
 const errorProps = () => ({ variant: 'danger' });
 
+// Stateful wrapper for Bootstrap buttons
 export const StatefulButton = props => (
     <Stateful
         pendingClasses={null}

@@ -3,6 +3,7 @@ import Stateful from '../Stateful';
 
 const errorProps = () => ({ type: 'danger' });
 
+// Stateful wrapper for Ant Design buttons
 export const StatefulButton = props => (
     <Stateful
         pendingClasses={null}

@@ -17,7 +17,8 @@ var errorProps = function errorProps() {
   return {
     type: 'danger'
   };
-};
+}; // Stateful wrapper for Ant Design buttons
+
 
 var StatefulButton = function StatefulButton(props) {
   return _react.default.createElement(_Stateful.default, _extends({
