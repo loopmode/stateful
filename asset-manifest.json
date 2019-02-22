@@ -8,10 +8,10 @@
   "runtime~main.js": "/stateful/static/js/runtime~main.00b38f24.js",
   "runtime~main.js.map": "/stateful/static/js/runtime~main.00b38f24.js.map",
   "static/media/index.css": "/stateful/static/media/roboto-latin-900italic.bc833e72.woff",
-  "static/media/semantic.min.css": "/stateful/static/media/icons.8e3c7f55.eot",
+  "static/media/semantic.min.css": "/stateful/static/media/icons.0ab54153.woff2",
   "static/css/main.addafc1f.chunk.css.map": "/stateful/static/css/main.addafc1f.chunk.css.map",
   "static/css/1.46ff1265.chunk.css.map": "/stateful/static/css/1.46ff1265.chunk.css.map",
   "index.html": "/stateful/index.html",
-  "precache-manifest.43671196bb8f8fafd052c9e2118b90ea.js": "/stateful/precache-manifest.43671196bb8f8fafd052c9e2118b90ea.js",
+  "precache-manifest.82574b0b41f3982c996234d8f24e63ac.js": "/stateful/precache-manifest.82574b0b41f3982c996234d8f24e63ac.js",
   "service-worker.js": "/stateful/service-worker.js"
 }
