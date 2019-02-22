@@ -1,12 +1,48 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { Segment } from 'semantic-ui-react';
 
-import { Button, Form, Message, Segment } from 'semantic-ui-react';
+export default () => (
+    <>
+        <h2>Semantic UI</h2>
+        <p>
+            Semantic UI is mostly supported out of the box, as it's capable to
+            display the pending, success and error states by merely setting
+            boolean flags on its components.
+        </p>
 
-import dummyCall from '../dummyCall';
-
-import { StatefulForm } from '@loopmode/stateful/lib/wrapper/semantic-ui';
-
-export const Info = () => (
+        <p>Have a look at the relevant code:</p>
+        <ul>
+            <li>
+                <a
+                    href="https://github.com/loopmode/stateful/blob/master/packages/stateful/src/wrapper/semantic-ui.js"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Stateful configuration
+                </a>
+            </li>
+        </ul>
+    </>
+);
+export const Buttons = () => (
+    <>
+        <h3>Buttons</h3>
+        <div>
+            The default <code>semantic-ui-react</code> wrapper can be used via:
+            <Segment>
+                <code>
+                    {
+                        "import Stateful from '@loopmode/stateful/lib/wrapper/semantic-ui';"
+                    }
+                </code>
+            </Segment>
+            It provides <code>loading</code>, <code>positive</code> and{' '}
+            <code>negative</code> flags to the wrapped component - which is
+            understood by at least the <code>Button</code> component.
+        </div>
+    </>
+);
+export const Forms = () => (
     <>
         <h3>Forms</h3>
         <p>
@@ -43,38 +79,3 @@ export const Info = () => (
         </i>
     </>
 );
-
-export default class FormExample extends Component {
-    render() {
-        return (
-            <StatefulForm>
-                <Form onSubmit={this.handleSubmit}>
-                    <Message
-                        success
-                        header="Form Completed"
-                        content="You're all signed up for the newsletter"
-                    />
-                    <Message
-                        error
-                        header="Something went wrong"
-                        content="An unexpected error occurred. Please try again."
-                    />
-                    <Form.Field inline>
-                        <label>First Name</label>
-                        <input placeholder="First Name" />
-                    </Form.Field>
-                    <Form.Field inline>
-                        <label>Last Name</label>
-                        <input placeholder="Last Name" />
-                    </Form.Field>
-                    <Button type="submit">Log in</Button>
-                </Form>
-            </StatefulForm>
-        );
-    }
-
-    handleSubmit = e => {
-        e.preventDefault();
-        return dummyCall({ successRate: 0.5, min: 500, max: 2500 });
-    };
-}

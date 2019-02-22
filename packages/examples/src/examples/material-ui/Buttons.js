@@ -1,14 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import 'typeface-roboto';
-
 import { withStyles } from '@material-ui/core/styles';
-import dummyCall from '../dummyCall';
+
+import dummyCall from 'utils/dummyCall';
+import ButtonsHeader from 'components/ButtonsHeader';
 
 import Button from './ProgressButton';
 import Stateful from './Stateful';
-import ButtonsInfo from '../ButtonsInfo';
 
 const styles = theme => ({
     button: {
@@ -20,7 +19,7 @@ function TextButtons(props) {
     const { classes } = props;
     return (
         <>
-            <ButtonsInfo />
+            <ButtonsHeader />
             <Stateful>
                 <Button
                     variant="contained"

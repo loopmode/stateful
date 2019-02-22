@@ -1,0 +1,19 @@
+html,
+body,
+#root {
+    color: #333;
+}
+
+#root,
+.App {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+code {
+    font-size: small;
+    color: #e83e8c;
+}
+pre code {
+}

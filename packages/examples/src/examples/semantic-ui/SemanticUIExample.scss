@@ -1,0 +1,11 @@
+:local(.SemanticUIExample) {
+    form {
+        padding: 10px;
+    }
+    form[disabled] * {
+        pointer-events: none;
+    }
+    form[disabled] button {
+        opacity: 0.9;
+    }
+}

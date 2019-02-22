@@ -8,6 +8,9 @@ import red from '@material-ui/core/colors/red';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
+// a component that wraps a `Button` and displays a `Progress` when the `loading` prop is set
+// based on https://material-ui.com/demos/progress/#interactive-integration
+
 const styles = () => ({
     wrapper: {
         display: 'inline-block',
@@ -37,6 +40,7 @@ const styles = () => ({
         marginLeft: -8
     }
 });
+
 const ProgressButton = props => {
     const {
         className,
