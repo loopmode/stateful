@@ -11,10 +11,10 @@
     "scripts": {
         "start": "npm-run-all --parallel examples watch",
         "examples": "cd packages/examples && yarn start",
-        "build": "lerna run build --parallel --stream --no-private",
-        "watch": "lerna run watch --parallel --stream --no-private",
         "lint": "lerna run lint --parallel --stream",
-        "docs": "cd packages/examples && yarn build && cp -r build/* ../../docs"
+        "watch": "lerna run watch --parallel --stream --no-private",
+        "build": "lerna run build --stream",
+        "build:docs": "yarn build && cp -r ./packages/examples/build/* ./docs/"
     },
     "devDependencies": {
         "cross-env": "^5.2.0",
