@@ -41,7 +41,6 @@ import Stateful from '@loopmode/stateful';
 | callbacks      | PolyType | `['onClick', 'onTouchStart']` | Names of callbacks to intercept and check for promises                                                  |
 | pendingProps   | PolyType | `['disabled']`                | Names of props to add for `Status.PENDING`                                                              |
 | pendingClasses | PolyType | `[]`                          | Names of CSS classes to add for `Status.PENDING`                                                        |
-| busyDelay      | Number   | `0`                           | Duration in milliseconds to wait after `Status.PENDING` and before `Status.BUSY`                        |
 | busyProps      | PolyType | `['disabled']`                | Names of props to add for `Status.BUSY`                                                                 |
 | busyClasses    | PolyType | `[]`                          | Names of CSS classes to add for `Status.BUSY`                                                           |
 | errorProps     | PolyType | `[]`                          | Names of props to add for `Status.ERROR`                                                                |
@@ -49,6 +48,7 @@ import Stateful from '@loopmode/stateful';
 | successProps   | PolyType | `[]`                          | Names of props to add for `Status.SUCCESS`                                                              |
 | successClasses | PolyType | `['success']`                 | Names of CSS classes to add for `Status.SUCCESS`                                                        |
 | hintDuration   | Number   | `1000`                        | Duration in milliseconds for `Status.SUCCESS` and `Status.ERROR` before returning to the default status |
+| busyDelay      | Number   | `0`                           | Duration in milliseconds to wait after `Status.PENDING` and before `Status.BUSY`                        |
 | delimiter      | String   | `' '`                         | Delimiter for splitting `Poly` props of type `String` into multiple strings                             |
 
 ## "PolyType" props
