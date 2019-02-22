@@ -13,7 +13,7 @@
         "build": "lerna run build --no-private --stream",
         "watch": "lerna run watch --no-private --stream --parallel",
         "develop": "cd packages/examples && yarn start",
-        "docs": "yarn build && cd packages/examples && yarn deploy",
+        "deploy": "yarn build && cd packages/examples && yarn deploy",
         "lint": "lerna run lint --parallel --stream",
         "start": "npm-run-all --parallel watch develop"
     },

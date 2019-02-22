@@ -2,7 +2,7 @@ import React from 'react';
 
 export default () => (
     <>
-        <h2>Vanilla example</h2>
+        <h1>Vanilla example</h1>
         <p>
             This example doesn't use any UI frameworks, but some simple CSS
             rules instead. It uses the default wrapper:

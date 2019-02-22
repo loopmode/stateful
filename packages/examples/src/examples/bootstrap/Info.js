@@ -2,7 +2,7 @@ import React from 'react';
 
 export default () => (
     <>
-        <h2>Bootstrap</h2>
+        <h1>Bootstrap</h1>
         <p>
             Unfortunately, <code>react-bootstrap</code> does not provide any
             sophisticated loading states or animations, so besides indicating

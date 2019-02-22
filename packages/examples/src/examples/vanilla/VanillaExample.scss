@@ -1,4 +1,5 @@
 :local(.VanillaExample) {
+    // this is simply some default styling
     button {
         appearance: none;
         outline: none;
@@ -6,13 +7,15 @@
         border: 1px solid #ccc;
         padding: 5px 15px;
         border-radius: 3px;
+        &:hover {
+            outline: 1px solid #ccc;
+        }
+        & + button {
+            margin-left: 10px;
+        }
     }
-    button:hover {
-        outline: 1px solid #ccc;
-    }
-    button + button {
-        margin-left: 10px;
-    }
+
+    // these are the relevant rules and styles of the example
     button[disabled] {
         pointer-events: none;
         opacity: 0.8;

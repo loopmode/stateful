@@ -1,0 +1,32 @@
+:local(.AppHeader) {
+    background: #094277;
+    color: white;
+    padding: 20px;
+    user-select: none;
+    display: flex;
+    align-items: baseline;
+
+    > .title {
+        color: white;
+        display: flex;
+        align-items: center;
+        font-size: 2rem;
+        margin-right: 10px;
+    }
+    .show-mobile-menu {
+        cursor: pointer;
+    }
+
+    @media (max-width: 760px) {
+        position: sticky;
+        top: 0;
+        padding: 10px;
+        font-size: 14px;
+        > .info {
+            display: none;
+        }
+        > .title {
+            font-size: 1.5rem;
+        }
+    }
+}

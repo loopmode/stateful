@@ -2,7 +2,7 @@ import React from 'react';
 
 export default () => (
     <>
-        <h2>Material UI</h2>
+        <h1>Material UI</h1>
         <p>
             While there is a nice loading animation when using Material UI (
             <a

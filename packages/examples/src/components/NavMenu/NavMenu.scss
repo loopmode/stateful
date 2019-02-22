@@ -1,0 +1,53 @@
+:local(.NavMenu) {
+    background: #eee;
+
+    user-select: none;
+    display: flex;
+    flex-direction: column;
+
+    position: relative;
+    z-index: 100;
+
+    ul {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        margin: 0;
+        padding: 0;
+        overflow: auto;
+    }
+
+    a {
+        display: block;
+        color: #1890ff;
+        padding: 10px 20px;
+        text-decoration: none;
+        &:hover {
+            text-decoration: underline;
+        }
+        &.active {
+            background: #1890ff;
+            color: white;
+        }
+    }
+
+    .hide-mobile-menu {
+        display: none;
+        cursor: pointer;
+    }
+
+    @media (max-width: 760px) {
+        .hide-mobile-menu {
+            display: flex;
+            align-items: center;
+            padding: 10px 20px 10px 10px;
+        }
+        position: fixed;
+        height: auto;
+        top: 0;
+        left: 0;
+        height: 120%;
+        box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5);
+    }
+}

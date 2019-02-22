@@ -3,7 +3,7 @@ import { Segment } from 'semantic-ui-react';
 
 export default () => (
     <>
-        <h2>Semantic UI</h2>
+        <h1>Semantic UI</h1>
         <p>
             Semantic UI is mostly supported out of the box, as it's capable to
             display the pending, success and error states by merely setting

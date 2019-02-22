@@ -2,7 +2,7 @@ import React from 'react';
 
 export default () => (
     <>
-        <h2>AntD</h2>
+        <h1>AntD</h1>
         <p>
             AntD can't be fully supported out of the box because its buttons do
             not support any kind of success state, so you'll have to define some
