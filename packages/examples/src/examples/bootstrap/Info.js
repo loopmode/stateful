@@ -17,8 +17,15 @@ export default () => (
         <p>
             If you need to change that text or localize it, simply create a
             custom wrapper and provide the <code>pendingProps</code> and{' '}
-            <code>busyProps</code> in a similar fashion to how how the default
-            wrapper does it.
+            <code>busyProps</code> in a similar fashion to how how the{' '}
+            <a
+                href="https://github.com/loopmode/stateful/blob/master/packages/stateful/src/wrapper/bootstrap.js#L4"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                default
+            </a>{' '}
+            does it.
         </p>
         <p>
             The default <code>react-bootstrap</code> wrapper can be used via:

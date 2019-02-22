@@ -1,6 +1,6 @@
 import React from 'react';
 import cx from 'classnames';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { HashRouter as Router } from 'react-router-dom';
 
 import Examples from './Examples';
 
