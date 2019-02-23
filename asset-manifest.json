@@ -1,17 +1,17 @@
 {
   "main.css": "/stateful/static/css/main.af028b7b.chunk.css",
-  "main.js": "/stateful/static/js/main.ad30b58d.chunk.js",
-  "main.js.map": "/stateful/static/js/main.ad30b58d.chunk.js.map",
+  "main.js": "/stateful/static/js/main.ee637edf.chunk.js",
+  "main.js.map": "/stateful/static/js/main.ee637edf.chunk.js.map",
   "static/css/1.cfb494eb.chunk.css": "/stateful/static/css/1.cfb494eb.chunk.css",
   "static/js/1.478d590e.chunk.js": "/stateful/static/js/1.478d590e.chunk.js",
   "static/js/1.478d590e.chunk.js.map": "/stateful/static/js/1.478d590e.chunk.js.map",
   "runtime~main.js": "/stateful/static/js/runtime~main.00b38f24.js",
   "runtime~main.js.map": "/stateful/static/js/runtime~main.00b38f24.js.map",
-  "static/media/index.css": "/stateful/static/media/roboto-latin-900italic.bc833e72.woff",
-  "static/media/semantic.min.css": "/stateful/static/media/icons.b87b9ba5.ttf",
+  "static/media/index.css": "/stateful/static/media/roboto-latin-900.8c2ade50.woff",
+  "static/media/semantic.min.css": "/stateful/static/media/icons.faff9214.woff",
   "static/css/main.af028b7b.chunk.css.map": "/stateful/static/css/main.af028b7b.chunk.css.map",
   "static/css/1.cfb494eb.chunk.css.map": "/stateful/static/css/1.cfb494eb.chunk.css.map",
   "index.html": "/stateful/index.html",
-  "precache-manifest.db2e2d6605bdb40e54946cfb44a52b79.js": "/stateful/precache-manifest.db2e2d6605bdb40e54946cfb44a52b79.js",
+  "precache-manifest.a0bb90ca3387b038f7fc8ec96147cf21.js": "/stateful/precache-manifest.a0bb90ca3387b038f7fc8ec96147cf21.js",
   "service-worker.js": "/stateful/service-worker.js"
 }
