@@ -15,6 +15,7 @@
         "develop": "cd packages/examples && yarn start",
         "deploy": "yarn build && cd packages/examples && yarn deploy",
         "lint": "lerna run lint --parallel --stream",
+        "fix": "lerna run lint --parallel --stream -- --fix",
         "start": "npm-run-all --parallel watch develop"
     },
     "devDependencies": {
