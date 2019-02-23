@@ -39,8 +39,20 @@ export function createStatusProps(status, props) {
     return createProps(flags, status, props.delimiter);
 }
 
-export function createProps(flags, status, delimiter) {
-    const statusFlags = flags[status];
+/**
+ * Creates a props object given the current status and a mapping of status values to prop names.
+ *
+ * The `flagMap` object should define a mapping between status values and prop names.
+ * Its keys should be `Status` values, while its values should be a `PolyType` list of prop names
+ * or functions that return a props object themselves.
+ *
+ * @param {Object} flagMap A mapping of status values and prop names, e.g. `{[Status.PENDING]: 'pending disabled'}`
+ * @param {Number} status The active `Status` value
+ * @param {String} [delimiter] An optional delimiter by which to split `PolyType` strings
+ * @return {Object} An object with props for the given `status`, e.g. `{pending: true, disabled: true}`
+ */
+export function createProps(flagMap, status, delimiter) {
+    const statusFlags = flagMap[status];
     if (typeof statusFlags === 'function') {
         return statusFlags(status);
     } else {
