@@ -8,6 +8,8 @@ The idea is that you simply wrap it around an existing component in your JSX, wi
 ![success gif](https://github.com/loopmode/stateful/raw/master/stateful-success.gif 'Example of loading and success indication')
 ![error gif](https://github.com/loopmode/stateful/raw/master/stateful-error.gif 'Example of loading and error indication')
 
+See also: [Documentation and Examples](https://loopmode.github.io/stateful/)
+
 ## Installation
 
 Using npm:

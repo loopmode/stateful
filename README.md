@@ -1,6 +1,6 @@
 # @loopmode/stateful-workspace
 
-This repository contains the `@loopmode/stateful` package and its development workspace.
+This repository contains the [`@loopmode/stateful` package](https://github.com/loopmode/stateful/tree/master/packages/stateful) and its development workspace.
 
 ## Installation
 
