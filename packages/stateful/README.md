@@ -26,12 +26,17 @@ yarn add @loopmode/stateful
 
 ## Usage
 
+Just wrap around a component that invokes a promise-returning callback. If the callback returns a promise, the wrapped component will receive props that indicate the state of the promise.
+
 ```
 import Stateful from '@loopmode/stateful';
 
+async function handleClick() {
+    // ...
+}
 ...
     <Stateful>
-        <button onClick={somePromiseHandler}>load</button>
+        <button onClick={handleClick}>load</button>
     </Stateful>
 ...
 ```
@@ -105,6 +110,21 @@ In these cases, you can provide a function that receives the current `status` an
     }
 }} />
 ```
+
+## Internal state: `status`
+
+Internally, we use a variable named `status` to handle the current state. Its value is just an integer, all possible values are defined in [Status](https://github.com/loopmode/stateful/blob/master/packages/stateful/src/Status.js).
+
+When you provide a function value to a PolyType prop, that function will be invoked with the current `status` as its first argument.
+You can import the named values via `import { Status } from '@loopmode/stateful'` or `import * as Status from '@loopmode/stateful/lib/Status'` to compare against them.
+
+| status         | value | Description                                                                                                                          |
+| -------------- | ----- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| Status.IDLE    | `0`   | The default state - no props are added to wrapped children                                                                           |
+| Status.PENDING | `1`   | A callback was invoked, and it returned a promise. Wrapped children now receive `pendingProps` and `pendingClasses`                  |
+| Status.BUSY    | `2`   | The returned promise has been pending for more than `busyDelay` milliseconds. Wrapped children receive `busyProps` and `busyClasses` |
+| Status.SUCCESS | `3`   | The returned promise was resolved. Wrapped children receive `successProps` and `successClasses` for `successDuration` milliseconds   |
+| Status.ERROR   | `4`   | The returned promise was rejected. Wrapped children receive `errorProps` and `errorClasses` for `errorDuration` milliseconds         |
 
 ## Usage with UI libraries and frameworks
 
