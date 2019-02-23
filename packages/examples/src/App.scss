@@ -19,12 +19,20 @@
         flex: 1;
     }
     .AppMenu {
+        min-width: 250px;
         width: 250px;
+        position: sticky;
+        top: 0;
+        align-self: flex-start;
+        min-height: 120vh;
+    }
+    .AppHeader {
+        z-index: 2;
     }
     .AppContent {
+        z-index: 1;
         padding: 20px;
         flex: 1;
-        overflow: auto;
     }
 
     @media (max-width: 760px) {
