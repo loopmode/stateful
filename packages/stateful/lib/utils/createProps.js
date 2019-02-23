@@ -9,7 +9,7 @@ exports.createProps = createProps;
 exports.createFlags = createFlags;
 exports.omitProps = omitProps;
 
-var Status = _interopRequireWildcard(require("./Status"));
+var Status = _interopRequireWildcard(require("../Status"));
 
 var _asArray = _interopRequireDefault(require("./asArray"));
 

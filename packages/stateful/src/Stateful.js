@@ -5,7 +5,7 @@ import useTimeout from '@rooks/use-timeout';
 import useDidMount from '@rooks/use-did-mount';
 import useWillUnmount from '@rooks/use-will-unmount';
 
-import * as Status from './utils/Status';
+import * as Status from './Status';
 import asArray from './utils/asArray';
 import createCallbacks from './utils/createCallbacks';
 import {

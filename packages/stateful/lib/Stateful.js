@@ -17,7 +17,7 @@ var _useDidMount = _interopRequireDefault(require("@rooks/use-did-mount"));
 
 var _useWillUnmount = _interopRequireDefault(require("@rooks/use-will-unmount"));
 
-var Status = _interopRequireWildcard(require("./utils/Status"));
+var Status = _interopRequireWildcard(require("./Status"));
 
 var _asArray = _interopRequireDefault(require("./utils/asArray"));
 

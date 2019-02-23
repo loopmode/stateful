@@ -1,4 +1,4 @@
-import * as Status from './Status';
+import * as Status from '../Status';
 import asArray from './asArray';
 
 /**
