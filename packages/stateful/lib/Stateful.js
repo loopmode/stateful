@@ -51,6 +51,10 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 var PolyType = _propTypes.default.oneOfType([_propTypes.default.func, _propTypes.default.string, _propTypes.default.arrayOf(_propTypes.default.string)]);
 
+var defaultRejectValue = function defaultRejectValue(value) {
+  return value instanceof Error;
+};
+
 Stateful.propTypes = {
   children: _propTypes.default.node,
   callbacks: PolyType,
@@ -64,7 +68,8 @@ Stateful.propTypes = {
   errorProps: PolyType,
   errorClasses: PolyType,
   hintDuration: _propTypes.default.number,
-  delimiter: _propTypes.default.string
+  delimiter: _propTypes.default.string,
+  rejectValue: _propTypes.default.func
 }; // Note that we use the keys of the defaultProps object to omit
 // our own props from propagation to children
 // make sure to create a key for each own prop - even if the value must be `undefined`
@@ -81,7 +86,8 @@ Stateful.defaultProps = {
   errorProps: [],
   errorClasses: ['error'],
   hintDuration: 1000,
-  delimiter: ' '
+  delimiter: ' ',
+  rejectValue: defaultRejectValue
 };
 
 function Stateful(props) {
@@ -127,7 +133,12 @@ function Stateful(props) {
       busyTimer.clear();
       idleTimer.start();
     }),
-    onResolve: ifMounted(function () {
+    onResolve: ifMounted(function (result) {
+      if (typeof props.rejectValue === 'function' && props.rejectValue(result)) {
+        handlers.rejectValue(result);
+        return;
+      }
+
       setStatus(Status.SUCCESS);
       busyTimer.clear();
       idleTimer.start();

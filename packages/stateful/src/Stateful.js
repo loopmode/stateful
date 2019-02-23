@@ -19,6 +19,8 @@ const PolyType = PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.string)
 ]);
 
+const defaultRejectValue = value => value instanceof Error;
+
 Stateful.propTypes = {
     children: PropTypes.node,
 
@@ -39,7 +41,9 @@ Stateful.propTypes = {
 
     hintDuration: PropTypes.number,
 
-    delimiter: PropTypes.string
+    delimiter: PropTypes.string,
+
+    rejectValue: PropTypes.func
 };
 
 // Note that we use the keys of the defaultProps object to omit
@@ -62,7 +66,8 @@ Stateful.defaultProps = {
     errorClasses: ['error'],
 
     hintDuration: 1000,
-    delimiter: ' '
+    delimiter: ' ',
+    rejectValue: defaultRejectValue
 };
 
 function Stateful(props) {
@@ -98,7 +103,14 @@ function Stateful(props) {
             busyTimer.clear();
             idleTimer.start();
         }),
-        onResolve: ifMounted(() => {
+        onResolve: ifMounted(result => {
+            if (
+                typeof props.rejectValue === 'function' &&
+                props.rejectValue(result)
+            ) {
+                handlers.rejectValue(result);
+                return;
+            }
             setStatus(Status.SUCCESS);
             busyTimer.clear();
             idleTimer.start();

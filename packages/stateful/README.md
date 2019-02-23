@@ -43,20 +43,21 @@ async function handleClick() {
 
 ## Supported props
 
-| Prop           | Type     | Default                       | Description                                                                                             |
-| -------------- | -------- | ----------------------------- | ------------------------------------------------------------------------------------------------------- |
-| callbacks      | PolyType | `['onClick', 'onTouchStart']` | Names of callbacks to intercept and check for promises                                                  |
-| pendingProps   | PolyType | `['disabled']`                | Names of props to add for `Status.PENDING`                                                              |
-| pendingClasses | PolyType | `[]`                          | Names of CSS classes to add for `Status.PENDING`                                                        |
-| busyProps      | PolyType | `['disabled']`                | Names of props to add for `Status.BUSY`                                                                 |
-| busyClasses    | PolyType | `[]`                          | Names of CSS classes to add for `Status.BUSY`                                                           |
-| errorProps     | PolyType | `[]`                          | Names of props to add for `Status.ERROR`                                                                |
-| errorClasses   | PolyType | `['error']`                   | Names of CSS classes to add for `Status.ERROR`                                                          |
-| successProps   | PolyType | `[]`                          | Names of props to add for `Status.SUCCESS`                                                              |
-| successClasses | PolyType | `['success']`                 | Names of CSS classes to add for `Status.SUCCESS`                                                        |
-| hintDuration   | Number   | `1000`                        | Duration in milliseconds for `Status.SUCCESS` and `Status.ERROR` before returning to the default status |
-| busyDelay      | Number   | `0`                           | Duration in milliseconds to wait after `Status.PENDING` and before `Status.BUSY`                        |
-| delimiter      | String   | `' '`                         | Delimiter for splitting `PolyType` props of type `String` into multiple values                          |
+| Prop           | Type     | Default                           | Description                                                                                             |
+| -------------- | -------- | --------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| callbacks      | PolyType | `['onClick', 'onTouchStart']`     | Names of callbacks to intercept and check for promises                                                  |
+| pendingProps   | PolyType | `['disabled']`                    | Names of props to add for `Status.PENDING`                                                              |
+| pendingClasses | PolyType | `[]`                              | Names of CSS classes to add for `Status.PENDING`                                                        |
+| busyProps      | PolyType | `['disabled']`                    | Names of props to add for `Status.BUSY`                                                                 |
+| busyClasses    | PolyType | `[]`                              | Names of CSS classes to add for `Status.BUSY`                                                           |
+| errorProps     | PolyType | `[]`                              | Names of props to add for `Status.ERROR`                                                                |
+| errorClasses   | PolyType | `['error']`                       | Names of CSS classes to add for `Status.ERROR`                                                          |
+| successProps   | PolyType | `[]`                              | Names of props to add for `Status.SUCCESS`                                                              |
+| successClasses | PolyType | `['success']`                     | Names of CSS classes to add for `Status.SUCCESS`                                                        |
+| hintDuration   | Number   | `1000`                            | Duration in milliseconds for `Status.SUCCESS` and `Status.ERROR` before returning to the default status |
+| busyDelay      | Number   | `0`                               | Duration in milliseconds to wait after `Status.PENDING` and before `Status.BUSY`                        |
+| delimiter      | String   | `' '`                             | Delimiter for splitting `PolyType` props of type `String` into multiple values                          |
+| rejectValue    | Function | `value => value instanceof Error` | Whether to indicate `Status.ERROR` for a promise that was actually resolved with a value                |
 
 ## "PolyType" props
 
