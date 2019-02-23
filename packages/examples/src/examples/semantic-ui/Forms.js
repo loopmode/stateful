@@ -4,7 +4,7 @@ import { Button, Form, Message } from 'semantic-ui-react';
 
 import dummyCall from 'utils/dummyCall';
 
-import { StatefulForm } from '@loopmode/stateful/lib/wrapper/semantic-ui';
+import { StatefulForm } from '@loopmode/stateful/lib/wrappers/semantic-ui';
 
 import { Forms as Info } from './Info';
 

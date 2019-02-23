@@ -6,7 +6,7 @@ import ButtonsHeader from 'components/ButtonsHeader';
 
 import dummyCall from 'utils/dummyCall';
 
-import Stateful from '@loopmode/stateful/lib/wrapper/semantic-ui';
+import Stateful from '@loopmode/stateful/lib/wrappers/semantic-ui';
 
 import { Buttons as Info } from './Info';
 

@@ -5,7 +5,7 @@ import { Button } from 'react-bootstrap';
 import dummyCall from 'utils/dummyCall';
 import ButtonsHeader from 'components/ButtonsHeader';
 
-import Stateful from '@loopmode/stateful/lib/wrapper/bootstrap';
+import Stateful from '@loopmode/stateful/lib/wrappers/bootstrap';
 
 export default () => (
     <>

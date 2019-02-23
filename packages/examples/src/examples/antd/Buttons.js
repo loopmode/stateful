@@ -4,7 +4,7 @@ import { Button } from 'antd';
 import ButtonsHeader from 'components/ButtonsHeader';
 import dummyCall from 'utils/dummyCall';
 
-import Stateful from '@loopmode/stateful/lib/wrapper/antd';
+import Stateful from '@loopmode/stateful/lib/wrappers/antd';
 
 export default () => (
     <>

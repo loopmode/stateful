@@ -12,7 +12,7 @@ export default () => (
         <p>
             The default <code>antd</code> wrapper can be used via:
             <code className="push">
-                {"import Stateful from '@loopmode/stateful/lib/wrapper/antd';"}
+                {"import Stateful from '@loopmode/stateful/lib/wrappers/antd';"}
             </code>
         </p>
         <p>
@@ -37,7 +37,7 @@ export default () => (
             </li>
             <li>
                 <a
-                    href="https://github.com/loopmode/stateful/blob/master/packages/stateful/src/wrapper/antd.js"
+                    href="https://github.com/loopmode/stateful/blob/master/packages/stateful/src/wrappers/antd.js"
                     target="_blank"
                     rel="noopener noreferrer"
                 >

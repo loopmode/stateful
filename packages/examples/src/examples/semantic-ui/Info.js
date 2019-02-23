@@ -14,7 +14,7 @@ export default () => (
         <ul>
             <li>
                 <a
-                    href="https://github.com/loopmode/stateful/blob/master/packages/stateful/src/wrapper/semantic-ui.js"
+                    href="https://github.com/loopmode/stateful/blob/master/packages/stateful/src/wrappers/semantic-ui.js"
                     target="_blank"
                     rel="noopener noreferrer"
                 >
@@ -32,7 +32,7 @@ export const Buttons = () => (
             <Segment>
                 <code>
                     {
-                        "import Stateful from '@loopmode/stateful/lib/wrapper/semantic-ui';"
+                        "import Stateful from '@loopmode/stateful/lib/wrappers/semantic-ui';"
                     }
                 </code>
             </Segment>
@@ -61,7 +61,7 @@ export const Forms = () => (
             <Segment>
                 <code>
                     {
-                        "import { StatefulForm } from '@loopmode/stateful/lib/wrapper/semantic-ui';"
+                        "import { StatefulForm } from '@loopmode/stateful/lib/wrappers/semantic-ui';"
                     }
                 </code>
             </Segment>
