@@ -35,36 +35,40 @@ export default () => {
 };
 
 const AppMenu = ({ onHideMenu }) => {
+    const onLink = event => {
+        document.documentElement.scrollTop = 0;
+        onHideMenu(event);
+    };
     return (
         <NavMenu className="AppMenu" onClose={onHideMenu}>
             <ul>
                 <li>
-                    <NavLink onClick={onHideMenu} to="/" exact>
+                    <NavLink onClick={onLink} to="/" exact>
                         Overview
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink onClick={onHideMenu} to="/vanilla">
+                    <NavLink onClick={onLink} to="/vanilla">
                         Vanilla example
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink onClick={onHideMenu} to="/semantic-ui">
+                    <NavLink onClick={onLink} to="/semantic-ui">
                         Semantic UI example
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink onClick={onHideMenu} to="/antd">
+                    <NavLink onClick={onLink} to="/antd">
                         AntD example
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink onClick={onHideMenu} to="/bootstrap">
+                    <NavLink onClick={onLink} to="/bootstrap">
                         Bootstrap example
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink onClick={onHideMenu} to="/material-ui">
+                    <NavLink onClick={onLink} to="/material-ui">
                         Material UI example
                     </NavLink>
                 </li>

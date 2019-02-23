@@ -7,8 +7,7 @@ import dummyCall from 'utils/dummyCall';
 import Stateful from '@loopmode/stateful/lib/wrappers/antd';
 
 export default () => (
-    <>
-        <h3>Buttons</h3>
+    <div className="ButtonsExample">
         <ButtonsHeader />
         <Stateful>
             <Button onClick={dummyCall} type="primary">
@@ -28,5 +27,5 @@ export default () => (
                 Danger
             </Button>
         </Stateful>
-    </>
+    </div>
 );

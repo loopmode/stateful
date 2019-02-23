@@ -8,8 +8,7 @@ import ButtonsHeader from 'components/ButtonsHeader';
 import Stateful from '@loopmode/stateful/lib/wrappers/bootstrap';
 
 export default () => (
-    <>
-        <h3>Buttons</h3>
+    <div className="ButtonsExample">
         <ButtonsHeader />
         <Stateful>
             <Button onClick={dummyCall}>Load</Button>
@@ -17,5 +16,5 @@ export default () => (
         <Stateful>
             <Button onClick={dummyCall}>Save</Button>
         </Stateful>
-    </>
+    </div>
 );

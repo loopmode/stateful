@@ -57,7 +57,7 @@ const ProgressButton = props => {
     });
 
     return (
-        <div className={cx('ProgressButton', classes.wrapper)}>
+        <div className={cx('ProgressButton Button', classes.wrapper)}>
             <Button
                 className={buttonClassname}
                 disabled={loading}

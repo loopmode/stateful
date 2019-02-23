@@ -11,16 +11,21 @@ import Stateful from '@loopmode/stateful/lib/wrappers/semantic-ui';
 import { Buttons as Info } from './Info';
 
 export default () => (
-    <>
+    <div className="ButtonsExample">
         <Info />
         <ButtonsHeader />
         <Stateful>
-            <Button icon="undo" onClick={dummyCall} />
+            <Button
+                icon="undo"
+                onClick={dummyCall}
+                title="Icon-only"
+                className="inline"
+            />
         </Stateful>
         <Stateful>
             <Button
                 icon="upload"
-                content="Upload"
+                content="With icon"
                 labelPosition="left"
                 onClick={dummyCall}
             />
@@ -28,5 +33,5 @@ export default () => (
         <Stateful busyDelay={1000}>
             <Button onClick={dummyCall}>With 1s busy delay</Button>
         </Stateful>
-    </>
+    </div>
 );

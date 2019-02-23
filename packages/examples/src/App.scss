@@ -10,10 +10,6 @@
         background: #eee;
     }
 
-    button + button {
-        margin-left: 10px;
-    }
-
     .AppBody {
         display: flex;
         flex: 1;
@@ -35,7 +31,14 @@
         flex: 1;
     }
 
-    @media (max-width: 760px) {
+    .ButtonsExample {
+        button + button,
+        .Button + .Button {
+            margin-left: 10px;
+        }
+    }
+
+    @media (max-width: 768px) {
         &:not(.showMobileMenu) .AppMenu {
             display: none;
         }
@@ -43,6 +46,9 @@
             display: flex;
             flex-direction: column;
             flex: 1;
+        }
+        code {
+            word-break: break-all;
         }
 
         .AppMenu {
@@ -54,6 +60,22 @@
             height: 120%;
             max-width: 250px;
             box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5);
+        }
+    }
+    @media (max-width: 480px) {
+        .ButtonsExample {
+            button,
+            .Button {
+                &:not(.inline) {
+                    display: block;
+                    width: 100%;
+                }
+            }
+            button + button,
+            .Button + .Button {
+                margin-left: 0px;
+                margin-top: 10px;
+            }
         }
     }
 }

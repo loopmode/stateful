@@ -15,15 +15,7 @@ export default () => (
                 {"import Stateful from '@loopmode/stateful/lib/wrappers/antd';"}
             </code>
         </p>
-        <p>
-            AntD already has <code>loading</code> and <code>danger</code>{' '}
-            support, but it has no default <code>success</code> handling.
-        </p>
-        <p>
-            For that reason, the default wrapper just adds a<code>success</code>{' '}
-            CSS class, but you are still responsible for defining a CSS rule for
-            that class.
-        </p>
+
         <p>Have a look at the relevant code:</p>
         <ul>
             <li>
