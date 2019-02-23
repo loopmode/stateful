@@ -9,7 +9,7 @@
         "packages/*"
     ],
     "scripts": {
-        "clean": "rm -rf ./packages/*/lib/*",
+        "clean": "rm -rf ./packages/examples/build/* ./packages/*/lib/*",
         "build": "lerna run build --no-private --stream",
         "watch": "lerna run watch --no-private --stream --parallel",
         "develop": "cd packages/examples && yarn start",
