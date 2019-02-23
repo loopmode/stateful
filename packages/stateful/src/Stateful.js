@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import useTimeout from '@rooks/use-timeout';
-import useDidMount from '@rooks/use-did-mount';
-import useWillUnmount from '@rooks/use-will-unmount';
-
+import useTimeout from './hooks/timeout';
+import useDidMount from './hooks/did-mount';
+import useWillUnmount from './hooks/will-unmount';
 import * as Status from './Status';
 import asArray from './utils/asArray';
 import createCallbacks from './utils/createCallbacks';

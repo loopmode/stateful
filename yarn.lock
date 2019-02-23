@@ -1597,21 +1597,6 @@
     typed-styles "^0.0.5"
     warning "^3.0.0"
 
-"@rooks/use-did-mount@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@rooks/use-did-mount/-/use-did-mount-1.1.0.tgz#e91c8b0cd1232eb47fdc22c43ad08eda1351388e"
-  integrity sha512-S3FzYPKvQhyPwrxBaJJ93wr2/Rp55BjeV/qijlfBbB3y6ZUwcVdOj2ShwUZh2zBH+vqoxDxapraIV0Yq5NnwRw==
-
-"@rooks/use-timeout@^1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@rooks/use-timeout/-/use-timeout-1.2.0.tgz#bc9a64f393049f5dced0775d196c8690a591ad2a"
-  integrity sha512-4J1D23a7Ru1qs9hWYfze9ipXdK8KFmo516uwYqjU9M1Th4YvNV0vzdTv9I2ylZ2PBKNrTphDQkxUo5i73DFFUQ==
-
-"@rooks/use-will-unmount@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@rooks/use-will-unmount/-/use-will-unmount-1.1.0.tgz#04edb9dadbedc1b7c96288ee998717f91e9d682b"
-  integrity sha512-NldxeCjAwdlcCBmQ0eEG7Uo58UZW8ebsiWuc/sjhUOZnFYcdsp1v5xNl5nXuCndISfXnx8xSLDFbWp89rWyaFA==
-
 "@semantic-ui-react/event-stack@^3.0.1":
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/@semantic-ui-react/event-stack/-/event-stack-3.1.0.tgz#aadbe4a28b0dd7703c5f451640d0fefe66dd9208"

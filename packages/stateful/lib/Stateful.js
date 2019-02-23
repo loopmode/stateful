@@ -11,11 +11,11 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _classnames = _interopRequireDefault(require("classnames"));
 
-var _useTimeout = _interopRequireDefault(require("@rooks/use-timeout"));
+var _timeout = _interopRequireDefault(require("./hooks/timeout"));
 
-var _useDidMount = _interopRequireDefault(require("@rooks/use-did-mount"));
+var _didMount = _interopRequireDefault(require("./hooks/did-mount"));
 
-var _useWillUnmount = _interopRequireDefault(require("@rooks/use-will-unmount"));
+var _willUnmount = _interopRequireDefault(require("./hooks/will-unmount"));
 
 var Status = _interopRequireWildcard(require("./Status"));
 
@@ -106,12 +106,12 @@ function Stateful(props) {
     return setStatus(Status.IDLE);
   };
 
-  var busyTimer = (0, _useTimeout.default)(setBusy, props.busyDelay);
-  var idleTimer = (0, _useTimeout.default)(setIdle, props.hintDuration);
-  (0, _useDidMount.default)(function () {
+  var busyTimer = (0, _timeout.default)(setBusy, props.busyDelay);
+  var idleTimer = (0, _timeout.default)(setIdle, props.hintDuration);
+  (0, _didMount.default)(function () {
     isMounted.current = true;
   });
-  (0, _useWillUnmount.default)(function () {
+  (0, _willUnmount.default)(function () {
     isMounted.current = false;
     idleTimer.clear();
     busyTimer.clear();
