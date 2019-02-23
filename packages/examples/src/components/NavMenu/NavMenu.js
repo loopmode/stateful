@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import css from './NavMenu.scss';
@@ -6,24 +6,24 @@ import css from './NavMenu.scss';
 import { MdClose } from 'react-icons/md';
 import NavIcon from '../NavIcon';
 
-const prevent = event => event.preventDefault();
-
 function NavMenu(props) {
+    const ref = useRef();
+
     const onClose = event => {
-        prevent(event);
+        event.preventDefault();
         props.onClose(event);
     };
+
+    usePreventTouchMove(ref);
+
     return (
-        <nav
-            className={cx('NavMenu', props.className, css.NavMenu)}
-            onTouchMove={prevent}
-        >
+        <div ref={ref} className={cx('NavMenu', props.className, css.NavMenu)}>
             <div className="hide-mobile-menu" onClick={onClose}>
                 <NavIcon icon={MdClose} className="hide-menu-icon" />
                 <div>CLOSE MENU</div>
             </div>
             {props.children}
-        </nav>
+        </div>
     );
 }
 NavMenu.propTypes = {
@@ -31,5 +31,26 @@ NavMenu.propTypes = {
     onClose: PropTypes.func,
     className: PropTypes.string
 };
+
+function usePreventTouchMove(ref) {
+    // prevent scrolling of the page via menu overlay
+    const preventTouchMove = event => {
+        if (ref.current) {
+            if (ref.current === event.target) {
+                event.preventDefault();
+            }
+        }
+    };
+    useEffect(() => {
+        document.addEventListener('touchmove', preventTouchMove, {
+            passive: false
+        });
+        return () => {
+            document.removeEventListener('touchmove', preventTouchMove, {
+                passive: false
+            });
+        };
+    });
+}
 
 export default NavMenu;
