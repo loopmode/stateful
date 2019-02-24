@@ -35,13 +35,20 @@
     .hide-mobile-menu {
         display: none;
         cursor: pointer;
+        background: #094277;
+        color: white;
+        svg {
+            margin-right: 10px;
+            font-size: 2.5rem;
+            overflow: visible;
+        }
     }
 
     @media (max-width: 768px) {
         .hide-mobile-menu {
             display: flex;
             align-items: center;
-            padding: 10px 20px 10px 10px;
+            padding: 10px;
         }
         position: fixed;
         height: auto;

@@ -4,7 +4,6 @@ import cx from 'classnames';
 import css from './NavMenu.scss';
 
 import { MdClose } from 'react-icons/md';
-import NavIcon from '../NavIcon';
 
 function NavMenu(props) {
     const ref = useRef();
@@ -19,7 +18,7 @@ function NavMenu(props) {
     return (
         <div ref={ref} className={cx('NavMenu', props.className, css.NavMenu)}>
             <div className="hide-mobile-menu" onClick={onClose}>
-                <NavIcon icon={MdClose} className="hide-menu-icon" />
+                <MdClose />
                 <div>CLOSE MENU</div>
             </div>
             {props.children}

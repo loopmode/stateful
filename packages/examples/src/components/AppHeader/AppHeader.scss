@@ -15,6 +15,9 @@
     }
     .show-mobile-menu {
         cursor: pointer;
+        margin-right: 10px;
+        font-size: 2.5rem;
+        overflow: visible;
     }
 
     @media (max-width: 768px) {

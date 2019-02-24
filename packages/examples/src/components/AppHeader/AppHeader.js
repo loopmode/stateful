@@ -4,8 +4,6 @@ import cx from 'classnames';
 
 import { MdMenu } from 'react-icons/md';
 
-import NavIcon from 'components/NavIcon';
-
 import css from './AppHeader.scss';
 
 const AppHeader = ({ onShowMenu, className }) => {
@@ -16,9 +14,8 @@ const AppHeader = ({ onShowMenu, className }) => {
     return (
         <header className={cx('AppHeader', className, css.AppHeader)}>
             <div className="title">
-                <NavIcon
+                <MdMenu
                     className="show-mobile-menu only-small-screen"
-                    icon={MdMenu}
                     onClick={handleShowMenu}
                 />
                 @loopmode/stateful
