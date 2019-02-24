@@ -18,7 +18,7 @@ const AppHeader = ({ onShowMenu, className }) => {
                     className="show-mobile-menu only-small-screen"
                     onClick={handleShowMenu}
                 />
-                @loopmode/stateful
+                <span> @loopmode/stateful</span>
             </div>
             <div className="info">React helper for async buttons</div>
         </header>

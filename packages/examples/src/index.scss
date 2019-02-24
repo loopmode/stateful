@@ -36,16 +36,18 @@ body,
 #root,
 .App {
     width: 100%;
-    height: auto !important;
+    height: auto;
     margin: 0;
     display: flex;
     flex-direction: column;
     flex: 1;
+    overflow-x: hidden;
 }
 
 code {
     font-size: small;
     color: #e83e8c;
+    word-break: break-all;
 }
 .push {
     display: block;

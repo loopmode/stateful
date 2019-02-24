@@ -2,13 +2,16 @@
 
 A react component for visual indication of async state.
 
-This component is meant as an unobtrusive, opt-in helper that doesn't require significant changes in your code.
-The idea is that you simply wrap it around an existing component in your JSX, without changing or adding any props, and the rest should "just work".
-
 ![success gif](https://github.com/loopmode/stateful/raw/master/stateful-success.gif 'Example of loading and success indication')
 ![error gif](https://github.com/loopmode/stateful/raw/master/stateful-error.gif 'Example of loading and error indication')
 
-See also: [Documentation and Examples](https://loopmode.github.io/stateful/)
+This component is meant as an unobtrusive helper that doesn't require significant changes in your code.
+You simply wrap it around an existing component in your JSX, without adding or changing any props - the rest should "just work".
+
+See also:
+
+-   [docs and examples](https://loopmode.github.io/stateful/)
+-   [npm page](https://www.npmjs.com/package/@loopmode/stateful)
 
 ## Installation
 
@@ -26,7 +29,7 @@ yarn add @loopmode/stateful
 
 ## Usage
 
-Just wrap around a component that invokes a promise-returning callback. If the callback returns a promise, the wrapped component will receive props that indicate the state of the promise.
+Just wrap it around a component that has a callback. If the callback returns a promise, the wrapped component will receive props that indicate the state of the promise.
 
 ```
 import Stateful from '@loopmode/stateful';

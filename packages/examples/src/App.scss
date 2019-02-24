@@ -3,17 +3,21 @@
     color: #333;
     position: relative;
     display: flex;
+    height: 100%;
     h1:first-child,
     h2:first-child,
     h3:first-child {
         margin-top: 0;
     }
     .Readme img {
-        width: 173px;
+        width: 150px;
         height: 90px;
         background: #eee;
     }
 
+    .AppHeader {
+        z-index: 2;
+    }
     .AppBody {
         display: flex;
         flex: 1;
@@ -21,13 +25,6 @@
     .AppMenu {
         min-width: 250px;
         width: 250px;
-        position: sticky;
-        top: 0;
-        align-self: flex-start;
-        min-height: 120vh;
-    }
-    .AppHeader {
-        z-index: 2;
     }
     .AppContent {
         z-index: 1;
@@ -42,30 +39,6 @@
         }
     }
 
-    @media (max-width: 768px) {
-        &:not(.menuVisible) .AppMenu {
-            display: none;
-        }
-        .AppBody {
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-        }
-        code {
-            word-break: break-all;
-        }
-
-        .AppMenu {
-            position: fixed;
-            height: auto;
-            top: 0;
-            left: 0;
-            width: 90%;
-            height: 120%;
-            max-width: 250px;
-            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5);
-        }
-    }
     @media (max-width: 480px) {
         .ButtonsExample {
             button,
@@ -80,6 +53,13 @@
                 margin-left: 0px;
                 margin-top: 10px;
             }
+        }
+    }
+    @media (max-width: 768px) {
+        .AppBody {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
         }
     }
 }

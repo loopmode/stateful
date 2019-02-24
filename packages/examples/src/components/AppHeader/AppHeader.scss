@@ -24,12 +24,16 @@
         position: sticky;
         top: 0;
         padding: 10px;
-        font-size: 14px;
+        font-size: 12px;
         > .info {
             display: none;
         }
         > .title {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
+            span {
+                position: relative;
+                top: -1px;
+            }
         }
     }
 }
