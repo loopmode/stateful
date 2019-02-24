@@ -3,7 +3,11 @@
     color: #333;
     position: relative;
     display: flex;
-
+    h1:first-child,
+    h2:first-child,
+    h3:first-child {
+        margin-top: 0;
+    }
     .Readme img {
         width: 173px;
         height: 90px;
@@ -39,7 +43,7 @@
     }
 
     @media (max-width: 768px) {
-        &:not(.showMobileMenu) .AppMenu {
+        &:not(.menuVisible) .AppMenu {
             display: none;
         }
         .AppBody {
