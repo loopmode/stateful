@@ -15,10 +15,10 @@
         "directory": "packages/stateful"
     },
     "eslintConfig": {
-        "extends": "@loopmode/stateful"
+        "extends": "@loopmode/stateful-config-eslint"
     },
     "babel": {
-        "extends": "@loopmode/babel-config-stateful"
+        "extends": "@loopmode/stateful-config-babel"
     },
     "peerDependencies": {
         "react": ">= 16.8.0"

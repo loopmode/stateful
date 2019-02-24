@@ -1,6 +1,6 @@
 {
     "private": true,
-    "name": "@loopmode/babel-config-stateful",
+    "name": "@loopmode/stateful-config-babel",
     "version": "1.0.0",
     "main": ".babelrc",
     "dependencies": {

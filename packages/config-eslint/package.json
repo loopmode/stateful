@@ -1,6 +1,6 @@
 {
     "private": true,
-    "name": "@loopmode/eslint-config-stateful",
+    "name": "@loopmode/stateful-config-eslint",
     "version": "1.0.0",
     "main": ".eslintrc",
     "dependencies": {
