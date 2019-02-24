@@ -11,10 +11,12 @@ export default () => (
         </p>
         <p>
             The default <code>antd</code> wrapper can be used via:
-            <code className="push">
+        </p>
+        <pre className="push">
+            <code>
                 {"import Stateful from '@loopmode/stateful/lib/wrappers/antd';"}
             </code>
-        </p>
+        </pre>
 
         <p>Have a look at the relevant code:</p>
         <ul>

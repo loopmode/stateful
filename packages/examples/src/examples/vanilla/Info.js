@@ -6,9 +6,14 @@ export default () => (
         <p>
             This example doesn't use any UI frameworks, but some simple CSS
             rules instead. It uses the default wrapper:
-            <code className="push">
-                {"import Stateful from '@loopmode/stateful';"}
-            </code>
+        </p>
+        <pre className="push">
+            <code>{"import Stateful from '@loopmode/stateful';"}</code>
+        </pre>
+        <p>
+            The <code>pending</code> and <code>busy</code> CSS classes display a
+            subtle animation, while the <code>success</code> and{' '}
+            <code>error</code> classes give it green or red color.
         </p>
         <p>Have a look at the relevant code:</p>
         <ul>
@@ -22,18 +27,5 @@ export default () => (
                 </a>
             </li>
         </ul>
-        <p>
-            The <code>pending</code> and <code>busy</code> CSS classes have
-            rules to display a little animation based on{' '}
-            <a
-                href="https://codepen.io/seansean11/pen/dhwzj"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                this codepen
-            </a>
-            , while <code>success</code> and <code>error</code> just give it
-            green or red background.
-        </p>
     </>
 );

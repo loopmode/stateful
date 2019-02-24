@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import cx from 'classnames';
 import { HashRouter as Router, Route, NavLink } from 'react-router-dom';
 
 import css from './App.scss';
 
 import AppHeader from 'components/AppHeader';
-import NavMenu from 'components/NavMenu';
-import Lazy from 'components/Lazy';
+import AppMenu from 'components/AppMenu';
 
 const Readme = React.lazy(() =>
     import(/* webpackChunkName: "Readme" */ 'markdown/Readme')
@@ -29,29 +27,33 @@ const VanillaExample = React.lazy(() =>
 );
 
 const App = () => {
-    const [menuVisible, setMenuVisible] = useState(false);
+    const [menuVisible, setMenuVisible] = React.useState(false);
     const showMenu = () => setMenuVisible(true);
     const hideMenu = () => setMenuVisible(false);
+
     return (
         <Router basename={process.env.REACT_APP_BASENAME}>
             <div className={cx('App', css.App, { menuVisible })}>
                 <AppHeader onShowMenu={showMenu} />
                 <div className="AppBody">
-                    <AppMenu onHideMenu={hideMenu} />
-                    <AppContent />
+                    <Navigation
+                        onHideMenu={hideMenu}
+                        menuVisible={menuVisible}
+                    />
+                    <Content />
                 </div>
             </div>
         </Router>
     );
 };
 
-const AppMenu = ({ onHideMenu }) => {
+const Navigation = props => {
     const onLinkClicked = event => {
         document.documentElement.scrollTop = 0;
-        onHideMenu(event);
+        props.onHideMenu(event);
     };
     return (
-        <NavMenu className="AppMenu" onClose={onHideMenu}>
+        <AppMenu {...props}>
             <ul>
                 <li>
                     <NavLink onClick={onLinkClicked} to="/" exact>
@@ -84,14 +86,11 @@ const AppMenu = ({ onHideMenu }) => {
                     </NavLink>
                 </li>
             </ul>
-        </NavMenu>
+        </AppMenu>
     );
 };
-AppMenu.propTypes = {
-    onHideMenu: PropTypes.func
-};
 
-const AppContent = () => (
+const Content = () => (
     <div className="AppContent">
         <Route exact path="/" component={Lazy(Readme)} />
         <Route path="/vanilla" component={Lazy(VanillaExample)} />
@@ -101,5 +100,13 @@ const AppContent = () => (
         <Route path="/material-ui" component={Lazy(MaterialUIExample)} />
     </div>
 );
+
+const Lazy = Component => {
+    return props => (
+        <React.Suspense fallback={<div>Loading...</div>}>
+            <Component {...props} />
+        </React.Suspense>
+    );
+};
 
 export default App;

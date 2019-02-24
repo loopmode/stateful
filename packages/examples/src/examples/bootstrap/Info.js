@@ -29,12 +29,14 @@ export default () => (
         </p>
         <p>
             The default <code>react-bootstrap</code> wrapper can be used via:
-            <code className="push">
+        </p>
+        <pre className="push">
+            <code>
                 {
                     "import Stateful from '@loopmode/stateful/lib/wrappers/bootstrap';"
                 }
             </code>
-        </p>
+        </pre>
         <p>Have a look at the relevant code:</p>
         <ul>
             <li>
