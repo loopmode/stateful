@@ -50,7 +50,7 @@ Stateful.propTypes = {
 // our own props from propagation to children
 // make sure to create a key for each own prop - even if the value must be `undefined`
 Stateful.defaultProps = {
-    callbacks: ['onClick', 'onTouchStart'],
+    callbacks: ['onClick'],
 
     pendingProps: ['disabled'],
     pendingClasses: [],

@@ -48,7 +48,7 @@ async function handleClick() {
 
 | Prop           | Type     | Default                           | Description                                                                                             |
 | -------------- | -------- | --------------------------------- | ------------------------------------------------------------------------------------------------------- |
-| callbacks      | PolyType | `['onClick', 'onTouchStart']`     | Names of callbacks to intercept and check for promises                                                  |
+| callbacks      | PolyType | `['onClick']`                     | Names of callbacks to intercept and check for promises                                                  |
 | pendingProps   | PolyType | `['disabled']`                    | Names of props to add for `Status.PENDING`                                                              |
 | pendingClasses | PolyType | `[]`                              | Names of CSS classes to add for `Status.PENDING`                                                        |
 | busyProps      | PolyType | `['disabled']`                    | Names of props to add for `Status.BUSY`                                                                 |

@@ -2,6 +2,9 @@
 
 This repository contains the [`@loopmode/stateful` package](https://github.com/loopmode/stateful/tree/master/packages/stateful) and its development workspace.
 
+![success gif](https://github.com/loopmode/stateful/raw/master/stateful-success.gif 'Example of loading and success indication')
+![error gif](https://github.com/loopmode/stateful/raw/master/stateful-error.gif 'Example of loading and error indication')
+
 ## Installation
 
 Clone this repository. Then, execute `yarn` or `yarn install` in the root to install the dependencies.
@@ -43,4 +46,10 @@ It simply executes `yarn watch` and `yarn examples` in parallel.
 
 Performs an `eslint` and `prettier` scan on the codebase.
 
-Use `yarn lint --fix` to automatically fix formatting isses like whitespaces, tabs or indentation.
+#### `yarn lint`
+
+Performs `yarn lint` and fixes any issues that can be automatically fixed via `--fix`.
+
+#### `yarn deploy`
+
+Compiles and deploys the examples application to the `gh-pages` branch, which serves as the [public website](https://loopmode.github.io/stateful).

@@ -1,8 +1,9 @@
 {
     "name": "@loopmode/stateful",
-    "version": "0.0.3",
+    "version": "1.0.0",
     "main": "lib/index.js",
     "license": "MIT",
+    "author": "Jovica Aleksic <jovica.aleksic@loopmode.de>",
     "scripts": {
         "build": "cross-env NODE_ENV=production babel src --out-dir lib --copy-files",
         "watch": "yarn build --watch",
@@ -11,7 +12,7 @@
     "homepage": "https://loopmode.github.io/stateful/",
     "repository": {
         "type": "git",
-        "url": "https://github.com/loopmode/stateful.git",
+        "url": "https://github.com/loopmode/stateful",
         "directory": "packages/stateful"
     },
     "eslintConfig": {
@@ -25,5 +26,17 @@
     },
     "dependencies": {
         "classnames": "^2.2.6"
-    }
+    },
+    "keywords": [
+        "react",
+        "wrapper",
+        "component",
+        "async",
+        "promise",
+        "indicate",
+        "pending",
+        "busy",
+        "success",
+        "error"
+    ]
 }

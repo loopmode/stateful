@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports.default = useTimeout;
 
 var _react = require("react");
 
@@ -40,6 +40,3 @@ function useTimeout(func) {
     }
   };
 }
-
-var _default = useTimeout;
-exports.default = _default;

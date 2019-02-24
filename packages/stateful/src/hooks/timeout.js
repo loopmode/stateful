@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-function useTimeout(func, delay = 0) {
+export default function useTimeout(func, delay = 0) {
     const [isPending, setPending] = useState(false);
 
     useEffect(() => {
@@ -17,5 +17,3 @@ function useTimeout(func, delay = 0) {
         start: () => setPending(true)
     };
 }
-
-export default useTimeout;
