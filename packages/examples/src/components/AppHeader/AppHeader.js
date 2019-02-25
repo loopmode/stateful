@@ -8,7 +8,7 @@ import { MdMenu } from 'react-icons/md';
 
 import css from './AppHeader.scss';
 
-import Logo from './icon_256.png';
+import Logo from './icon.svg';
 
 const AppHeader = ({ onShowMenu, className }) => {
     const handleShowMenu = event => {
@@ -27,7 +27,11 @@ const AppHeader = ({ onShowMenu, className }) => {
                 </div>
                 <div className="info">React helper for async buttons</div>
             </div>
-            <Link to="/" className="logo-link">
+            <Link
+                to="/"
+                className="logo-link"
+                onClick={() => (document.documentElement.scrollTop = 0)}
+            >
                 <img className="logo" src={Logo} alt="logo" />
             </Link>
         </header>
