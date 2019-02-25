@@ -8,6 +8,8 @@ import { MdMenu } from 'react-icons/md';
 
 import css from './AppHeader.scss';
 
+import Logo from './icon_256.png';
+
 const AppHeader = ({ onShowMenu, className }) => {
     const handleShowMenu = event => {
         event.preventDefault();
@@ -15,14 +17,19 @@ const AppHeader = ({ onShowMenu, className }) => {
     };
     return (
         <header className={cx('AppHeader', className, css.AppHeader)}>
-            <div className="title">
-                <MdMenu
-                    className="show-mobile-menu only-small-screen"
-                    onClick={handleShowMenu}
-                />
-                <Link to="/">@loopmode/stateful</Link>
+            <div className="contents">
+                <div className="title">
+                    <MdMenu
+                        className="show-mobile-menu only-small-screen"
+                        onClick={handleShowMenu}
+                    />
+                    @loopmode/stateful
+                </div>
+                <div className="info">React helper for async buttons</div>
             </div>
-            <div className="info">React helper for async buttons</div>
+            <Link to="/" className="logo-link">
+                <img className="logo" src={Logo} alt="logo" />
+            </Link>
         </header>
     );
 };

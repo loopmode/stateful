@@ -4,6 +4,12 @@
     position: relative;
     display: flex;
     height: 100%;
+    .flex {
+        display: flex;
+    }
+    .flex-1 {
+        flex: 1;
+    }
     h1:first-child,
     h2:first-child,
     h3:first-child {
@@ -55,6 +61,7 @@
         z-index: 1;
         padding: 20px;
         flex: 1;
+        overflow: auto;
     }
 
     .ButtonsExample {
