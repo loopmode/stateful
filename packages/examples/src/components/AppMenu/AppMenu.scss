@@ -1,66 +1,62 @@
+@import 'styles/mixins.scss';
 :local(.AppMenu) {
     background: #eee;
-
     user-select: none;
+
     display: flex;
     flex-direction: column;
 
-    z-index: 100;
-
     position: sticky;
     top: 0;
-    align-self: flex-start;
-    min-height: 120vh;
 
-    ul {
-        list-style: none;
-        display: flex;
-        flex-direction: column;
+    width: 250px;
+    height: 100vh;
 
-        margin: 0;
-        padding: 0;
-        overflow: auto;
-    }
-
-    a {
-        display: block;
-        color: #1890ff;
-        padding: 10px 20px;
-        text-decoration: none;
-        &:hover {
-            text-decoration: underline;
-        }
-        &.active {
-            background: #1890ff;
-            color: white;
+    @include medium-screen {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: -100%;
+        transition: left 0.2s ease-in-out;
+        box-shadow: none;
+        .menuVisible & {
+            left: 0%;
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5);
         }
     }
 
-    .hide-mobile-menu {
-        display: none;
-        cursor: pointer;
+    .AppMenu--mobile-header {
         background: #094277;
+    }
+    .AppMenu--contents {
+        flex: 1;
+        overflow-x: hidden;
+        overflow-y: auto;
+        &::-webkit-scrollbar {
+            -webkit-appearance: initial;
+            width: 5px;
+            height: 10px;
+        }
+    }
+
+    .AppMenu--mobile-close {
+        display: none;
         color: white;
+        background: none;
+        appearance: none;
+        border: none;
+        cursor: pointer;
+        padding: 10px;
+        align-items: center;
+
         svg {
             margin-right: 10px;
             font-size: 2.5rem;
             overflow: visible;
         }
-    }
 
-    @media (max-width: 768px) {
-        left: -110%;
-        transition: left 0.2s ease-in-out;
-        .menuVisible & {
-            left: 0%;
-        }
-        .hide-mobile-menu {
+        @include medium-screen {
             display: flex;
-            align-items: center;
-            padding: 10px;
         }
-        position: fixed;
-        top: 0;
-        box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5);
     }
 }

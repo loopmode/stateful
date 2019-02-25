@@ -1,0 +1,17 @@
+@import 'config';
+
+@mixin small-screen {
+    @media screen and (max-width: $breakpoint-small) {
+        @content;
+    }
+}
+@mixin medium-screen {
+    @media screen and (max-width: $breakpoint-medium) {
+        @content;
+    }
+}
+@mixin large-screen {
+    @media screen and (min-width: $breakpoint-medium + 1) {
+        @content;
+    }
+}

@@ -5,25 +5,30 @@ import css from './AppMenu.scss';
 
 import { MdClose } from 'react-icons/md';
 
+export const Item = props => <li className="AppMenu-item" {...props} />;
+
 function AppMenu(props) {
     const ref = useRef();
 
-    hideOnOuterClick(ref, props);
+    hideOnOuterTouch(ref, props);
     preventTouchMove(ref);
 
     return (
         <div ref={ref} className={cx('AppMenu', props.className, css.AppMenu)}>
-            <div
-                className="hide-mobile-menu"
-                onClick={event => {
-                    event.preventDefault();
-                    props.onHideMenu(event);
-                }}
-            >
-                <MdClose />
-                <div>CLOSE MENU</div>
-            </div>
-            {props.children}
+            <header className="AppMenu--mobile-header">
+                <button
+                    className="AppMenu--mobile-close"
+                    onClick={event => {
+                        event.preventDefault();
+                        props.onHideMenu(event);
+                    }}
+                >
+                    <MdClose />
+                    CLOSE MENU
+                </button>
+            </header>
+
+            <div className="AppMenu--contents">{props.children}</div>
         </div>
     );
 }
@@ -34,16 +39,16 @@ AppMenu.propTypes = {
     className: PropTypes.string
 };
 
-function hideOnOuterClick(ref, { onHideMenu, menuVisible }) {
-    const handleClick = event => {
+function hideOnOuterTouch(ref, { onHideMenu, menuVisible }) {
+    const handleTouch = event => {
         if (menuVisible && ref.current && !ref.current.contains(event.target)) {
             event.preventDefault();
             onHideMenu();
         }
     };
     useEffect(() => {
-        document.addEventListener('click', handleClick);
-        return () => document.removeEventListener('click', handleClick);
+        document.addEventListener('touchstart', handleTouch);
+        return () => document.removeEventListener('touchstart', handleTouch);
     });
 }
 
