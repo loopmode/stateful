@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Code from 'components/Code';
+
 export default () => (
     <>
         <h1>Semantic UI</h1>
@@ -16,13 +18,11 @@ export const Buttons = () => (
         <p>
             The <code>semantic-ui-react</code> default wrapper can be used via:
         </p>
-        <pre className="push">
-            <code>
-                {
-                    "import Stateful from '@loopmode/stateful/lib/wrappers/semantic-ui';"
-                }
-            </code>
-        </pre>
+        <Code>
+            {
+                "import Stateful from '@loopmode/stateful/lib/wrappers/semantic-ui';"
+            }
+        </Code>
         <p>
             It provides <code>loading</code>, <code>positive</code> and{' '}
             <code>negative</code> flags to the wrapped component, which is
@@ -58,13 +58,11 @@ export const Forms = () => (
         <p>
             The <code>semantic-ui-react</code> form wrapper can be used via:
         </p>
-        <pre className="push">
-            <code>
-                {
-                    "import { StatefulForm } from '@loopmode/stateful/lib/wrappers/semantic-ui';"
-                }
-            </code>
-        </pre>
+        <Code>
+            {
+                "import { StatefulForm } from '@loopmode/stateful/lib/wrappers/semantic-ui';"
+            }
+        </Code>
         <p>
             It provides <code>loading</code>, <code>success</code> and{' '}
             <code>error</code> flags to the wrapped component. Note that this

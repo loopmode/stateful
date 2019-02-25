@@ -1,4 +1,5 @@
 import React from 'react';
+import Code from 'components/Code';
 
 export default () => (
     <>
@@ -12,11 +13,9 @@ export default () => (
         <p>
             The default <code>antd</code> wrapper can be used via:
         </p>
-        <pre className="push">
-            <code>
-                {"import Stateful from '@loopmode/stateful/lib/wrappers/antd';"}
-            </code>
-        </pre>
+        <Code>
+            {"import Stateful from '@loopmode/stateful/lib/wrappers/antd';"}
+        </Code>
 
         <p>Have a look at the relevant code:</p>
         <ul>

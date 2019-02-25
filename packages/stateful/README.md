@@ -17,13 +17,13 @@ See also:
 
 Using npm:
 
-```
+```bash
 npm install --save @loopmode/stateful
 ```
 
 Using yarn:
 
-```
+```bash
 yarn add @loopmode/stateful
 ```
 
@@ -31,17 +31,20 @@ yarn add @loopmode/stateful
 
 Just wrap it around a component that has a callback. If the callback returns a promise, the wrapped component will receive props that indicate the state of the promise.
 
-```
+```jsx
+import React from 'react';
+import ReactDOM from 'react-dom';
 import Stateful from '@loopmode/stateful';
 
-async function handleClick() {
-    // ...
+function handleClick() {
+    return fetch('https://jsonplaceholder.typicode.com/users');
 }
-...
+const Demo = () => (
     <Stateful>
         <button onClick={handleClick}>load</button>
     </Stateful>
-...
+);
+ReactDOM.render(<Demo />, document.getElementById('root'));
 ```
 
 ## Supported props
@@ -66,7 +69,7 @@ async function handleClick() {
 
 The term "PolyType" isn't the latest thing, it's just something made up for the sakes of this documentation. It means that the prop value can be one of three types:
 
-```
+```jsx
 const PolyType = PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.arrayOf(PropTypes.string),
@@ -79,7 +82,7 @@ const PolyType = PropTypes.oneOfType([
 In most cases, you can stick with the `String` type. It supports both single and multiple values, but in a primitive type that works well with pure components.
 Single values are typed as a simple string, while multiple values are delimiter-separated strings. The default delimiter is a space (``), but you can change that using the `delimiter` prop.
 
-```
+```jsx
 <Stateful pendingProps="disabled" />
 <Stateful pendingProps="disabled pending" />
 <Stateful pendingProps="disabled,pending" delimiter="," />
@@ -89,7 +92,7 @@ Single values are typed as a simple string, while multiple values are delimiter-
 
 In some cases, it might be preferrable to provide the props as an array. While this interferes with rendering of pure components when typed inline, in many cases you do have an array that you can pass on directly.
 
-```
+```jsx
 <Stateful pendingProps={['disabled']} />
 <Stateful pendingProps={['disabled', 'pending']} />
 <Stateful pendingProps={myPropsArray} />
@@ -100,7 +103,7 @@ In some cases, it might be preferrable to provide the props as an array. While t
 Sometimes, the component you need to wrap just doesn't support a simple boolean flag to get the job done. For example, `react-bootstraps` wants to receive `variant="success"` or `variant="danger"` - the same prop, but with a different value.
 In these cases, you can provide a function that receives the current `status` and returns an object with as many properties and values as needed.
 
-```
+```jsx
 <Stateful
     pendingProps={() => ({status: 'pending'})}
     successProps={() => ({status: 'success'})}
@@ -110,7 +113,7 @@ In these cases, you can provide a function that receives the current `status` an
     return {
         status,
         foo: 'bar',
-        bar: 'baz
+        bar: 'baz'
     }
 }} />
 ```

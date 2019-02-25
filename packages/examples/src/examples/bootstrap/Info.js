@@ -1,4 +1,5 @@
 import React from 'react';
+import Code from 'components/Code';
 
 export default () => (
     <>
@@ -30,13 +31,11 @@ export default () => (
         <p>
             The default <code>react-bootstrap</code> wrapper can be used via:
         </p>
-        <pre className="push">
-            <code>
-                {
-                    "import Stateful from '@loopmode/stateful/lib/wrappers/bootstrap';"
-                }
-            </code>
-        </pre>
+        <Code>
+            {
+                "import Stateful from '@loopmode/stateful/lib/wrappers/bootstrap';"
+            }
+        </Code>
         <p>Have a look at the relevant code:</p>
         <ul>
             <li>
