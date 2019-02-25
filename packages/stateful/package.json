@@ -1,5 +1,6 @@
 {
     "name": "@loopmode/stateful",
+    "description": "A react component for visual indication of async state",
     "version": "1.0.0",
     "main": "lib/index.js",
     "license": "MIT",
