@@ -132,13 +132,15 @@ When you provide a function value to a PolyType prop, that function will be invo
 You can import the named values via `import { Status } from '@loopmode/stateful'` or `import * as Status from '@loopmode/stateful/lib/Status'` to compare against them.
 
 ```jsx
+import Stateful, {Status} from '@loopmode/stateful';
+...
 <Stateful
     pendingProps={status => {
-        console.log({ status });
         return {
             status,
             foo: 'bar',
-            bar: 'baz'
+            bar: 'baz',
+            baz: status === Status.SUCCESS
         };
     }}
 />
