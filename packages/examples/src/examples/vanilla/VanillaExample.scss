@@ -24,11 +24,11 @@
         animation: pulse-busy 1s infinite ease-in-out;
     }
     button.success {
-        background: limegreen;
+        background: rgb(0, 155, 0);
         color: white;
     }
     button.error {
-        background: red;
+        background: rgb(165, 0, 0);
         color: white;
     }
 }

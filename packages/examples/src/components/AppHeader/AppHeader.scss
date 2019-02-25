@@ -1,3 +1,5 @@
+@import 'styles/mixins.scss';
+
 :local(.AppHeader) {
     background: #094277;
     color: white;
@@ -43,9 +45,12 @@
         margin-right: 10px;
         font-size: 2.5rem;
         overflow: visible;
+        @include large-screen {
+            display: none;
+        }
     }
 
-    @media (max-width: 768px) {
+    @include medium-screen {
         position: sticky;
         top: 0;
         padding: 10px;
