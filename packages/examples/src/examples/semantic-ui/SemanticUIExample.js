@@ -6,6 +6,7 @@ import Forms from './Forms';
 
 import css from './SemanticUIExample';
 import cx from 'classnames';
+import PrevNextLinks from 'components/PrevNextLinks';
 
 export default () => (
     <div className={cx('SemanticUIExample', css.SemanticUIExample)}>
@@ -13,5 +14,6 @@ export default () => (
         <Buttons />
         <div className="push" />
         <Forms />
+        <PrevNextLinks />
     </div>
 );

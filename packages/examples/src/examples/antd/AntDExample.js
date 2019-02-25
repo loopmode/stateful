@@ -8,9 +8,12 @@ import cx from 'classnames';
 import Info from './Info';
 import Buttons from './Buttons';
 
+import PrevNextLinks from 'components/PrevNextLinks';
+
 export default () => (
     <div className={cx('AntDExample', css.AntDExample)}>
         <Info />
         <Buttons />
+        <PrevNextLinks />
     </div>
 );

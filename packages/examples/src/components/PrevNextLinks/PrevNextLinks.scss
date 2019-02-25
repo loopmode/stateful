@@ -1,0 +1,13 @@
+@import 'styles/mixins.scss';
+
+:local(.PrevNextLinks) {
+    display: flex;
+    margin-top: 20px;
+    margin-bottom: 0px;
+    .spacer {
+        flex: 1;
+    }
+    @include large-screen {
+        margin-top: 40px;
+    }
+}
