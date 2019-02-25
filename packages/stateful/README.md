@@ -12,6 +12,9 @@ See also:
 -   [docs and examples](https://loopmode.github.io/stateful/)
 -   [npm page](https://www.npmjs.com/package/@loopmode/stateful)
 
+_Note: This is a rewrite of `@loopmode/async-state` using hooks. Thus, it requires **react@16.8.0** or higher._
+_If you need the functionality for older react versions, check out [@loopmode/async-state](https://www.npmjs.com/package/@loopmode/async-state)_
+
 ## Installation
 
 Using npm:
