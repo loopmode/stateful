@@ -1,7 +1,4 @@
 :local(.SemanticUIExample) {
-    form {
-        padding: 10px;
-    }
     form[disabled] * {
         pointer-events: none;
     }

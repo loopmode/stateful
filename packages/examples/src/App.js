@@ -27,17 +27,15 @@ const VanillaExample = React.lazy(() =>
 );
 
 const App = () => {
-    const [menuVisible, setMenuVisible] = React.useState(false);
-    const showMenu = () => setMenuVisible(true);
-    const hideMenu = () => setMenuVisible(false);
+    const [menuVisible, showMenu] = React.useState(false);
 
     return (
         <Router basename={process.env.REACT_APP_BASENAME}>
             <div className={cx('App', css.App, { menuVisible })}>
-                <AppHeader onShowMenu={showMenu} />
-                <div className="AppBody">
+                <AppHeader onShowMenu={() => showMenu(true)} />
+                <div className="App--body">
                     <Navigation
-                        onHideMenu={hideMenu}
+                        onHideMenu={() => showMenu(false)}
                         menuVisible={menuVisible}
                     />
                     <Content />

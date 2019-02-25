@@ -1,5 +1,6 @@
+@import 'styles/mixins.scss';
+
 :local(.App) {
-    font-size: 16px;
     color: #333;
     position: relative;
     display: flex;
@@ -46,33 +47,54 @@
         background: #eee;
     }
 
+    .App--body {
+        display: flex;
+        flex: 1;
+        @include medium-screen {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+    }
+
     .AppHeader {
         z-index: 2;
     }
-    .AppBody {
-        display: flex;
-        flex: 1;
-    }
     .AppMenu {
-        min-width: 250px;
-        width: 250px;
+        z-index: 3;
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        a {
+            display: block;
+            color: #1890ff;
+            padding: 10px 20px;
+            text-decoration: none;
+            &:hover {
+                background: rgba(black, 0.1);
+            }
+            &.active {
+                background: #1890ff;
+                color: white;
+            }
+        }
     }
     .AppContent {
         z-index: 1;
         padding: 20px;
         flex: 1;
-        overflow: auto;
-    }
-
-    .ButtonsExample {
-        button + button,
-        .Button + .Button {
-            margin-left: 10px;
+        @include large-screen {
+            flex-basis: 0;
+            overflow: hidden;
+            flex-grow: 1;
         }
     }
 
-    @media (max-width: 480px) {
-        .ButtonsExample {
+    .ButtonsExample {
+        @include small-screen {
             button,
             .Button {
                 &:not(.inline) {
@@ -80,18 +102,14 @@
                     width: 100%;
                 }
             }
-            button + button,
-            .Button + .Button {
+        }
+        button + button,
+        .Button + .Button {
+            margin-left: 10px;
+            @include small-screen {
                 margin-left: 0px;
                 margin-top: 10px;
             }
-        }
-    }
-    @media (max-width: 768px) {
-        .AppBody {
-            display: flex;
-            flex-direction: column;
-            flex: 1;
         }
     }
 }
