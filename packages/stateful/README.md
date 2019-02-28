@@ -1,3 +1,14 @@
+[poly]: https://github.com/loopmode/stateful/blob/master/packages/stateful/src/Stateful.js#L16-L20 'PolyType'
+[status]: https://github.com/loopmode/stateful/blob/master/packages/stateful/src/Status.js 'Status'
+[antd-example]: https://loopmode.github.io/stateful/#/antd 'AntD Example'
+[bootstrap-example]: https://loopmode.github.io/stateful/#/bootstrap 'Bootstrap Example'
+[semantic-ui-example]: https://loopmode.github.io/stateful/#/semantic-ui 'Semantic UI Example'
+[material-ui-example]: https://loopmode.github.io/stateful/#/material-ui 'Material UI Example'
+[example-vanilla]: https://loopmode.github.io/stateful/#/vanilla 'Vanilla Example'
+[antd-wrapper]: https://github.com/loopmode/stateful/blob/master/packages/stateful/src/wrappers/antd.js 'AntD Wrapper'
+[bootstrap-wrapper]: https://github.com/loopmode/stateful/blob/master/packages/stateful/src/wrappers/bootstrap.js 'Bootstrap Wrapper'
+[semantic-ui-wrapper]: https://github.com/loopmode/stateful/blob/master/packages/stateful/src/wrappers/semantic-ui.js 'Semantic UI Wrapper'
+
 # @loopmode/stateful
 
 A react component for visual indication of async state.
@@ -5,7 +16,7 @@ A react component for visual indication of async state.
 ![success gif](https://github.com/loopmode/stateful/raw/master/stateful-success.gif 'Example of loading and success indication')
 ![error gif](https://github.com/loopmode/stateful/raw/master/stateful-error.gif 'Example of loading and error indication')
 
-This is an unobtrusive wrapper component that doesn't require any significant changes in your existing code.
+Wrap it around some component that has a callback. If the callback returns a promise when invoked, the wrapped component receives props that indicate the current state of the promise.
 
 See also:
 
@@ -31,7 +42,14 @@ yarn add @loopmode/stateful
 
 ## Usage
 
-Just wrap it around a component that has a callback. If the callback returns a promise, the wrapped component will receive props that indicate the state of the promise.
+In the example below, we use `<Stateful>` without any props.
+
+The default values are used, and the button
+
+-   has a `disabled` prop when clicked, until the promise is resolved or rejected
+-   has a `busy` CSS class after `busyDelay` milliseconds (default `0` - right away)
+-   has a `success` CSS class for `successDuration` milliseconds (default `1000`) when the promise is resolved
+-   has an `error` CSS class for `errorDuration` milliseconds (default `1000`) when the promise is rejected
 
 ```jsx
 import React from 'react';
@@ -49,107 +67,64 @@ const Demo = () => (
 ReactDOM.render(<Demo />, document.getElementById('root'));
 ```
 
-In the example above, we used `<Stateful>` without any props, falling back to the default configuration.
-
-The wrapped button will
-
--   have a `disabled` prop when clicked, and until the promise is resolved or rejected
--   have a `busy` CSS class right away - after `busyDelay` milliseconds (default `0`)
--   have a `success` CSS class for `successDuration` milliseconds (default `1000`) when the promise is resolved
--   have an `error` CSS class for `errorDuration` milliseconds (default `1000`) when the promise is rejected
-
 ## Supported props
 
-| Prop           | Type     | Default                           | Description                                                                                             |
-| -------------- | -------- | --------------------------------- | ------------------------------------------------------------------------------------------------------- |
-| callbacks      | PolyType | `['onClick']`                     | Names of callbacks to intercept and check for promises                                                  |
-| pendingProps   | PolyType | `['disabled']`                    | Names of props to add for `Status.PENDING`                                                              |
-| pendingClasses | PolyType | `[]`                              | Names of CSS classes to add for `Status.PENDING`                                                        |
-| busyProps      | PolyType | `['disabled']`                    | Names of props to add for `Status.BUSY`                                                                 |
-| busyClasses    | PolyType | `[]`                              | Names of CSS classes to add for `Status.BUSY`                                                           |
-| errorProps     | PolyType | `[]`                              | Names of props to add for `Status.ERROR`                                                                |
-| errorClasses   | PolyType | `['error']`                       | Names of CSS classes to add for `Status.ERROR`                                                          |
-| successProps   | PolyType | `[]`                              | Names of props to add for `Status.SUCCESS`                                                              |
-| successClasses | PolyType | `['success']`                     | Names of CSS classes to add for `Status.SUCCESS`                                                        |
-| hintDuration   | Number   | `1000`                            | Duration in milliseconds for `Status.SUCCESS` and `Status.ERROR` before returning to the default status |
-| busyDelay      | Number   | `0`                               | Duration in milliseconds to wait after `Status.PENDING` and before `Status.BUSY`                        |
-| delimiter      | String   | `' '`                             | Delimiter for splitting `PolyType` props of type `String` into multiple values                          |
-| rejectValue    | Function | `value => value instanceof Error` | Whether to indicate `Status.ERROR` for a promise that was actually resolved with a value                |
+| Prop           | Type             | Default value                     | Description                                                                                             |
+| -------------- | ---------------- | --------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| callbacks      | [PolyType][poly] | `['onClick']`                     | Names of callbacks to intercept and check for promises                                                  |
+| pendingProps   | [PolyType][poly] | `['disabled']`                    | Names of props to add for `Status.PENDING`                                                              |
+| pendingClasses | [PolyType][poly] | `[]`                              | Names of CSS classes to add for `Status.PENDING`                                                        |
+| busyProps      | [PolyType][poly] | `['disabled']`                    | Names of props to add for `Status.BUSY`                                                                 |
+| busyClasses    | [PolyType][poly] | `[]`                              | Names of CSS classes to add for `Status.BUSY`                                                           |
+| errorProps     | [PolyType][poly] | `[]`                              | Names of props to add for `Status.ERROR`                                                                |
+| errorClasses   | [PolyType][poly] | `['error']`                       | Names of CSS classes to add for `Status.ERROR`                                                          |
+| successProps   | [PolyType][poly] | `[]`                              | Names of props to add for `Status.SUCCESS`                                                              |
+| successClasses | [PolyType][poly] | `['success']`                     | Names of CSS classes to add for `Status.SUCCESS`                                                        |
+| hintDuration   | Number           | `1000`                            | Duration in milliseconds for `Status.SUCCESS` and `Status.ERROR` before returning to the default status |
+| busyDelay      | Number           | `0`                               | Duration in milliseconds to wait after `Status.PENDING` and before `Status.BUSY`                        |
+| delimiter      | String           | `' '`                             | Delimiter for splitting `PolyType` props of type `String` into multiple values                          |
+| rejectValue    | Function         | `value => value instanceof Error` | Whether to indicate `Status.ERROR` for a promise that was actually resolved with a value                |
 
-The term "PolyType" isn't the latest thing, it's just something I made up for the sakes of this documentation, see details below.
-
-```jsx
-const PolyType = PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.arrayOf(PropTypes.string),
-    PropTypes.func
-]);
-```
-
-### PolyType: String
-
-In most cases, you can stick with the `String` type. It supports both single and multiple values, but in a primitive type that works well with pure components.
-Single values are typed as a simple string, while multiple values are delimiter-separated strings. The default delimiter is a space (``), but you can change that using the `delimiter` prop.
+"PolyType" props may have [one of these value types][poly]:
 
 ```jsx
+import Stateful, { Status } from '@loopmode/stateful';
+
+// String
 <Stateful pendingProps="disabled" />
 <Stateful pendingProps="disabled pending" />
 <Stateful pendingProps="disabled,pending" delimiter="," />
-```
 
-### PolyType: Array
-
-In some cases, it might be preferrable to provide the props as an array. While this interferes with rendering of pure components when typed inline, in many cases you do have an array that you can pass on directly.
-
-```jsx
+// Array
 <Stateful pendingProps={['disabled']} />
 <Stateful pendingProps={['disabled', 'pending']} />
 <Stateful pendingProps={myPropsArray} />
+
+// Function
+<Stateful pendingProps={() => ({ variant: 'loading' })} />
+<Stateful pendingProps={(status) => ({ isLoading: status === Status.BUSY })} />
 ```
 
-### PolyType: Function
+## Status value
 
-Sometimes, the component you need to wrap just doesn't support a simple boolean flag to get the job done. For example, `react-bootstraps` wants to receive `variant="success"` or `variant="danger"` - the same prop, but with a different value.
-In these cases, you can provide a function that receives the current `status` and returns an object with as many properties and values as needed.
+When you provide a function to a [PolyType][poly] prop, it will be invoked with the current `status` and should return a props object.
+
+| status                   | value | Description                                                                                                                          |
+| ------------------------ | ----- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| [Status.IDLE][status]    | `0`   | The default state - no props are added to wrapped children                                                                           |
+| [Status.PENDING][status] | `1`   | A callback was invoked, and it returned a promise. Wrapped children now receive `pendingProps` and `pendingClasses`                  |
+| [Status.BUSY][status]    | `2`   | The returned promise has been pending for more than `busyDelay` milliseconds. Wrapped children receive `busyProps` and `busyClasses` |
+| [Status.SUCCESS][status] | `3`   | The returned promise was resolved. Wrapped children receive `successProps` and `successClasses` for `successDuration` milliseconds   |
+| [Status.ERROR][status]   | `4`   | The returned promise was rejected. Wrapped children receive `errorProps` and `errorClasses` for `errorDuration` milliseconds         |
 
 ```jsx
-<Stateful
-    pendingProps={() => ({ status: 'pending' })}
-    successProps={() => ({ status: 'success' })}
-/>
+import { Status } from '@loopmode/stateful';
+// or:
+// import * as Status from '@loopmode/stateful/lib/Status';
+console.log({ Status });
 ```
 
-## Internal state: `status`
-
-Internally, we use a variable named `status` to handle the current state. Its value is just an integer, all possible values are defined in [Status](https://github.com/loopmode/stateful/blob/master/packages/stateful/src/Status.js).
-
-| status         | value | Description                                                                                                                          |
-| -------------- | ----- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| Status.IDLE    | `0`   | The default state - no props are added to wrapped children                                                                           |
-| Status.PENDING | `1`   | A callback was invoked, and it returned a promise. Wrapped children now receive `pendingProps` and `pendingClasses`                  |
-| Status.BUSY    | `2`   | The returned promise has been pending for more than `busyDelay` milliseconds. Wrapped children receive `busyProps` and `busyClasses` |
-| Status.SUCCESS | `3`   | The returned promise was resolved. Wrapped children receive `successProps` and `successClasses` for `successDuration` milliseconds   |
-| Status.ERROR   | `4`   | The returned promise was rejected. Wrapped children receive `errorProps` and `errorClasses` for `errorDuration` milliseconds         |
-
-When you provide a function value to a PolyType prop, that function will be invoked with the current `status` as its first argument.
-You can import the named values via `import { Status } from '@loopmode/stateful'` or `import * as Status from '@loopmode/stateful/lib/Status'` to compare against them.
-
-```jsx
-import Stateful, {Status} from '@loopmode/stateful';
-...
-<Stateful
-    pendingProps={status => {
-        return {
-            status,
-            foo: 'bar',
-            bar: 'baz',
-            baz: status === Status.SUCCESS
-        };
-    }}
-/>
-```
-
-## Usage with UI libraries and frameworks
+## Usage with UI libraries
 
 Most UI libraries and frameworks come prepared for these situations and provide class names or props to make a button look green or red or busy.
 While `@loopmode/stateful` makes it easy to write a custom wrapper for any library you use, it comes with a couple of presets for popular frameworks.
@@ -158,17 +133,18 @@ While `@loopmode/stateful` makes it easy to write a custom wrapper for any libra
 To use the pre-configured wrapper components, you should import them specifically from `lib/wrapper`.
 Ideally, you would do this only once for the local `Stateful` component of a project, configure it there, and import that one across your codebase.
 
-| name        | examples                                                    | implementation                                                                                                            | usage                                                                 |
-| ----------- | ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------- |
-| antd        | [example](http://loopmode.github.io/stateful/#/antd)        | [wrappers/antd.js](https://github.com/loopmode/stateful/blob/master/packages/stateful/src/wrappers/antd.js)               | `import Stateful from '@loopmode/stateful/lib/wrappers/antd';`        |
-| bootstrap   | [example](http://loopmode.github.io/stateful/#/bootstrap)   | [wrappers/bootstrap.js](https://github.com/loopmode/stateful/blob/master/packages/stateful/src/wrappers/bootstrap.js)     | `import Stateful from '@loopmode/stateful/lib/wrappers/bootstrap';`   |
-| semantic-ui | [example](http://loopmode.github.io/stateful/#/semantic-ui) | [wrappers/semantic-ui.js](https://github.com/loopmode/stateful/blob/master/packages/stateful/src/wrappers/semantic-ui.js) | `import Stateful from '@loopmode/stateful/lib/wrappers/semantic-ui';` |
-| material-ui | [example](http://loopmode.github.io/stateful/#/material-ui) | -                                                                                                                         | -                                                                     |
+| name        | examples                       | implementation                                 | usage                                                                 |
+| ----------- | ------------------------------ | ---------------------------------------------- | --------------------------------------------------------------------- |
+| antd        | [example][antd-example]        | [wrappers/antd.js][antd-wrapper]               | `import Stateful from '@loopmode/stateful/lib/wrappers/antd';`        |
+| bootstrap   | [example][bootstrap-example]   | [wrappers/bootstrap.js][bootstrap-wrapper]     | `import Stateful from '@loopmode/stateful/lib/wrappers/bootstrap';`   |
+| semantic-ui | [example][semantic-ui-example] | [wrappers/semantic-ui.js][semantic-ui-wrapper] | `import Stateful from '@loopmode/stateful/lib/wrappers/semantic-ui';` |
+| material-ui | [example][material-ui-example] | -                                              | -                                                                     |
 
 ### Recommended usage
 
 You might be able to use one of the pre-configured library wrappers, but chances are you'll need your own wrapper.
-Typically, you should create a local `components/Stateful` component, configure it once for the needs of your project, and pass along the rest of the props.
+
+Typically, you should create a local `components/Stateful` component, configure it once for the needs of your project:
 
 ```jsx
 // src/components/Stateful/index.js
@@ -193,30 +169,6 @@ const CustomStateful = props => {
 };
 
 export default CustomStateful;
-```
-
-This makes it easy to use the component, but it still leaves you lots of flexibility.
-You can still pass props, but you don't have to.
-
-This is how you would then use it:
-
-```jsx
-import Page from 'components/Page';
-import UpdateForm from 'components/Form/UpdateForm';
-import Button from 'components/Button';
-import Stateful from 'components/Stateful';
-
-const UpdatePage = props => (
-    <Page>
-        <h2>Update details</h2>
-        <UpdateForm data={props.formData} onChange={props.onFormChange} />
-        <Stateful busyDelay={500}>
-            <Button onClick={props.onFormSubmit} children="Create" />
-        </Stateful>
-    </Page>
-);
-
-export default UpdatePage;
 ```
 
 Check out [the default wrappers](https://github.com/loopmode/stateful/tree/master/packages/stateful/src/wrappers) for some examples using this approach.
