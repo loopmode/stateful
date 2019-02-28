@@ -6,11 +6,13 @@
     "scripts": {
         "start": "react-scripts start",
         "build": "react-scripts build",
+        "build:stats": "react-scripts build --stats && webpack-bundle-analyzer build/bundle-stats.json -m static -r build/bundle-stats.html -O",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
         "lint": "eslint src/**/*.js",
         "predeploy": "npm run build",
-        "deploy": "gh-pages -d build"
+        "deploy": "gh-pages -d build",
+        "analyze": "source-map-explorer build/static/js/*"
     },
     "browserslist": [
         ">0.2%",
@@ -41,6 +43,7 @@
         "typeface-roboto": "^0.0.54"
     },
     "devDependencies": {
-        "node-sass": "^4.11.0"
+        "node-sass": "^4.11.0",
+        "webpack-bundle-analyzer": "^3.0.4"
     }
 }
