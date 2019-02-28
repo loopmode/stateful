@@ -1,0 +1,23 @@
+:local(.AppMenuLinks) {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    a {
+        display: block;
+        color: #1890ff;
+        padding: 10px 20px;
+        text-decoration: none;
+        &:hover {
+            background: rgba(black, 0.1);
+        }
+        &:active,
+        &:focus {
+            background: rgba(#1890ff, 0.3);
+        }
+        &.active {
+            background: #1890ff;
+            color: white;
+        }
+    }
+}

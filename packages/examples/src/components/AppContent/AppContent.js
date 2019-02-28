@@ -1,6 +1,9 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 
+import cx from 'classnames';
+import css from './AppContent.scss';
+
 const MemoContent = React.memo(Content, hasRouteChanged);
 
 function hasRouteChanged(prevProps, nextProps) {
@@ -10,7 +13,7 @@ function hasRouteChanged(prevProps, nextProps) {
 function lazyRoute(importer) {
     const LazyComponent = React.lazy(importer);
     return props => (
-        <React.Suspense fallback={<div>Loading...</div>}>
+        <React.Suspense fallback={<div>Loading page...</div>}>
             <LazyComponent {...props} />
         </React.Suspense>
     );
@@ -25,7 +28,7 @@ export default function AppContent() {
 
 export function Content() {
     return (
-        <div className="AppContent">
+        <div className={cx('AppContent', css.AppContent)}>
             <Route
                 exact
                 path="/"

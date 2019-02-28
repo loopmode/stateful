@@ -4,9 +4,15 @@ import { HashRouter as Router } from 'react-router-dom';
 
 import css from './App.scss';
 
-import AppHeader from 'components/AppHeader';
-import AppContent from './AppContent';
-import AppNavigation from './AppNavigation';
+const AppHeader = React.lazy(() =>
+    import(/* webpackChunkName: 'components/AppHeader' */ 'components/AppHeader')
+);
+const AppMenu = React.lazy(() =>
+    import(/* webpackChunkName: 'components/AppMenu' */ 'components/AppMenu')
+);
+const AppContent = React.lazy(() =>
+    import(/* webpackChunkName: 'components/AppContent' */ 'components/AppContent')
+);
 
 const App = () => {
     // the menu is hidden on mobile via CSS, and we force-open it when menu icon is clicked
@@ -15,18 +21,22 @@ const App = () => {
     const hideMenu = () => setMenuVisible(false);
 
     return (
-        <Router basename={process.env.REACT_APP_BASENAME}>
-            <div className={cx('App', css.App, { menuVisible })}>
-                <AppHeader onShowMenu={showMenu} />
-                <div className="App--body">
-                    <AppNavigation
-                        onHideMenu={hideMenu}
-                        menuVisible={menuVisible}
-                    />
-                    <AppContent />
+        <React.Suspense
+            fallback={<div style={{ padding: 10 }}>Loading...</div>}
+        >
+            <Router basename={process.env.REACT_APP_BASENAME}>
+                <div className={cx('App', css.App, { menuVisible })}>
+                    <AppHeader onShowMenu={showMenu} />
+                    <div className="App--body">
+                        <AppMenu
+                            onHideMenu={hideMenu}
+                            menuVisible={menuVisible}
+                        />
+                        <AppContent />
+                    </div>
                 </div>
-            </div>
-        </Router>
+            </Router>
+        </React.Suspense>
     );
 };
 

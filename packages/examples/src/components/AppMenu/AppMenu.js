@@ -1,13 +1,16 @@
 import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import cx from 'classnames';
-import css from './AppMenu.scss';
-
 import { MdClose } from 'react-icons/md';
+import cx from 'classnames';
 
-export const Item = props => <li className="AppMenu-item" {...props} />;
+import css from './AppMenu.scss';
+import AppMenuLinks from './AppMenuLinks';
 
-function AppMenu(props) {
+/**
+ * Renders the AppMenu container with some behaviour for mobile devices.
+ * The actual navigation links are defined in AppMenuLinks.js
+ */
+export default function AppMenu(props) {
     const ref = useRef();
 
     hideOnOuterTouch(ref, props);
@@ -28,13 +31,19 @@ function AppMenu(props) {
                 </button>
             </header>
 
-            <div className="AppMenu--contents">{props.children}</div>
+            <div className="AppMenu--contents">
+                <AppMenuLinks
+                    navDelay={props.navDelay}
+                    onHideMenu={props.onHideMenu}
+                />
+            </div>
         </div>
     );
 }
 AppMenu.propTypes = {
     children: PropTypes.node,
     menuVisible: PropTypes.bool,
+    navDelay: PropTypes.number,
     onHideMenu: PropTypes.func,
     className: PropTypes.string
 };
@@ -70,5 +79,3 @@ function preventTouchMove(ref) {
         };
     });
 }
-
-export default AppMenu;

@@ -57,26 +57,15 @@
         }
     }
 
+    .AppContent {
+        z-index: 1;
+    }
+
     .AppHeader {
         z-index: 2;
     }
     .AppMenu {
         z-index: 3;
-        ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-    }
-    .AppContent {
-        z-index: 1;
-        padding: 20px;
-        flex: 1;
-        @include large-screen {
-            flex-basis: 0;
-            overflow: hidden;
-            flex-grow: 1;
-        }
     }
 
     .ButtonsExample {
