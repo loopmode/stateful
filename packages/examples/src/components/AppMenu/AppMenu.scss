@@ -1,36 +1,47 @@
 @import 'styles/mixins.scss';
-:local(.AppMenu) {
-    background: #eee;
-    user-select: none;
 
+:local(.AppMenu) {
+    user-select: none;
     display: flex;
     flex-direction: column;
+    background: #eee;
 
-    position: sticky;
-    top: 0;
+    .AppMenu--inner {
+        position: sticky;
+        top: 0;
+        width: 250px;
+        display: flex;
+        flex-direction: column;
+        background: #eee;
 
-    width: 250px;
-    height: 100vh;
-
-    @include medium-screen {
+        @include medium-screen {
+            height: 100%;
+            flex: 1;
+            box-shadow: none;
+            backface-visibility: hidden;
+            perspective: 1000;
+            transform: translate3d(-100%, 0, 0);
+            transition: transform 0.2s ease-in-out;
+        }
+    }
+    .AppMenu--mobile-overlay {
+        z-index: 0;
         position: fixed;
         top: 0;
-        bottom: 0;
-        box-shadow: none;
-        backface-visibility: hidden;
-        perspective: 1000;
-        transform: translate3d(-100%, 0, 0);
-        transition: transform 0.2s ease-in-out;
-        .menuVisible & {
-            transform: translate3d(0%, 0, 0);
-            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5);
-        }
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(black, 0.5);
+        opacity: 0;
+        transition: opacity 0.5s;
     }
 
     .AppMenu--mobile-header {
+        z-index: 1;
         background: #094277;
     }
     .AppMenu--contents {
+        z-index: 1;
         flex: 1;
         overflow-x: hidden;
         overflow-y: auto;
@@ -60,6 +71,24 @@
 
         @include medium-screen {
             display: flex;
+        }
+    }
+
+    @include medium-screen {
+        pointer-events: none;
+        background: none;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+    }
+    &.show-mobile-menu {
+        pointer-events: all;
+        .AppMenu--inner {
+            transform: translate3d(0%, 0, 0);
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5);
+        }
+        .AppMenu--mobile-overlay {
+            opacity: 1;
         }
     }
 }

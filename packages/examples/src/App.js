@@ -25,7 +25,7 @@ const App = () => {
             fallback={<div style={{ padding: 10 }}>Loading...</div>}
         >
             <Router basename={process.env.REACT_APP_BASENAME}>
-                <div className={cx('App', css.App, { menuVisible })}>
+                <div className={cx('App', css.App)}>
                     <AppHeader onShowMenu={showMenu} />
                     <div className="App--body">
                         <AppMenu

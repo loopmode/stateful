@@ -10,6 +10,11 @@ body,
     display: flex;
     flex-direction: column;
     flex: 1;
+    min-height: 100vh;
     font-size: 16px !important;
     font-family: Lato, 'Helvetica Neue', Arial, Helvetica, sans-serif !important;
+}
+
+body.no-scroll {
+    overflow: hidden;
 }

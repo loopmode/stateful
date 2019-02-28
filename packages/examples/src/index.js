@@ -10,3 +10,8 @@ ReactDOM.render(<App />, document.getElementById('root'));
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: http://bit.ly/CRA-PWA
 serviceWorker.unregister();
+
+const placeholder = document.querySelector('.content-placeholder');
+if (placeholder) {
+    placeholder.parentNode.removeChild(placeholder);
+}

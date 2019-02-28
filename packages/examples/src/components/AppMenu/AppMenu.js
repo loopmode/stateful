@@ -13,29 +13,37 @@ import AppMenuLinks from './AppMenuLinks';
 export default function AppMenu(props) {
     const ref = useRef();
 
-    hideOnOuterTouch(ref, props);
-    preventTouchMove(ref);
+    hideOnOuterClick(ref, props);
+
+    usePreventBodyScroll(props.menuVisible);
 
     return (
-        <div ref={ref} className={cx('AppMenu', props.className, css.AppMenu)}>
-            <header className="AppMenu--mobile-header">
-                <button
-                    className="AppMenu--mobile-close"
-                    onClick={event => {
-                        event.preventDefault();
-                        props.onHideMenu(event);
-                    }}
-                >
-                    <MdClose />
-                    CLOSE MENU
-                </button>
-            </header>
+        <div
+            className={cx('AppMenu', props.className, css.AppMenu, {
+                'show-mobile-menu': props.menuVisible
+            })}
+        >
+            <div className="AppMenu--mobile-overlay" />
+            <div className="AppMenu--inner">
+                <header className="AppMenu--mobile-header">
+                    <button
+                        className="AppMenu--mobile-close"
+                        onClick={event => {
+                            event.preventDefault();
+                            props.onHideMenu(event);
+                        }}
+                    >
+                        <MdClose />
+                        CLOSE MENU
+                    </button>
+                </header>
 
-            <div className="AppMenu--contents">
-                <AppMenuLinks
-                    navDelay={props.navDelay}
-                    onHideMenu={props.onHideMenu}
-                />
+                <div className="AppMenu--contents" ref={ref}>
+                    <AppMenuLinks
+                        navDelay={props.navDelay}
+                        onHideMenu={props.onHideMenu}
+                    />
+                </div>
             </div>
         </div>
     );
@@ -48,34 +56,28 @@ AppMenu.propTypes = {
     className: PropTypes.string
 };
 
-function hideOnOuterTouch(ref, { onHideMenu, menuVisible }) {
-    const handleTouch = event => {
+function usePreventBodyScroll(menuVisible) {
+    useEffect(() => {
+        const addClass = () => document.body.classList.add('no-scroll');
+        const removeClass = () => document.body.classList.remove('no-scroll');
+        if (menuVisible) {
+            addClass();
+        } else {
+            removeClass();
+        }
+        return () => removeClass();
+    }, [menuVisible]);
+}
+
+function hideOnOuterClick(ref, { onHideMenu, menuVisible }) {
+    const handleEvent = event => {
+        console.log(ref.current, event.target);
         if (menuVisible && ref.current && !ref.current.contains(event.target)) {
-            event.preventDefault();
             onHideMenu();
         }
     };
     useEffect(() => {
-        document.addEventListener('touchstart', handleTouch);
-        return () => document.removeEventListener('touchstart', handleTouch);
-    });
-}
-
-function preventTouchMove(ref) {
-    // prevent scrolling of the page via menu overlay
-    const preventTouchMove = event => {
-        if (ref.current === event.target) {
-            event.preventDefault();
-        }
-    };
-    useEffect(() => {
-        document.addEventListener('touchmove', preventTouchMove, {
-            passive: false
-        });
-        return () => {
-            document.removeEventListener('touchmove', preventTouchMove, {
-                passive: false
-            });
-        };
+        document.addEventListener('click', handleEvent);
+        return () => document.removeEventListener('click', handleEvent);
     });
 }
