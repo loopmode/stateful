@@ -67,20 +67,6 @@
             margin: 0;
             padding: 0;
         }
-
-        a {
-            display: block;
-            color: #1890ff;
-            padding: 10px 20px;
-            text-decoration: none;
-            &:hover {
-                background: rgba(black, 0.1);
-            }
-            &.active {
-                background: #1890ff;
-                color: white;
-            }
-        }
     }
     .AppContent {
         z-index: 1;
