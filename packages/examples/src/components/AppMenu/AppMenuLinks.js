@@ -10,14 +10,17 @@ const scrollToTop = () => (document.documentElement.scrollTop = 0);
 /**
  * Renders the actual navigational items of the menu
  */
-const AppMenuLinks = props => {
+const AppMenuLinks = React.forwardRef((props, ref) => {
     const linkProps = {
         delay: props.navDelay,
         onClick: props.onHideMenu,
         onNavigate: scrollToTop
     };
     return (
-        <ul className={cx('AppMenuLinks', props.className, css.AppMenuLinks)}>
+        <ul
+            ref={ref}
+            className={cx('AppMenuLinks', props.className, css.AppMenuLinks)}
+        >
             <li>
                 <DelayLink exact to="/" {...linkProps}>
                     Overview
@@ -50,7 +53,7 @@ const AppMenuLinks = props => {
             </li>
         </ul>
     );
-};
+});
 
 AppMenuLinks.propTypes = {
     className: PropTypes.string,
@@ -59,7 +62,7 @@ AppMenuLinks.propTypes = {
 };
 AppMenuLinks.defaultProps = {
     // enough time for the mobile menu slide animation to finish
-    navDelay: 200
+    navDelay: 300
 };
 
 export default AppMenuLinks;
