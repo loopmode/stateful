@@ -31,8 +31,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -40,6 +38,8 @@ function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread n
 function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
 
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
@@ -68,6 +68,8 @@ Stateful.propTypes = {
   errorProps: PolyType,
   errorClasses: PolyType,
   hintDuration: _propTypes.default.number,
+  successDuration: _propTypes.default.number,
+  errorDuration: _propTypes.default.number,
   delimiter: _propTypes.default.string,
   rejectValue: _propTypes.default.func
 }; // Note that we use the keys of the defaultProps object to omit
@@ -86,11 +88,15 @@ Stateful.defaultProps = {
   errorProps: [],
   errorClasses: ['error'],
   hintDuration: 1000,
+  successDuration: undefined,
+  errorDuration: undefined,
   delimiter: ' ',
   rejectValue: defaultRejectValue
 };
 
 function Stateful(props) {
+  var _hintDurations;
+
   var isMounted = _react.default.useRef();
 
   var ifMounted = function ifMounted(fn) {
@@ -112,8 +118,9 @@ function Stateful(props) {
     return setStatus(Status.IDLE);
   };
 
+  var hintDurations = (_hintDurations = {}, _defineProperty(_hintDurations, Status.SUCCESS, props.successDuration || props.hintDuration), _defineProperty(_hintDurations, Status.ERROR, props.errorDuration || props.hintDuration), _hintDurations);
   var busyTimer = (0, _timeout.default)(setBusy, props.busyDelay);
-  var idleTimer = (0, _timeout.default)(setIdle, props.hintDuration);
+  var idleTimer = (0, _timeout.default)(setIdle, hintDurations[status] || props.hintDuration);
   (0, _didMount.default)(function () {
     isMounted.current = true;
   });

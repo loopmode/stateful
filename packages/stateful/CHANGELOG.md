@@ -1,3 +1,7 @@
+# 1.1.0
+
+-   Support individual optional `successDuration` and `errorDuration` props to override the `hintDuration`
+
 # 1.0.0
 
 -   Drop `onTouchStart` default callback handling

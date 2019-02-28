@@ -8,19 +8,19 @@ import ButtonsHeader from 'components/ButtonsHeader';
 export default () => (
     <div className="ButtonsExample">
         <ButtonsHeader />
-        <Stateful hintDuration={2000}>
+        <Stateful hintDuration={500}>
             <button onClick={() => dummyCall({ min: 500, max: 3000 })}>
-                Do something
+                hintDuration 500ms
             </button>
         </Stateful>
-        <Stateful>
+        <Stateful successDuration={5000}>
             <button onClick={() => dummyCall({ min: 500, max: 3000 })}>
-                Do something
+                successDuration 5000ms
             </button>
         </Stateful>
-        <Stateful>
+        <Stateful errorDuration={5000}>
             <button onClick={() => dummyCall({ min: 500, max: 3000 })}>
-                Do something
+                errorDuration 5000ms
             </button>
         </Stateful>
     </div>

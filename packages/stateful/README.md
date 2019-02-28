@@ -69,23 +69,34 @@ ReactDOM.render(<Demo />, document.getElementById('root'));
 
 ## Supported props
 
-| Prop           | Type             | Default value                     | Description                                                                                             |
-| -------------- | ---------------- | --------------------------------- | ------------------------------------------------------------------------------------------------------- |
-| callbacks      | [PolyType][poly] | `['onClick']`                     | Names of callbacks to intercept and check for promises                                                  |
-| pendingProps   | [PolyType][poly] | `['disabled']`                    | Names of props to add for `Status.PENDING`                                                              |
-| pendingClasses | [PolyType][poly] | `[]`                              | Names of CSS classes to add for `Status.PENDING`                                                        |
-| busyProps      | [PolyType][poly] | `['disabled']`                    | Names of props to add for `Status.BUSY`                                                                 |
-| busyClasses    | [PolyType][poly] | `[]`                              | Names of CSS classes to add for `Status.BUSY`                                                           |
-| errorProps     | [PolyType][poly] | `[]`                              | Names of props to add for `Status.ERROR`                                                                |
-| errorClasses   | [PolyType][poly] | `['error']`                       | Names of CSS classes to add for `Status.ERROR`                                                          |
-| successProps   | [PolyType][poly] | `[]`                              | Names of props to add for `Status.SUCCESS`                                                              |
-| successClasses | [PolyType][poly] | `['success']`                     | Names of CSS classes to add for `Status.SUCCESS`                                                        |
-| hintDuration   | Number           | `1000`                            | Duration in milliseconds for `Status.SUCCESS` and `Status.ERROR` before returning to the default status |
-| busyDelay      | Number           | `0`                               | Duration in milliseconds to wait after `Status.PENDING` and before `Status.BUSY`                        |
-| delimiter      | String           | `' '`                             | Delimiter for splitting `PolyType` props of type `String` into multiple values                          |
-| rejectValue    | Function         | `value => value instanceof Error` | Whether to indicate `Status.ERROR` for a promise that was actually resolved with a value                |
+Common
 
-"PolyType" props may have [one of these value types][poly]:
+| Prop                | Type             | Default value                     | Description                                                                                                                 |
+| ------------------- | ---------------- | --------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| _common props_      |                  |                                   |                                                                                                                             |
+| callbacks           | [PolyType][poly] | `['onClick']`                     | Names of callbacks to intercept and check for promises                                                                      |
+| hintDuration        | Number           | `1000`                            | Duration in milliseconds for both `Status.SUCCESS` and `Status.ERROR` - outweighed by `successDuration` and `errorDuration` |
+| delimiter           | String           | `' '`                             | Delimiter for splitting `PolyType` props of type `String` into multiple values                                              |
+| rejectValue         | Function         | `value => value instanceof Error` | Whether to indicate `Status.ERROR` for a promise that was actually resolved with a value                                    |
+| _for pending state_ |                  |                                   |                                                                                                                             |
+| pendingProps        | [PolyType][poly] | `['disabled']`                    | Names of props to add for `Status.PENDING`                                                                                  |
+| pendingClasses      | [PolyType][poly] | `[]`                              | Names of CSS classes to add for `Status.PENDING`                                                                            |
+| _for busy state_    |                  |                                   |                                                                                                                             |
+| busyProps           | [PolyType][poly] | `['disabled']`                    | Names of props to add for `Status.BUSY`                                                                                     |
+| busyClasses         | [PolyType][poly] | `[]`                              | Names of CSS classes to add for `Status.BUSY`                                                                               |
+| busyDelay           | Number           | `0`                               | Duration in milliseconds to wait after `Status.PENDING` and before `Status.BUSY`                                            |
+| _for error state_   |                  |                                   |                                                                                                                             |
+| errorProps          | [PolyType][poly] | `[]`                              | Names of props to add for `Status.ERROR`                                                                                    |
+| errorClasses        | [PolyType][poly] | `['error']`                       | Names of CSS classes to add for `Status.ERROR`                                                                              |
+| errorDuration       | Number           | `undefined`                       | Duration in milliseconds for `Status.ERROR` - outweighs `hintDuration`                                                      |
+| _for success state_ |                  |                                   |                                                                                                                             |
+| successProps        | [PolyType][poly] | `[]`                              | Names of props to add for `Status.SUCCESS`                                                                                  |
+| successClasses      | [PolyType][poly] | `['success']`                     | Names of CSS classes to add for `Status.SUCCESS`                                                                            |
+| successDuration     | Number           | `undefined`                       | Duration in milliseconds for `Status.SUCCESS` - outweighs `hintDuration`                                                    |
+
+### PolyType props
+
+The values of [PolyType][poly] props may be of type String, Array or Function. Here are some examples:
 
 ```jsx
 import Stateful, { Status } from '@loopmode/stateful';

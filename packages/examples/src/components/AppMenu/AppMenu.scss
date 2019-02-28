@@ -34,6 +34,9 @@
         background: rgba(black, 0.5);
         opacity: 0;
         transition: opacity 0.5s;
+        @include large-screen {
+            display: none;
+        }
     }
 
     .AppMenu--mobile-header {

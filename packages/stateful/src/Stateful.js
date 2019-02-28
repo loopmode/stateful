@@ -40,6 +40,8 @@ Stateful.propTypes = {
     errorClasses: PolyType,
 
     hintDuration: PropTypes.number,
+    successDuration: PropTypes.number,
+    errorDuration: PropTypes.number,
 
     delimiter: PropTypes.string,
 
@@ -66,6 +68,9 @@ Stateful.defaultProps = {
     errorClasses: ['error'],
 
     hintDuration: 1000,
+    successDuration: undefined,
+    errorDuration: undefined,
+
     delimiter: ' ',
     rejectValue: defaultRejectValue
 };
@@ -79,8 +84,15 @@ function Stateful(props) {
     const setBusy = () => setStatus(Status.BUSY);
     const setIdle = () => setStatus(Status.IDLE);
 
+    const hintDurations = {
+        [Status.SUCCESS]: props.successDuration || props.hintDuration,
+        [Status.ERROR]: props.errorDuration || props.hintDuration
+    };
     const busyTimer = useTimeout(setBusy, props.busyDelay);
-    const idleTimer = useTimeout(setIdle, props.hintDuration);
+    const idleTimer = useTimeout(
+        setIdle,
+        hintDurations[status] || props.hintDuration
+    );
 
     useDidMount(() => {
         isMounted.current = true;

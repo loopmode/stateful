@@ -19,4 +19,10 @@
     h3:not(:first-child) {
         margin-top: 40px;
     }
+
+    td:first-child > em:first-child:last-child {
+        color: #999;
+        margin-top: 10px;
+        display: block;
+    }
 }
