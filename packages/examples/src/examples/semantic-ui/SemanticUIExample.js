@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 
 import Info from './Info';
 import Buttons from './Buttons';
@@ -11,6 +12,13 @@ import PrevNextLinks from 'components/PrevNextLinks';
 
 export default () => (
     <div className={cx('SemanticUIExample', css.SemanticUIExample)}>
+        <Helmet>
+            <link
+                rel="stylesheet"
+                href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css"
+                type="text/css"
+            />
+        </Helmet>
         <Info />
         <Buttons />
         <div className="push" />

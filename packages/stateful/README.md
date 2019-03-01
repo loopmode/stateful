@@ -129,10 +129,15 @@ When you provide a function to a [PolyType][poly] prop, it will be invoked with 
 | [Status.SUCCESS][status] | `3`   | The returned promise was resolved. Wrapped children receive `successProps` and `successClasses` for `successDuration` milliseconds   |
 | [Status.ERROR][status]   | `4`   | The returned promise was rejected. Wrapped children receive `errorProps` and `errorClasses` for `errorDuration` milliseconds         |
 
+You can either check for the values inline or import the `Status` module:
+
 ```jsx
-import { Status } from '@loopmode/stateful';
-// or:
+// either as wildcard import from the specific Status module:
 // import * as Status from '@loopmode/stateful/lib/Status';
+
+// or as named import from the main module:
+import { Status } from '@loopmode/stateful';
+
 console.log({ Status });
 ```
 
