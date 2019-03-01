@@ -8,7 +8,7 @@ import { MdMenu } from 'react-icons/md';
 
 import css from './AppHeader.scss';
 
-import Logo from './icon.svg';
+import HoverLogo from 'components/AnimatedLogo/HoverLogo';
 
 const AppHeader = ({ onShowMenu, className }) => {
     const handleShowMenu = event => {
@@ -32,7 +32,7 @@ const AppHeader = ({ onShowMenu, className }) => {
                 className="logo-link"
                 onClick={() => (document.documentElement.scrollTop = 0)}
             >
-                <img className="logo" src={Logo} alt="logo" />
+                <HoverLogo scale={0.25} />
             </Link>
         </header>
     );

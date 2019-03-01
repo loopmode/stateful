@@ -22,7 +22,7 @@ function lazyRoute(importer) {
 }
 
 /**
- * Renders route components lazily and only re-renders when the location has changed.
+ * Renders the route components lazily, only re-renders when the location has changed.
  */
 export default function AppContent() {
     return <Route render={props => <MemoContent {...props} />} />;
