@@ -4,6 +4,8 @@ import { HashRouter as Router } from 'react-router-dom';
 
 import css from './App.scss';
 
+import LoadingOverlay from 'components/LoadingOverlay';
+
 const AppHeader = React.lazy(() =>
     import(/* webpackChunkName: 'components/AppHeader' */ 'components/AppHeader')
 );
@@ -21,9 +23,7 @@ const App = () => {
     const hideMenu = () => setMenuVisible(false);
 
     return (
-        <React.Suspense
-            fallback={<div style={{ padding: 10 }}>Loading...</div>}
-        >
+        <React.Suspense fallback={<LoadingOverlay />}>
             <Router basename={process.env.REACT_APP_BASENAME}>
                 <div className={cx('App', css.App)}>
                     <AppHeader onShowMenu={showMenu} />

@@ -1,0 +1,121 @@
+@mixin rotation($name, $v1: 0deg, $v2: 120deg, $v3: 240deg, $v4: 360deg) {
+    $easing: cubic-bezier(0.215, 0.61, 0.355, 1);
+    @keyframes #{$name}-outer {
+        0% {
+            transform: rotate3d(0, 0, 1, $v1);
+        }
+        33% {
+            transform: rotate3d(0, 0, 1, $v2);
+        }
+        66% {
+            transform: rotate3d(0, 0, 1, $v3);
+        }
+        100% {
+            transform: rotate3d(0, 0, 1, $v4);
+        }
+    }
+    @keyframes #{$name}-inner {
+        0% {
+            transform: rotate3d(0, 0, 1, -$v1);
+        }
+        33% {
+            transform: rotate3d(0, 0, 1, -$v2);
+        }
+        66% {
+            transform: rotate3d(0, 0, 1, -$v3);
+        }
+        100% {
+            transform: rotate3d(0, 0, 1, -$v4);
+        }
+    }
+
+    .rotation-outer {
+        will-change: transform;
+        transform: rotate3d(0, 0, 1, $v1);
+        .rotation-inner {
+            will-change: transform;
+            transform: rotate3d(0, 0, 1, -$v1);
+        }
+    }
+
+    &.animated {
+        .rotation-outer {
+            animation: #{$name}-outer 6s infinite $easing;
+            .rotation-inner {
+                animation: #{$name}-inner 6s infinite $easing;
+            }
+        }
+    }
+}
+
+:local(.Logo) {
+    $outer-width: 120px;
+    $outer-height: 120px;
+
+    $hex-width: 43px;
+    $hex-height: 50px;
+
+    $top-dist: 5px;
+    $center-dist: 28px;
+
+    .Logo-outer {
+        width: $outer-width;
+        height: $outer-height;
+        position: relative;
+        background: #094277;
+    }
+    .Logo-inner {
+        transform: translate3d(0, $top-dist, 0);
+        width: $outer-width;
+        height: $outer-height;
+
+        .center-outer {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            .center-inner {
+                transform: translate3D(
+                    -$hex-width * 0.5,
+                    -$hex-height * 0.5,
+                    0
+                );
+            }
+        }
+
+        .position {
+            position: relative;
+            top: -$center-dist;
+        }
+
+        .hex {
+            width: $hex-width;
+            height: $hex-height;
+            polyline {
+                &:first-child {
+                    fill: white;
+                }
+                &:last-child {
+                    transform: translate(10%, 10%);
+                }
+            }
+        }
+        .rotator-1 {
+            .hex polyline:last-child {
+                fill: #094277;
+            }
+            @include rotation(rotation-1, 0deg, 120deg, 240deg, 360deg);
+        }
+        .rotator-2 {
+            .hex polyline:last-child {
+                fill: #bd1818;
+            }
+            @include rotation(rotation-2, 120deg, 240deg, 360deg, 480deg);
+        }
+        .rotator-3 {
+            .hex polyline:last-child {
+                fill: #139632;
+            }
+            @include rotation(rotation-4, 240deg, 360deg, 480deg, 600deg);
+        }
+    }
+}

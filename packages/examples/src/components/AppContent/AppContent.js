@@ -4,6 +4,8 @@ import { Route } from 'react-router-dom';
 import cx from 'classnames';
 import css from './AppContent.scss';
 
+import LoadingOverlay from 'components/LoadingOverlay';
+
 const MemoContent = React.memo(Content, hasRouteChanged);
 
 function hasRouteChanged(prevProps, nextProps) {
@@ -13,7 +15,7 @@ function hasRouteChanged(prevProps, nextProps) {
 function lazyRoute(importer) {
     const LazyComponent = React.lazy(importer);
     return props => (
-        <React.Suspense fallback={<div>Loading page...</div>}>
+        <React.Suspense fallback={<LoadingOverlay />}>
             <LazyComponent {...props} />
         </React.Suspense>
     );

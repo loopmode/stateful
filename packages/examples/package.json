@@ -21,7 +21,7 @@
         "not op_mini all"
     ],
     "eslintConfig": {
-        "extends": "@loopmode/stateful"
+        "extends": "@loopmode/stateful-config-eslint"
     },
     "dependencies": {
         "@material-ui/core": "^3.9.2",
