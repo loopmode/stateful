@@ -1,3 +1,7 @@
+# 1.1.1
+
+-   `antd` wrapper: Pass `error` CSS class instead of `danger` type for error states
+
 # 1.1.0
 
 -   Support individual optional `successDuration` and `errorDuration` props to override the `hintDuration`
