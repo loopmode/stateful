@@ -1,10 +1,14 @@
 :local(.AntDExample) {
-    .ant-btn.success {
-        border-color: green;
-        color: green;
+    .ant-btn.success,
+    .ant-btn.ant-btn-primary.success,
+    .ant-btn.ant-btn-danger.success {
+        background: green !important;
+        color: white !important;
     }
-    .ant-btn.ant-btn.ant-btn-primary.success {
-        background: green;
-        color: white;
+    .ant-btn.error,
+    .ant-btn.ant-btn-primary.error,
+    .ant-btn.ant-btn-danger.error {
+        background: red !important;
+        color: white !important;
     }
 }
