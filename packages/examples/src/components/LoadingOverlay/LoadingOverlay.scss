@@ -13,4 +13,9 @@
     .Logo .Logo-outer {
         background: transparent;
     }
+    transition: opacity 0.5s;
+    opacity: 0;
+    &.visible {
+        opacity: 1;
+    }
 }
