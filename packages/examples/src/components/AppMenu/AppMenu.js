@@ -71,7 +71,6 @@ function usePreventBodyScroll(menuVisible) {
 
 function hideOnOuterClick(ref, { onHideMenu, menuVisible }) {
     const handleEvent = event => {
-        console.log(ref.current, event.target, menuVisible);
         if (menuVisible && ref.current && !ref.current.contains(event.target)) {
             onHideMenu();
         }
