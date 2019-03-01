@@ -2,6 +2,7 @@
 
 :local(.AppContent) {
     padding: 20px;
+    position: relative;
     flex: 1;
     @include large-screen {
         flex-basis: 0;
