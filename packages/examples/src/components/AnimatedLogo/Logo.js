@@ -14,21 +14,24 @@ export default function Logo({
     ...props
 }) {
     return (
-        <div {...props} className={cx('Logo', css.Logo, className)}>
+        <div
+            {...props}
+            className={cx('Logo', css.Logo, className, { animated })}
+        >
             <div
                 className={'Logo-outer'}
                 style={{ transform: `scale(${scale})` }}
             >
                 <div className={cx('Logo-inner')}>
-                    <Rotator className={cx('rotator-1', { animated })}>
+                    <Rotator className={cx('rotator-1')}>
                         <Hex size={50} className="hex" />
                     </Rotator>
 
-                    <Rotator className={cx('rotator-2', { animated })}>
+                    <Rotator className={cx('rotator-2')}>
                         <Hex size={50} className="hex" />
                     </Rotator>
 
-                    <Rotator className={cx('rotator-3', { animated })}>
+                    <Rotator className={cx('rotator-3')}>
                         <Hex size={50} className="hex" />
                     </Rotator>
                 </div>
