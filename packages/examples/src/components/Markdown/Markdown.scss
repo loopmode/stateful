@@ -1,6 +1,8 @@
 :local(.Markdown) {
     margin-bottom: 50px;
-
+    img {
+        background: #eee;
+    }
     table {
         display: block;
         overflow-x: auto;

@@ -1,9 +1,13 @@
-# @loopmode/stateful-workspace
+# @loopmode/stateful workspace
 
-This repository contains the [`@loopmode/stateful` package](https://github.com/loopmode/stateful/tree/master/packages/stateful) and its development workspace.
+This repository contains the `@loopmode/stateful` package and its development workspace.
 
-![success gif](https://github.com/loopmode/stateful/raw/master/stateful-success.gif 'Example of loading and success indication')
-![error gif](https://github.com/loopmode/stateful/raw/master/stateful-error.gif 'Example of loading and error indication')
+The `@loopmode/stateful` package, henceforth called the "main package", is a react component for indicating the state of async callbacks:
+
+<img src="https://github.com/loopmode/stateful/raw/master/stateful-success.gif" width="150" height="90" title="pending and success example" alt="success animation" />
+<img src="https://github.com/loopmode/stateful/raw/master/stateful-error.gif" width="150" height="90" title="pending and error example" alt="error animation" />
+
+This repository consists of a `yarn` and `lerna` workspace that contains [the main package](https://github.com/loopmode/stateful/tree/master/packages/stateful), the [examples and docs website](https://github.com/loopmode/stateful/tree/master/packages/examples), as well as some configuration and utility packages.
 
 ## Installation
 

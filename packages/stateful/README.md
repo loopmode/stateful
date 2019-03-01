@@ -13,8 +13,8 @@
 
 A react component for visual indication of async state.
 
-![success gif](https://github.com/loopmode/stateful/raw/master/stateful-success.gif 'Example of loading and success indication')
-![error gif](https://github.com/loopmode/stateful/raw/master/stateful-error.gif 'Example of loading and error indication')
+<img src="https://github.com/loopmode/stateful/raw/master/stateful-success.gif" width="150" height="90" title="pending and success example" alt="success animation" />
+<img src="https://github.com/loopmode/stateful/raw/master/stateful-error.gif" width="150" height="90" title="pending and error example" alt="error animation" />
 
 Wrap it around some component that has a callback. If the callback returns a promise when invoked, the wrapped component receives props that indicate the current state of the promise.
 
@@ -22,6 +22,7 @@ See also:
 
 -   [docs and examples](https://loopmode.github.io/stateful/)
 -   [npm page](https://www.npmjs.com/package/@loopmode/stateful)
+-   [github page](https://github.com/loopmode/stateful/tree/master/packages/stateful)
 
 _Note: This is a rewrite of `@loopmode/async-state` using hooks. Thus, it requires **react@16.8.0** or higher._
 _If you need the functionality for older react versions, check out [@loopmode/async-state](https://www.npmjs.com/package/@loopmode/async-state)_
@@ -71,28 +72,28 @@ ReactDOM.render(<Demo />, document.getElementById('root'));
 
 Common
 
-| Prop            | Type             | Default value                     | Description                                                                                                                 |
-| --------------- | ---------------- | --------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| _common props_  |                  |                                   |                                                                                                                             |
-| callbacks       | [PolyType][poly] | `['onClick']`                     | Names of callbacks to intercept and check for promises                                                                      |
-| hintDuration    | Number           | `1000`                            | Duration in milliseconds for both `Status.SUCCESS` and `Status.ERROR` - outweighed by `successDuration` and `errorDuration` |
-| delimiter       | String           | `' '`                             | Delimiter for splitting `PolyType` props of type `String` into multiple values                                              |
-| rejectValue     | Function         | `value => value instanceof Error` | Whether to indicate `Status.ERROR` for a promise that was actually resolved with a value                                    |
-| _for pending_   |                  |                                   |                                                                                                                             |
-| pendingProps    | [PolyType][poly] | `['disabled']`                    | Names of props to add for `Status.PENDING`                                                                                  |
-| pendingClasses  | [PolyType][poly] | `[]`                              | Names of CSS classes to add for `Status.PENDING`                                                                            |
-| _for busy_      |                  |                                   |                                                                                                                             |
-| busyProps       | [PolyType][poly] | `['disabled']`                    | Names of props to add for `Status.BUSY`                                                                                     |
-| busyClasses     | [PolyType][poly] | `[]`                              | Names of CSS classes to add for `Status.BUSY`                                                                               |
-| busyDelay       | Number           | `0`                               | Duration in milliseconds to wait after `Status.PENDING` and before `Status.BUSY`                                            |
-| _for error_     |                  |                                   |                                                                                                                             |
-| errorProps      | [PolyType][poly] | `[]`                              | Names of props to add for `Status.ERROR`                                                                                    |
-| errorClasses    | [PolyType][poly] | `['error']`                       | Names of CSS classes to add for `Status.ERROR`                                                                              |
-| errorDuration   | Number           | `undefined`                       | Duration in milliseconds for `Status.ERROR` - outweighs `hintDuration`                                                      |
-| _for success_   |                  |                                   |                                                                                                                             |
-| successProps    | [PolyType][poly] | `[]`                              | Names of props to add for `Status.SUCCESS`                                                                                  |
-| successClasses  | [PolyType][poly] | `['success']`                     | Names of CSS classes to add for `Status.SUCCESS`                                                                            |
-| successDuration | Number           | `undefined`                       | Duration in milliseconds for `Status.SUCCESS` - outweighs `hintDuration`                                                    |
+| Prop               | Type             | Default value                     | Description                                                                                                                 |
+| ------------------ | ---------------- | --------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| **_common props_** |                  |                                   |                                                                                                                             |
+| callbacks          | [PolyType][poly] | `['onClick']`                     | Names of callbacks to intercept and check for promises                                                                      |
+| hintDuration       | Number           | `1000`                            | Duration in milliseconds for both `Status.SUCCESS` and `Status.ERROR` - outweighed by `successDuration` and `errorDuration` |
+| delimiter          | String           | `' '`                             | Delimiter for splitting `PolyType` props of type `String` into multiple values                                              |
+| rejectValue        | Function         | `value => value instanceof Error` | Whether to indicate `Status.ERROR` for a promise that was actually resolved with a value                                    |
+| **_for pending_**  |                  |                                   |                                                                                                                             |
+| pendingProps       | [PolyType][poly] | `['disabled']`                    | Names of props to add for `Status.PENDING`                                                                                  |
+| pendingClasses     | [PolyType][poly] | `[]`                              | Names of CSS classes to add for `Status.PENDING`                                                                            |
+| **_for busy_**     |                  |                                   |                                                                                                                             |
+| busyProps          | [PolyType][poly] | `['disabled']`                    | Names of props to add for `Status.BUSY`                                                                                     |
+| busyClasses        | [PolyType][poly] | `[]`                              | Names of CSS classes to add for `Status.BUSY`                                                                               |
+| busyDelay          | Number           | `0`                               | Duration in milliseconds to wait after `Status.PENDING` and before `Status.BUSY`                                            |
+| **_for error_**    |                  |                                   |                                                                                                                             |
+| errorProps         | [PolyType][poly] | `[]`                              | Names of props to add for `Status.ERROR`                                                                                    |
+| errorClasses       | [PolyType][poly] | `['error']`                       | Names of CSS classes to add for `Status.ERROR`                                                                              |
+| errorDuration      | Number           | `undefined`                       | Duration in milliseconds for `Status.ERROR` - outweighs `hintDuration`                                                      |
+| **_for success_**  |                  |                                   |                                                                                                                             |
+| successProps       | [PolyType][poly] | `[]`                              | Names of props to add for `Status.SUCCESS`                                                                                  |
+| successClasses     | [PolyType][poly] | `['success']`                     | Names of CSS classes to add for `Status.SUCCESS`                                                                            |
+| successDuration    | Number           | `undefined`                       | Duration in milliseconds for `Status.SUCCESS` - outweighs `hintDuration`                                                    |
 
 ### PolyType props
 
