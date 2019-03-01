@@ -18,7 +18,9 @@ const LoadingOverlay = ({ delay = 500 }) => {
 
     return (
         <div className={cx('LoadingOverlay', css.LoadingOverlay, { visible })}>
-            <AnimatedLogo scale={0.5} />
+            <div>
+                <AnimatedLogo scale={0.5} />
+            </div>
         </div>
     );
 };

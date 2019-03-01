@@ -4,7 +4,13 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: lighten(#094277, 5%);
+    max-height: 100vh;
+    background: linear-gradient(
+        to top,
+        darken(#094277, 5%) 0%,
+        lighten(#094277, 10%) 100%
+    );
+    box-shadow: inset 0px 0px 20px rgba(0, 0, 0, 0.9);
     z-index: 100;
     display: flex;
     align-items: center;

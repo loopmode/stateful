@@ -44,12 +44,19 @@
     }
 
     .App--body {
+        position: relative;
         display: flex;
         flex: 1;
         @include medium-screen {
             display: flex;
             flex-direction: column;
             flex: 1;
+        }
+    }
+
+    .LoadingOverlay {
+        @include medium-screen {
+            max-height: calc(100vh - 60px);
         }
     }
 
