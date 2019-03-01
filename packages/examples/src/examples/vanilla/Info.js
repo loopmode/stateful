@@ -26,6 +26,15 @@ export default () => (
                     Custom button styles
                 </a>
             </li>
+            <li>
+                <a
+                    href="https://github.com/loopmode/stateful/tree/master/packages/examples/src/examples/vanilla"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    This example
+                </a>
+            </li>
         </ul>
     </>
 );

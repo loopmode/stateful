@@ -74,6 +74,15 @@ export const Forms = () => (
                     Stateful button configuration
                 </a>
             </li>
+            <li>
+                <a
+                    href="https://github.com/loopmode/stateful/tree/master/packages/examples/src/examples/semantic-ui"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    This example
+                </a>
+            </li>
         </ul>
 
         <h4>Form Demo</h4>
