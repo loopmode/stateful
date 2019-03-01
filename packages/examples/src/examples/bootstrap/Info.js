@@ -1,5 +1,5 @@
 import React from 'react';
-import Code from 'components/Code';
+import Prism from 'components/Prism';
 
 export default () => (
     <>
@@ -31,11 +31,11 @@ export default () => (
         <p>
             The default <code>react-bootstrap</code> wrapper can be used via:
         </p>
-        <Code>
+        <Prism>
             {
                 "import Stateful from '@loopmode/stateful/lib/wrappers/bootstrap';"
             }
-        </Code>
+        </Prism>
         <p>Have a look at the relevant code:</p>
         <ul>
             <li>

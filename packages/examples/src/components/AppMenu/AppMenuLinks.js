@@ -61,7 +61,7 @@ AppMenuLinks.propTypes = {
     navDelay: PropTypes.number
 };
 AppMenuLinks.defaultProps = {
-    // enough time for the mobile menu slide animation to finish
+    // enough time for the CSS animation to finish before navigating
     navDelay: 300
 };
 

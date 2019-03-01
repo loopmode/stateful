@@ -4,6 +4,7 @@ import Remarkable from 'react-remarkable';
 
 import css from './Markdown.scss';
 import cx from 'classnames';
+import usePrism from 'components/Prism/usePrism';
 
 const Markdown = ({ className, ...props }) => {
     const ref = React.useRef();
@@ -14,22 +15,9 @@ const Markdown = ({ className, ...props }) => {
         </div>
     );
 };
+
 Markdown.propTypes = {
     className: PropTypes.string
 };
-export default Markdown;
 
-function usePrism(ref) {
-    const { loadDependencies } = require('components/Code/Code');
-    const applyPrism = async () => {
-        const { Prism } = await loadDependencies();
-        if (!ref) {
-            Prism.highlightAll();
-        } else if (ref.current) {
-            Prism.highlightAllUnder(ref.current);
-        }
-    };
-    React.useEffect(() => {
-        applyPrism();
-    });
-}
+export default Markdown;

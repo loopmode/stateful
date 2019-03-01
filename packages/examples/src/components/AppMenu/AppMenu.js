@@ -6,6 +6,9 @@ import cx from 'classnames';
 import css from './AppMenu.scss';
 import AppMenuLinks from './AppMenuLinks';
 
+import useOutsideEvent from './useOutsideEvent';
+import useBodyClass from './useBodyClass';
+
 /**
  * Renders the AppMenu container with some behaviour for mobile devices.
  * The actual navigation links are defined in AppMenuLinks.js
@@ -13,9 +16,15 @@ import AppMenuLinks from './AppMenuLinks';
 export default function AppMenu(props) {
     const ref = useRef();
 
-    hideOnOuterClick(ref, props);
-
-    usePreventBodyScroll(props.menuVisible);
+    useBodyClass({
+        enabled: props.menuVisible,
+        className: 'no-scroll'
+    });
+    useOutsideEvent(ref, {
+        enabled: props.menuVisible,
+        callback: props.onHideMenu,
+        eventName: 'click'
+    });
 
     return (
         <div
@@ -48,6 +57,7 @@ export default function AppMenu(props) {
         </div>
     );
 }
+
 AppMenu.propTypes = {
     children: PropTypes.node,
     menuVisible: PropTypes.bool,
@@ -55,28 +65,3 @@ AppMenu.propTypes = {
     onHideMenu: PropTypes.func,
     className: PropTypes.string
 };
-
-function usePreventBodyScroll(menuVisible) {
-    useEffect(() => {
-        const addClass = () => document.body.classList.add('no-scroll');
-        const removeClass = () => document.body.classList.remove('no-scroll');
-        if (menuVisible) {
-            addClass();
-        } else {
-            removeClass();
-        }
-        return () => removeClass();
-    }, [menuVisible]);
-}
-
-function hideOnOuterClick(ref, { onHideMenu, menuVisible }) {
-    const handleEvent = event => {
-        if (menuVisible && ref.current && !ref.current.contains(event.target)) {
-            onHideMenu();
-        }
-    };
-    useEffect(() => {
-        document.addEventListener('click', handleEvent);
-        return () => document.removeEventListener('click', handleEvent);
-    });
-}

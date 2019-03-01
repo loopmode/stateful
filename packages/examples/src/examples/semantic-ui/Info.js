@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Code from 'components/Code';
+import Prism from 'components/Prism';
 
 export default () => (
     <>
@@ -18,11 +18,11 @@ export const Buttons = () => (
         <p>
             The <code>semantic-ui-react</code> default wrapper can be used via:
         </p>
-        <Code>
+        <Prism>
             {
                 "import Stateful from '@loopmode/stateful/lib/wrappers/semantic-ui';"
             }
-        </Code>
+        </Prism>
         <p>
             It provides <code>loading</code>, <code>positive</code> and{' '}
             <code>negative</code> flags to the wrapped component, which is
@@ -58,11 +58,11 @@ export const Forms = () => (
         <p>
             The <code>semantic-ui-react</code> form wrapper can be used via:
         </p>
-        <Code>
+        <Prism>
             {
                 "import { StatefulForm } from '@loopmode/stateful/lib/wrappers/semantic-ui';"
             }
-        </Code>
+        </Prism>
         <p>
             It provides <code>loading</code>, <code>success</code> and{' '}
             <code>error</code> flags to the wrapped component. Note that this
