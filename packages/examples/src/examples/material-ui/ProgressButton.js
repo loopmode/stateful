@@ -19,6 +19,7 @@ const styles = () => ({
 
     success: {
         backgroundColor: green[500],
+        color: 'white',
         '&:hover': {
             backgroundColor: green[700]
         }
@@ -26,6 +27,7 @@ const styles = () => ({
 
     error: {
         backgroundColor: red[500],
+        color: 'white',
         '&:hover': {
             backgroundColor: red[700]
         }
