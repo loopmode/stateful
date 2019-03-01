@@ -68,6 +68,9 @@
     .Logo-inner {
         width: $outer-width;
         height: $outer-height;
+        transform: translate3D(0, 0, 0);
+        perspective: 1000;
+        backface-visibility: hidden;
     }
     .center-outer {
         position: absolute;

@@ -70,6 +70,9 @@
     .AppMenu {
         z-index: 3;
     }
+    .AppContent + .LoadingOverlay {
+        z-index: 2;
+    }
 
     .ButtonsExample {
         @include small-screen {
