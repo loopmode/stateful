@@ -1,6 +1,5 @@
 import React from 'react';
-
-import 'antd/dist/antd.css';
+import { Helmet } from 'react-helmet';
 
 import css from './AntDExample.scss';
 import cx from 'classnames';
@@ -13,6 +12,14 @@ import PrevNextLinks from 'components/PrevNextLinks';
 
 export default () => (
     <div className={cx('AntDExample', css.AntDExample)}>
+        <Helmet>
+            <link
+                rel="stylesheet"
+                href="https://cdnjs.cloudflare.com/ajax/libs/antd/3.13.6/antd.min.css"
+                type="text/css"
+            />
+            <title>antd example - @loopmode/stateful</title>
+        </Helmet>
         <Info />
         <Buttons />
         <RelevantCode />

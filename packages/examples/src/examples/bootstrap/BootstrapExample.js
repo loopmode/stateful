@@ -15,6 +15,7 @@ export default () => (
                 href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
                 type="text/css"
             />
+            <title>react-bootstrap example - @loopmode/stateful</title>
         </Helmet>
         <Info />
         <Buttons />

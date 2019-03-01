@@ -18,10 +18,10 @@ export default () => (
                 href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css"
                 type="text/css"
             />
+            <title>semantic-ui example - @loopmode/stateful</title>
         </Helmet>
         <Info />
         <Buttons />
-        <div className="push" />
         <Forms />
         <RelevantCode />
         <PrevNextLinks />
