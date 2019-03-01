@@ -28,18 +28,6 @@ export const Buttons = () => (
             <code>negative</code> flags to the wrapped component, which is
             supported by the <code>Button</code> component.
         </p>
-        <p>Have a look at the relevant code:</p>
-        <ul>
-            <li>
-                <a
-                    href="https://github.com/loopmode/stateful/blob/master/packages/stateful/src/wrappers/semantic-ui.js#L5-L17"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Stateful button configuration
-                </a>
-            </li>
-        </ul>
     </>
 );
 export const Forms = () => (
@@ -63,27 +51,6 @@ export const Forms = () => (
             It provides <code>loading</code>, <code>success</code> and{' '}
             <code>error</code> flags to the wrapped component.
         </p>
-        <p>Have a look at the relevant code:</p>
-        <ul>
-            <li>
-                <a
-                    href="https://github.com/loopmode/stateful/blob/master/packages/stateful/src/wrappers/semantic-ui.js#L20-L34"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Stateful button configuration
-                </a>
-            </li>
-            <li>
-                <a
-                    href="https://github.com/loopmode/stateful/tree/master/packages/examples/src/examples/semantic-ui"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    This example
-                </a>
-            </li>
-        </ul>
 
         <h4>Form Demo</h4>
         <i className="push info">

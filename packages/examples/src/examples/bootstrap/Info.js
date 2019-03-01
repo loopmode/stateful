@@ -34,26 +34,5 @@ export default () => (
                 "import Stateful from '@loopmode/stateful/lib/wrappers/bootstrap';"
             }
         </Prism>
-        <p>Have a look at the relevant code:</p>
-        <ul>
-            <li>
-                <a
-                    href="https://github.com/loopmode/stateful/blob/master/packages/stateful/src/wrappers/bootstrap.js#L4"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Stateful configuration
-                </a>
-            </li>
-            <li>
-                <a
-                    href="https://github.com/loopmode/stateful/tree/master/packages/examples/src/examples/bootstrap"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    This example
-                </a>
-            </li>
-        </ul>
     </>
 );

@@ -15,26 +15,5 @@ export default () => (
             subtle animation, while the <code>success</code> and{' '}
             <code>error</code> classes give it green or red color.
         </p>
-        <p>Have a look at the relevant code:</p>
-        <ul>
-            <li>
-                <a
-                    href="https://github.com/loopmode/stateful/blob/master/packages/examples/src/examples/vanilla/VanillaExample.scss"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Custom button styles
-                </a>
-            </li>
-            <li>
-                <a
-                    href="https://github.com/loopmode/stateful/tree/master/packages/examples/src/examples/vanilla"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    This example
-                </a>
-            </li>
-        </ul>
     </>
 );

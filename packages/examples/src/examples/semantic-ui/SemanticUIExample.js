@@ -3,6 +3,7 @@ import React from 'react';
 import Info from './Info';
 import Buttons from './Buttons';
 import Forms from './Forms';
+import RelevantCode from './RelevantCode';
 
 import css from './SemanticUIExample';
 import cx from 'classnames';
@@ -14,6 +15,7 @@ export default () => (
         <Buttons />
         <div className="push" />
         <Forms />
+        <RelevantCode />
         <PrevNextLinks />
     </div>
 );
