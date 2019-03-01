@@ -5,10 +5,9 @@ export default () => (
     <>
         <h1>AntD</h1>
         <p>
-            AntD can't be fully supported out of the box because its buttons do
-            not support any kind of success state, so you'll have to define some
-            CSS for it yourself. Other than that, its buttons do support a
-            loading flag and display an animated spinner, which is great.
+            AntD buttons do not support success and error state, so you'll have
+            to define some CSS for that yourself. Besides that, they do support
+            a loading flag to show an animated spinner, which is neat.
         </p>
         <p>
             The default <code>antd</code> wrapper can be used via:

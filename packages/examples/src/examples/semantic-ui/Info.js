@@ -8,7 +8,7 @@ export default () => (
         <p>
             Semantic UI is supported pretty well out of the box, because it is
             capable of displaying the pending, success and error states by
-            passing props on its components.
+            setting boolean props on its components.
         </p>
     </>
 );
@@ -46,13 +46,9 @@ export const Forms = () => (
     <>
         <h3>Forms</h3>
         <p>
-            Semantic UI forms are supported out of the box as well. While there
-            is an apparent naming inconsistency with the success and error props
-            (they are actually called <code>success</code> and{' '}
-            <code>error</code> in the <code>Form</code> component, while they
-            are called <code>positive</code> and <code>negative</code> in the{' '}
-            <code>Button</code> component) the form does support such props as
-            well as a <code>loading</code> one.
+            Semantic UI forms are supported out of the box as well. Note that
+            this also includes <code>&lt;Message success&gt;</code> and{' '}
+            <code>&lt;Message error&gt;</code> visibility.
         </p>
 
         <p>
@@ -65,9 +61,7 @@ export const Forms = () => (
         </Prism>
         <p>
             It provides <code>loading</code>, <code>success</code> and{' '}
-            <code>error</code> flags to the wrapped component. Note that this
-            also triggers <code>&lt;Message success&gt;</code> and{' '}
-            <code>&lt;Message error&gt;</code> visibility.
+            <code>error</code> flags to the wrapped component.
         </p>
         <p>Have a look at the relevant code:</p>
         <ul>

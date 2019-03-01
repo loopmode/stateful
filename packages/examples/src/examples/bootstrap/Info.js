@@ -5,19 +5,17 @@ export default () => (
     <>
         <h1>Bootstrap</h1>
         <p>
-            Unfortunately, <code>react-bootstrap</code> does not provide any
-            sophisticated loading states or animations, so besides indicating
-            success or danger, we need to perform some tricks for the loading
-            state.
+            While <code>react-bootstrap</code> provides danger and success
+            variants of their buttons, there is no built-in loading variant.
         </p>
         <p>
-            As suggested by the official documentation, the default wrapper
-            replaces the <code>children</code> property of the wrapped component
-            and displays a "Loading..." string while pending or busy.
+            Just as suggested in their docs, the default wrapper replaces the{' '}
+            <code>children</code> property of the wrapped component and displays
+            a "Loading..." string while pending or busy.
         </p>
         <p>
-            If you need to change that text or localize it, simply create a
-            custom wrapper and provide the <code>pendingProps</code> and{' '}
+            If you need to change that text or localize it, simply create your
+            own wrapper and provide the <code>pendingProps</code> and{' '}
             <code>busyProps</code> in a similar fashion to how how the{' '}
             <a
                 href="https://github.com/loopmode/stateful/blob/master/packages/stateful/src/wrappers/bootstrap.js#L4"
