@@ -7,7 +7,20 @@
     .spacer {
         flex: 1;
     }
+    border-top: 1px solid #eee;
+    padding-top: 20px;
     @include large-screen {
         margin-top: 40px;
+    }
+    a {
+        display: flex;
+        align-items: center;
+        &:first-child {
+            margin-right: 5px;
+        }
+        &:last-child {
+            margin-left: 5px;
+            text-align: right;
+        }
     }
 }

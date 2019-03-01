@@ -5,6 +5,8 @@ import { withRouter } from 'react-router-dom';
 import css from './PrevNextLinks.scss';
 import cx from 'classnames';
 
+import { MdNavigateBefore, MdNavigateNext } from 'react-icons/md';
+
 const PrevNextLinks = props => {
     const navLinks = document.querySelectorAll('.AppMenu a');
     const { prevLink, nextLink } = getPrevNextLinks(
@@ -35,12 +37,22 @@ function getPrevNextLinks(navLinks, pathname) {
     const prevAnchor = navLinks[currentIndex - 1];
     const prevLink = prevAnchor && {
         to: prevAnchor.hash.replace('#', ''),
-        children: `◀ ${prevAnchor.innerHTML}`
+        children: (
+            <>
+                <MdNavigateBefore />
+                {prevAnchor.innerHTML}
+            </>
+        )
     };
     const nextAnchor = navLinks[currentIndex + 1];
     const nextLink = nextAnchor && {
         to: nextAnchor.hash.replace('#', ''),
-        children: `${nextAnchor.innerHTML} ▶`
+        children: (
+            <>
+                {nextAnchor.innerHTML}
+                <MdNavigateNext />
+            </>
+        )
     };
     return {
         prevLink,
