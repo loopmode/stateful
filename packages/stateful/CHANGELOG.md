@@ -1,3 +1,7 @@
+# 1.1.2
+
+-   Add `index.d.ts` typings for usage in typescript projects
+
 # 1.1.1
 
 -   `antd` wrapper: Pass `error` CSS class instead of `danger` type for error states

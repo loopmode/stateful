@@ -1,7 +1,7 @@
 {
     "name": "@loopmode/stateful",
     "description": "A react component for visual indication of async state",
-    "version": "1.1.1",
+    "version": "1.1.2",
     "main": "lib/index.js",
     "license": "MIT",
     "author": "Jovica Aleksic <jovica.aleksic@loopmode.de>",
