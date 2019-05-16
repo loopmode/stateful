@@ -26,6 +26,11 @@ declare module '@loopmode/stateful' {
 
         rejectValue?: () => void;
     }
-    class Stateful extends React.Component<StatefulProps, any> {}
-    export = Stateful;
+
+    export default class Stateful extends React.Component<StatefulProps, any> {}
+
+    export function StatefulHOC(
+        DecoratedClass: React.Component | React.FunctionComponent,
+        options?: StatefulProps
+    ): React.FunctionComponent;
 }

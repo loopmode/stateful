@@ -1,3 +1,11 @@
+# 1.1.4
+
+-   Fix `StatefulHOC` typescript definition
+
+# 1.1.3
+
+-   Add `StatefulHOC` component
+
 # 1.1.2
 
 -   Add `index.d.ts` typings for usage in typescript projects
