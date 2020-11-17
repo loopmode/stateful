@@ -1,6 +1,6 @@
 import React from "react";
 import { Stateful } from "./Stateful";
-import { StatefulConsumer } from "@loopmode/stateful/lib/Stateful";
+import { StatefulConsumer } from "@loopmode/stateful";
 
 const wait = (time: number) => new Promise((resolve) => setTimeout(resolve, time));
 
