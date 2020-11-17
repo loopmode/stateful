@@ -1,169 +1,163 @@
 "use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _react = _interopRequireDefault(require("react"));
-
-var _propTypes = _interopRequireDefault(require("prop-types"));
-
-var _classnames = _interopRequireDefault(require("classnames"));
-
-var _timeout = _interopRequireDefault(require("./hooks/timeout"));
-
-var _didMount = _interopRequireDefault(require("./hooks/did-mount"));
-
-var _willUnmount = _interopRequireDefault(require("./hooks/will-unmount"));
-
-var Status = _interopRequireWildcard(require("./Status"));
-
-var _asArray = _interopRequireDefault(require("./utils/asArray"));
-
-var _createCallbacks = _interopRequireDefault(require("./utils/createCallbacks"));
-
-var _createProps = require("./utils/createProps");
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
-
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
-
-function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
-
-function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
-var PolyType = _propTypes.default.oneOfType([_propTypes.default.func, _propTypes.default.string, _propTypes.default.arrayOf(_propTypes.default.string)]);
-
-var defaultRejectValue = function defaultRejectValue(value) {
-  return value instanceof Error;
-};
-
-Stateful.propTypes = {
-  children: _propTypes.default.node,
-  callbacks: PolyType,
-  pendingProps: PolyType,
-  pendingClasses: PolyType,
-  busyDelay: _propTypes.default.number,
-  busyProps: PolyType,
-  busyClasses: PolyType,
-  successProps: PolyType,
-  successClasses: PolyType,
-  errorProps: PolyType,
-  errorClasses: PolyType,
-  hintDuration: _propTypes.default.number,
-  successDuration: _propTypes.default.number,
-  errorDuration: _propTypes.default.number,
-  delimiter: _propTypes.default.string,
-  rejectValue: _propTypes.default.func
-}; // Note that we use the keys of the defaultProps object to omit
-// our own props from propagation to children
-// make sure to create a key for each own prop - even if the value must be `undefined`
-
-Stateful.defaultProps = {
-  callbacks: ['onClick'],
-  pendingProps: ['disabled'],
-  pendingClasses: [],
-  busyDelay: 0,
-  busyProps: ['disabled'],
-  busyClasses: ['busy'],
-  successProps: [],
-  successClasses: ['success'],
-  errorProps: [],
-  errorClasses: ['error'],
-  hintDuration: 1000,
-  successDuration: undefined,
-  errorDuration: undefined,
-  delimiter: ' ',
-  rejectValue: defaultRejectValue
-};
-
-function Stateful(props) {
-  var _hintDurations;
-
-  var isMounted = _react.default.useRef();
-
-  var ifMounted = function ifMounted(fn) {
-    return function () {
-      return isMounted.current && fn();
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
     };
-  };
-
-  var _React$useState = _react.default.useState(Status.IDLE),
-      _React$useState2 = _slicedToArray(_React$useState, 2),
-      status = _React$useState2[0],
-      setStatus = _React$useState2[1];
-
-  var setBusy = function setBusy() {
-    return setStatus(Status.BUSY);
-  };
-
-  var setIdle = function setIdle() {
-    return setStatus(Status.IDLE);
-  };
-
-  var hintDurations = (_hintDurations = {}, _defineProperty(_hintDurations, Status.SUCCESS, props.successDuration || props.hintDuration), _defineProperty(_hintDurations, Status.ERROR, props.errorDuration || props.hintDuration), _hintDurations);
-  var busyTimer = (0, _timeout.default)(setBusy, props.busyDelay);
-  var idleTimer = (0, _timeout.default)(setIdle, hintDurations[status] || props.hintDuration);
-  (0, _didMount.default)(function () {
-    isMounted.current = true;
-  });
-  (0, _willUnmount.default)(function () {
-    isMounted.current = false;
-    idleTimer.clear();
-    busyTimer.clear();
-  });
-  var handlers = {
-    onPromise: ifMounted(function () {
-      setStatus(Status.PENDING);
-      idleTimer.clear();
-      busyTimer.start();
-    }),
-    onReject: ifMounted(function () {
-      setStatus(Status.ERROR);
-      busyTimer.clear();
-      idleTimer.start();
-    }),
-    onResolve: ifMounted(function (result) {
-      if (typeof props.rejectValue === 'function' && props.rejectValue(result)) {
-        handlers.rejectValue(result);
-        return;
-      }
-
-      setStatus(Status.SUCCESS);
-      busyTimer.clear();
-      idleTimer.start();
-    })
-  };
-  return _react.default.Children.map(props.children, function (child) {
-    // propagate all unknown props
-    var propagatedProps = (0, _createProps.omitProps)(child.props, [].concat(_toConsumableArray((0, _asArray.default)(props.callbacks)), _toConsumableArray(Object.keys(Stateful.defaultProps)))); // add new props for the current status
-
-    var statusProps = _objectSpread({
-      className: (0, _classnames.default)(child.props.className, (0, _createProps.createStatusClasses)(status, props))
-    }, (0, _createProps.createStatusProps)(status, props)); // override the callbacks, attach handlers
-
-
-    var callbackProps = (0, _createCallbacks.default)(child.props, props.callbacks, handlers);
-    return _react.default.cloneElement(child, _objectSpread({}, propagatedProps, statusProps, callbackProps));
-  });
+    return __assign.apply(this, arguments);
+};
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
+var __spreadArrays = (this && this.__spreadArrays) || function () {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+    for (var r = Array(s), k = 0, i = 0; i < il; i++)
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+            r[k] = a[j];
+    return r;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.BusyConsumer = exports.PendingConsumer = exports.FinishedConsumer = exports.ErrorConsumer = exports.SuccessConsumer = exports.IdleConsumer = exports.StatefulGate = exports.StatefulConsumer = exports.Stateful = void 0;
+var react_1 = __importDefault(require("react"));
+var classnames_1 = __importDefault(require("classnames"));
+var Status_1 = require("./Status");
+var asArray_1 = __importDefault(require("./utils/asArray"));
+var asFlags_1 = __importDefault(require("./utils/asFlags"));
+var createCallbacks_1 = __importDefault(require("./utils/createCallbacks"));
+var createProps_1 = require("./utils/createProps");
+var Context_1 = __importStar(require("./Context"));
+var hooks_1 = require("./hooks");
+Stateful.defaultProps = {
+    // Note that we use the keys of the defaultProps object to omit
+    // our own props from propagation to children.
+    // MAKE SURE TO CREATE A KEY FOR EACH SUPPORTED PROP, or that prop will be passed to wrapped children
+    monitor: ["onClick"],
+    pendingProps: [],
+    pendingClasses: [],
+    busyProps: [],
+    busyClasses: [],
+    busyDelay: 0,
+    successProps: [],
+    successClasses: [],
+    successDuration: undefined,
+    errorProps: [],
+    errorClasses: [],
+    errorDuration: undefined,
+    hintDuration: 1000,
+    delimiter: " ",
+    shouldRejectValue: function isErrorValue(value) {
+        return value instanceof Error;
+    },
+    provideProps: true,
+    provideContext: false,
+};
+function Stateful(props) {
+    var _a = hooks_1.useStateful(props), status = _a.status, handlers = _a.handlers;
+    return react_1.default.Children.map(props.children, function (child) {
+        if (!react_1.default.isValidElement(child)) {
+            return child;
+        }
+        // all existing props we found on the wrapped child
+        var childProps = child.props;
+        // the props we generate and attach to the wrapped child
+        var statusProps = __assign({ className: classnames_1.default(childProps.className, createProps_1.createStatusClassFlags(status, props)) }, createProps_1.createStatusProps(status, props));
+        // props of the child that we pass along because they are unknown to us
+        var foreignProps = createProps_1.omitProps(childProps, __spreadArrays(asArray_1.default(props.monitor), Object.keys(Stateful.defaultProps)));
+        // overridden callbacks for the wrapped child. these are the monitored functions
+        var callbackOverrides = createCallbacks_1.default(childProps, props.monitor, handlers);
+        if (props.provideContext && props.provideProps) {
+            // case "props and context": provide context, and also attach statusProps
+            return (react_1.default.createElement(Context_1.StatefulProvider, { value: { statusProps: statusProps, status: status, configProps: props } }, react_1.default.cloneElement(child, __assign(__assign(__assign({}, callbackOverrides), foreignProps), statusProps))));
+        }
+        if (props.provideContext) {
+            // case "context only": provide context, but do not attach statusProps
+            return (react_1.default.createElement(Context_1.StatefulProvider, { value: { statusProps: statusProps, status: status, configProps: props } }, react_1.default.cloneElement(child, __assign(__assign({}, callbackOverrides), foreignProps))));
+        }
+        // case "props only": only attach statusProps, but do not provide context
+        return react_1.default.cloneElement(child, __assign(__assign(__assign({}, callbackOverrides), foreignProps), statusProps));
+    });
 }
-
-var _default = Stateful;
-exports.default = _default;
+exports.Stateful = Stateful;
+function StatefulConsumer(props) {
+    var _a = react_1.default.useContext(Context_1.default), configProps = _a.configProps, statusProps = _a.statusProps;
+    return react_1.default.Children.map(props.children, function (child) {
+        if (!react_1.default.isValidElement(child)) {
+            return child;
+        }
+        var ignoredStatuses = asArray_1.default(props.ignore);
+        var effectiveStatuses = Status_1.AllStatuses.filter(function (s) { return !ignoredStatuses.includes(s); });
+        var effectivePropKeys = createProps_1.getStatusPropKeys(effectiveStatuses, configProps);
+        var effectiveClassKeys = createProps_1.getStatusClassNames(effectiveStatuses, configProps);
+        var childProps = __assign(__assign({}, createProps_1.pickProps(statusProps, effectivePropKeys)), { className: classnames_1.default(child.props.className, createProps_1.pickProps(asFlags_1.default(statusProps.className), effectiveClassKeys)) });
+        return react_1.default.cloneElement(child, childProps);
+    });
+}
+exports.StatefulConsumer = StatefulConsumer;
+function StatefulGate(props) {
+    var status = react_1.default.useContext(Context_1.default).status;
+    if (props.allow === status || props.allow.includes(status)) {
+        return props.children;
+    }
+    return null;
+}
+exports.StatefulGate = StatefulGate;
+function IdleConsumer(props) {
+    return react_1.default.createElement(StatefulGate, __assign({}, props, { allow: Status_1.Status.IDLE }));
+}
+exports.IdleConsumer = IdleConsumer;
+function SuccessConsumer(props) {
+    return react_1.default.createElement(StatefulGate, __assign({}, props, { allow: Status_1.Status.SUCCESS }));
+}
+exports.SuccessConsumer = SuccessConsumer;
+function ErrorConsumer(props) {
+    return react_1.default.createElement(StatefulGate, __assign({}, props, { allow: Status_1.Status.ERROR }));
+}
+exports.ErrorConsumer = ErrorConsumer;
+function FinishedConsumer(props) {
+    return react_1.default.createElement(StatefulGate, __assign({}, props, { allow: [Status_1.Status.SUCCESS, Status_1.Status.ERROR] }));
+}
+exports.FinishedConsumer = FinishedConsumer;
+function PendingConsumer(_a) {
+    var exact = _a.exact, props = __rest(_a, ["exact"]);
+    return react_1.default.createElement(StatefulGate, __assign({}, props, { allow: exact ? Status_1.Status.PENDING : [Status_1.Status.BUSY, Status_1.Status.PENDING] }));
+}
+exports.PendingConsumer = PendingConsumer;
+function BusyConsumer(_a) {
+    var exact = _a.exact, props = __rest(_a, ["exact"]);
+    return react_1.default.createElement(StatefulGate, __assign({}, props, { allow: exact ? Status_1.Status.BUSY : [Status_1.Status.BUSY, Status_1.Status.PENDING] }));
+}
+exports.BusyConsumer = BusyConsumer;

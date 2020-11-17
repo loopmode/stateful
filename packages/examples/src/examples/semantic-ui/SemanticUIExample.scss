@@ -1,8 +1,0 @@
-:local(.SemanticUIExample) {
-    form[disabled] * {
-        pointer-events: none;
-    }
-    form[disabled] button {
-        opacity: 0.9;
-    }
-}

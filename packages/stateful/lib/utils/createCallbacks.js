@@ -1,16 +1,17 @@
 "use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = createCallbacks;
-
-var _asPromise = _interopRequireDefault(require("./asPromise"));
-
-var _asArray = _interopRequireDefault(require("./asArray"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+var __spreadArrays = (this && this.__spreadArrays) || function () {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+    for (var r = Array(s), k = 0, i = 0; i < il; i++)
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+            r[k] = a[j];
+    return r;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var isPromise_1 = __importDefault(require("./isPromise"));
+var asArray_1 = __importDefault(require("./asArray"));
 /**
  * Creates an object with handler functions for the callbacks of a given child.
  *
@@ -27,45 +28,36 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @param {Function} handlers.onPromise - Invoked when the callback returned a promise
  * @param {Function} handlers.onResolve - Invoked when the returned promise is resolved
  * @param {Function} handlers.onReject - Invoked when the returned promise is rejected
- * @returns {Object} Object containing wrapped callbacks with their original names
  */
-function createCallbacks(childProps, callbackNames, _ref, delimiter) {
-  var onPromise = _ref.onPromise,
-      onResolve = _ref.onResolve,
-      onReject = _ref.onReject;
-
-  if (!callbackNames) {
-    return {};
-  }
-
-  function wrapCallback(originalCallback) {
-    for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-      args[_key - 1] = arguments[_key];
+function createCallbacks(childProps, callbackNames, handlers, delimiter) {
+    if (!callbackNames) {
+        return {};
     }
-
-    var callbackResult = originalCallback.apply(void 0, args);
-    var promise = (0, _asPromise.default)(callbackResult);
-
-    if (promise) {
-      promise.catch(onReject);
-      promise.then(onResolve);
-      onPromise(promise);
-    }
-  }
-
-  return (0, _asArray.default)(callbackNames, delimiter).reduce(function (result, callbackName) {
-    var originalCallback = childProps[callbackName];
-
-    if (typeof originalCallback === 'function') {
-      result[callbackName] = function () {
-        for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-          args[_key2] = arguments[_key2];
+    function runCallback(callback) {
+        var args = [];
+        for (var _i = 1; _i < arguments.length; _i++) {
+            args[_i - 1] = arguments[_i];
         }
-
-        return wrapCallback.apply(void 0, [originalCallback].concat(args));
-      };
+        var result = callback.apply(void 0, args);
+        if (isPromise_1.default(result)) {
+            var promise = result;
+            promise.catch(handlers.onReject);
+            promise.then(handlers.onResolve);
+            handlers.onPromise(promise);
+        }
     }
-
-    return result;
-  }, {});
+    return asArray_1.default(callbackNames, delimiter).reduce(function (result, callbackName) {
+        var callbackCandidate = childProps[callbackName];
+        if (typeof callbackCandidate === "function") {
+            result[callbackName] = function () {
+                var args = [];
+                for (var _i = 0; _i < arguments.length; _i++) {
+                    args[_i] = arguments[_i];
+                }
+                return runCallback.apply(void 0, __spreadArrays([callbackCandidate], args));
+            };
+        }
+        return result;
+    }, {});
 }
+exports.default = createCallbacks;

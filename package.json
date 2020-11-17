@@ -1,27 +1,18 @@
 {
-    "private": true,
-    "name": "@loopmode/stateful-workspace",
-    "version": "1.0.0",
-    "main": "index.js",
-    "author": "Jovica Aleksic <jovica.aleksic@loopmode.de>",
-    "license": "MIT",
-    "workspaces": [
-        "packages/*"
-    ],
-    "scripts": {
-        "clean": "rm -rf ./packages/examples/build/* ./packages/*/lib/*",
-        "build": "lerna run build --no-private --stream",
-        "watch": "lerna run watch --no-private --stream --parallel",
-        "develop": "cd packages/examples && yarn start",
-        "deploy": "yarn build && cd packages/examples && yarn deploy",
-        "lint": "lerna run lint --parallel --stream",
-        "fix": "lerna run lint --parallel --stream -- --fix",
-        "start": "npm-run-all --parallel watch develop"
-    },
-    "devDependencies": {
-        "cross-env": "^5.2.0",
-        "gh-pages": "^2.0.1",
-        "lerna": "^3.13.0",
-        "npm-run-all": "^4.1.5"
-    }
+  "private": true,
+  "name": "@loopmode/stateful-workspace",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "start": "run-p start:examples start:package",
+    "start:examples": "cd packages/examples && yarn start",
+    "start:package": "cd packages/stateful && yarn start"
+  },
+  "devDependencies": {
+    "npm-run-all": "^4.1.5"
+  }
 }

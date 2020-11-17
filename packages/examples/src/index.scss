@@ -1,73 +1,21 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto');
+@charset "utf-8";
+@import "~bulma/bulma.sass";
 
-/* ---------- globals and basics ---------- */
-$font-family: Roboto, Arial, 'Helvetica Neue', Helvetica, sans-serif;
-
-html,
-body,
-#root,
-.App {
-    // some external stylesheets mess around with global styles (bootstrap, semantic-ui), thus we use !important
-    width: 100% !important;
-    height: auto !important;
-
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    min-height: 100vh;
-    font-size: 16px !important;
+button {
+  transition: background 0.3s;
 }
 
-body.no-scroll {
-    overflow: hidden;
-}
-
-* {
-    box-sizing: border-box;
-    text-size-adjust: 100%;
-}
-
-.App {
-    line-height: 1.4285em !important;
-    font-family: $font-family !important;
-
-    h1,
-    h2,
-    h3,
-    h4,
-    h5 {
-        font-family: $font-family;
-        line-height: 1.28571429em;
-        margin: calc(2rem - 0.14285714em) 0 1rem;
-        font-weight: bold;
-        padding: 0;
-    }
-
-    a {
-        color: #4183c4;
-        text-decoration: none;
-        &:hover {
-            text-decoration: underline;
-        }
-    }
-    h1 {
-        font-size: 2rem;
-    }
-    h2 {
-        font-size: 1.71rem;
-    }
-    h3 {
-        font-size: 1.29rem;
-    }
-    h4 {
-        font-size: 1.07rem;
-    }
-    p {
-        display: block;
-        margin-block-start: 1em;
-        margin-block-end: 1em;
-        margin-inline-start: 0px;
-        margin-inline-end: 0px;
-    }
+*:not(.button).is-loading {
+  position: relative;
+  pointer-events: none;
+  opacity: 0.5;
+  &:after {
+    @include loader;
+    position: absolute;
+    top: calc(50% - 2.5em);
+    left: calc(50% - 2.5em);
+    width: 5em;
+    height: 5em;
+    border-width: 0.25em;
+  }
 }
