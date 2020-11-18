@@ -1,27 +1,40 @@
 import React from "react";
-import { Stateful } from "./Stateful";
-import { StatefulConsumer } from "@loopmode/stateful";
+import { Stateful } from "@loopmode/stateful";
+import { ToggleCode } from "../ToggleCode";
+import raw from "raw.macro";
+
+// The Stateful wrapper can be used on form elements as well, by using `monitor="onSubmit"`
+// however, your submit button will be deeply nested, and only the wrapped form element will receive stateful props
+// in order to display success or error state on your submit button, you can use the context features
+// - in the wrapper, you set the provideContext prop
+// - deeply nested, you can use Stateful.Consumer to pick up the statefull props and add them to its children
 
 const wait = (time: number) => new Promise((resolve) => setTimeout(resolve, time));
 
 async function dummyLogin() {
   await wait(200 + Math.random() * 800);
   if (Math.random() > 0.5) {
-    return Promise.reject(new Error("Something went wrong"));
+    return Promise.reject(new Error("Incorrect value"));
   }
   return Promise.resolve({ id: 1 });
 }
 
-export function FormExample() {
-  const [error, setError] = React.useState("");
+export default function FormContextExample() {
+  const [error, setError] = React.useState<any>({
+    email: "",
+    password: "",
+  });
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      setError("");
+      setError({});
       await dummyLogin();
     } catch (error) {
-      console.log();
-      setError(error.message);
+      const random = Math.random();
+      setError({
+        email: random > 0.5 ? error.message : "",
+        password: random < 0.5 ? error.message : "",
+      });
       return error;
     }
   };
@@ -29,8 +42,8 @@ export function FormExample() {
     <div className="">
       <div className="container">
         <div className="columns is-5-tablet is-4-desktop is-3-widescreen">
-          <div className="column">
-            <Stateful busyDelay={0} monitor="onSubmit" provideContext>
+          <div className="column is-half">
+            <Stateful monitor="onSubmit" provideContext>
               <form className="box" onSubmit={handleSubmit}>
                 <div className="field">
                   <label className="label">Email</label>
@@ -40,6 +53,7 @@ export function FormExample() {
                       <i className="fa fa-envelope"></i>
                     </span>
                   </div>
+                  {error.email && <p className="help is-danger">{error.email}</p>}
                 </div>
                 <div className="field">
                   <label className="label">Password</label>
@@ -49,6 +63,7 @@ export function FormExample() {
                       <i className="fa fa-lock"></i>
                     </span>
                   </div>
+                  {error.password && <p className="help is-danger">{error.password}</p>}
                 </div>
                 <div className="field">
                   <label className="checkbox">
@@ -56,18 +71,18 @@ export function FormExample() {
                   </label>
                 </div>
                 <div className="field">
-                  {error && <p className="help is-danger">{error}</p>}
-                  <StatefulConsumer ignore="busy">
+                  <Stateful.Consumer ignore="busy">
                     <button className="button" type="submit">
                       Login
                     </button>
-                  </StatefulConsumer>
+                  </Stateful.Consumer>
                 </div>
               </form>
             </Stateful>
           </div>
         </div>
       </div>
+      <ToggleCode content={raw("./form-context-example.tsx")} />
     </div>
   );
 }
