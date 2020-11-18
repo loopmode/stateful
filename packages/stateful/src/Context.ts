@@ -1,8 +1,8 @@
 import React from "react";
-import { StatefulContextType } from "./types";
+import { StatefulContextType, StatefulProps } from "./types";
 import { Status } from "./Status";
 
-const StatefulContext = React.createContext<StatefulContextType>({
+export const StatefulContext = React.createContext<StatefulContextType>({
   status: Status.IDLE,
   statusProps: {},
   configProps: {},
@@ -10,4 +10,10 @@ const StatefulContext = React.createContext<StatefulContextType>({
 export const StatefulProvider = StatefulContext.Provider;
 StatefulContext.displayName = "StatefulContext";
 
-export default StatefulContext;
+ 
+
+export const StatefulConfigContext = React.createContext<StatefulProps>({});
+export const StatefulConfigProvider = StatefulConfigContext.Provider;
+StatefulConfigContext.displayName = "StatefulConfigContext";
+
+ 

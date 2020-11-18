@@ -15,11 +15,11 @@ import {
   pickProps,
 } from "./utils/createProps";
 
-import StatefulContext, { StatefulProvider } from "./Context";
+import { StatefulConfigContext, StatefulContext, StatefulProvider } from "./Context";
 import { useStateful } from "./hooks";
 import { StatefulProps } from "./types";
 
-Stateful.defaultProps = {
+const defaultProps = {
   // Note that we use the keys of the defaultProps object to omit
   // our own props from propagation to children.
   // MAKE SURE TO CREATE A KEY FOR EACH SUPPORTED PROP, or that prop will be passed to wrapped children
@@ -53,11 +53,13 @@ Stateful.defaultProps = {
 };
 
 export function Stateful(
-  props: StatefulProps & {
+  componentProps: StatefulProps & {
     provideProps?: boolean;
     provideContext?: boolean;
   }
-) {
+): React.ReactElement {
+  const contextProps = React.useContext(StatefulConfigContext);
+  const props = { ...defaultProps, ...contextProps, ...componentProps };
   const { status, handlers } = useStateful(props);
 
   return React.Children.map<any, any>(props.children, (child) => {
@@ -77,7 +79,7 @@ export function Stateful(
     // props of the child that we pass along because they are unknown to us
     const foreignProps = omitProps(childProps, [
       ...asArray(props.monitor!),
-      ...Object.keys(Stateful.defaultProps),
+      ...Object.keys(defaultProps),
     ]);
 
     // overridden callbacks for the wrapped child. these are the monitored functions
@@ -117,7 +119,7 @@ export function Stateful(
   });
 }
 
-export function StatefulConsumer(props: {
+export function Consumer(props: {
   children?: React.ReactElement | React.ReactElement[];
   ignore?: string | string[];
 }) {
@@ -144,7 +146,10 @@ export function StatefulConsumer(props: {
   });
 }
 
-export function StatefulGate(props: { children?: React.ReactNode; allow: Status | Status[] }) {
+export function StatefulGate(props: {
+  children?: React.ReactNode;
+  allow: Status | Status[];
+}): React.ReactElement | null {
   const { status } = React.useContext(StatefulContext);
 
   if (props.allow === status || props.allow.includes(status)) {
@@ -187,3 +192,11 @@ export function BusyConsumer({
 }>) {
   return <StatefulGate {...props} allow={exact ? Status.BUSY : [Status.BUSY, Status.PENDING]} />;
 }
+
+Stateful.Consumer = Consumer;
+Stateful.IdleConsumer = IdleConsumer;
+Stateful.SuccessConsumer = SuccessConsumer;
+Stateful.ErrorConsumer = ErrorConsumer;
+Stateful.FinishedConsumer = FinishedConsumer;
+Stateful.PendingConsumer = PendingConsumer;
+Stateful.BusyConsumer = BusyConsumer;

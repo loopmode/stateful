@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "start": "tsc --watch"
+    "start": "tsc --watch",
+    "clean": "rm -rf lib"
   },
   "peerDependencies": {
     "react": ">= 16.8.0"
