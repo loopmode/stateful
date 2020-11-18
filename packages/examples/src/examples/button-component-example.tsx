@@ -49,10 +49,10 @@ export default function ButtonComponentExample() {
   return (
     <div className="">
       <div className="buttons">
-        <Button onClick={handleSuccessClick}>Success</Button>
-        <Button onClick={handleErrorClick}>Error</Button>
+        <Button onClick={handleSuccessClick}>Will succeed</Button>
+        <Button onClick={handleErrorClick}>Will fail</Button>
         <Button onClick={handleRandomClick} stateful={{ busyDelay: 0 }}>
-          Random
+          Random fail
         </Button>
       </div>
 

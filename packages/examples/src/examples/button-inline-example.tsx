@@ -23,19 +23,19 @@ export default function ButtonInlineExample() {
       <div className="buttons">
         <Stateful busyDelay={500}>
           <button className="button" onClick={successCallback}>
-            Success
+            Will succeed
           </button>
         </Stateful>
         
         <Stateful>
           <button className="button" onClick={errorCallback}>
-            Error
+            Will fail
           </button>
         </Stateful>
 
         <Stateful errorClasses="is-warning">
           <button className="button" onClick={errorCallback}>
-            Warn
+            Will warn
           </button>
         </Stateful>
 
