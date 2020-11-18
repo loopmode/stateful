@@ -52,6 +52,10 @@ const defaultProps = {
   provideContext: false,
 };
 
+/**
+ * Wraps a child component, monitors its async callbacks and provides status props and classnames to the wrapped child.
+ * @param componentProps
+ */
 export function Stateful(
   componentProps: StatefulProps & {
     provideProps?: boolean;
@@ -119,6 +123,10 @@ export function Stateful(
   });
 }
 
+/**
+ * Adds the stateful props of the parent context to its children
+ * @param props 
+ */
 export function Consumer(props: {
   children?: React.ReactElement | React.ReactElement[];
   ignore?: string | string[];
