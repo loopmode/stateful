@@ -74,9 +74,17 @@ export function Stateful(
     // all existing props we found on the wrapped child
     const childProps = (child as React.ReactElement<any>).props;
 
+    let className = childProps.className || "";
+    if (status !== Status.IDLE) {
+      className = AllStatuses.reduce(
+        (result, current) => result.replace(current, ""),
+        className
+      ).trim();
+    }
+
     // the props we generate and attach to the wrapped child
     const statusProps = {
-      className: cx(childProps.className, createStatusClassFlags(status, props)),
+      className: cx(className, createStatusClassFlags(status, props)),
       ...createStatusProps(status, props),
     };
 
@@ -125,32 +133,43 @@ export function Stateful(
 
 /**
  * Adds the stateful props of the parent context to its children
- * @param props 
+ * @param props
  */
-export function Consumer(props: {
-  children?: React.ReactElement | React.ReactElement[];
-  ignore?: string | string[];
-}) {
-  const { configProps, statusProps } = React.useContext(StatefulContext);
+export function Consumer(componentProps: StatefulProps) {
+  const { status, configProps } = React.useContext(StatefulContext);
+
+  const props = { ...configProps, ...componentProps };
 
   return React.Children.map<any, any>(props.children, (child) => {
     if (!React.isValidElement(child)) {
       return child;
     }
-    const ignoredStatuses = asArray<Status>(props.ignore);
-    const effectiveStatuses = AllStatuses.filter((s) => !ignoredStatuses.includes(s));
-    const effectivePropKeys = getStatusPropKeys(effectiveStatuses, configProps);
-    const effectiveClassKeys = getStatusClassNames(effectiveStatuses, configProps);
 
-    const childProps = {
-      ...pickProps(statusProps, effectivePropKeys),
-      className: cx(
-        (child as any).props.className,
-        pickProps(asFlags(statusProps.className), effectiveClassKeys)
-      ),
+    // all existing props we found on the wrapped child
+    const childProps = (child as React.ReactElement<any>).props;
+
+    let className = childProps.className || "";
+    if (status !== Status.IDLE) {
+      className = AllStatuses.reduce(
+        (result, current) => result.replace(current, ""),
+        className
+      ).trim();
+    }
+
+    const statusProps = {
+      className: cx(className, createStatusClassFlags(status, props)),
+      ...createStatusProps(status, props),
     };
 
-    return React.cloneElement(child, childProps);
+    const foreignProps = omitProps(childProps, [
+      ...asArray(props.monitor!),
+      ...Object.keys(defaultProps),
+    ]);
+
+    return React.cloneElement(child, {
+      ...foreignProps,
+      ...statusProps,
+    });
   });
 }
 
