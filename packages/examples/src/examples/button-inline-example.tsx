@@ -1,7 +1,7 @@
 import { Stateful } from "@loopmode/stateful";
 import raw from "raw.macro";
 import React from "react";
-import { ToggleCode } from "../ToggleCode";
+import { ToggleCodeViewer } from "../ToggleCodeViewer";
 
 // You can wrap any JSX children in Stateful wrappers.
 
@@ -48,7 +48,7 @@ export default function ButtonInlineExample() {
           </button>
         </Stateful>
       </div>
-      <ToggleCode content={raw("./button-inline-example.tsx")} />
+      <ToggleCodeViewer content={raw("./button-inline-example.tsx")} />
     </div>
   );
 }

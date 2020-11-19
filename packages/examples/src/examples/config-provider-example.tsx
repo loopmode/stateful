@@ -1,7 +1,7 @@
 import { Stateful, StatefulConfigProvider } from "@loopmode/stateful";
 import raw from "raw.macro";
 import React from "react";
-import { ToggleCode } from "../ToggleCode";
+import { ToggleCodeViewer } from "../ToggleCodeViewer";
 
 // You can render a StatefulConfigProvider at high level (e.g. wrapping your app)
 // and provide default configuration for all nested Stateful wrappers
@@ -27,7 +27,7 @@ export default function ConfigProviderExample() {
   return (
     <StatefulConfigProvider value={statefulConfig}>
       <SomeComponent />
-      <ToggleCode content={raw("./config-provider-example.tsx")} />
+      <ToggleCodeViewer content={raw("./config-provider-example.tsx")} />
     </StatefulConfigProvider>
   );
 }

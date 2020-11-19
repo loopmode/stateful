@@ -1,6 +1,6 @@
 import React from "react";
 import { Stateful } from "@loopmode/stateful";
-import { ToggleCode } from "../ToggleCode";
+import { ToggleCodeViewer } from "../ToggleCodeViewer";
 import raw from "raw.macro";
 
 // When you use provideContext, you can conditionally render some children only in specific states
@@ -100,7 +100,7 @@ export default function StateConsumersExample() {
           </div>
         </div>
       </div>
-      <ToggleCode content={raw("./state-consumers-example.tsx")} />
+      <ToggleCodeViewer content={raw("./state-consumers-example.tsx")} />
     </div>
   );
 }

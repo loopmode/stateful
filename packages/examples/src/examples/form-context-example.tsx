@@ -1,6 +1,6 @@
 import React from "react";
 import { Stateful } from "@loopmode/stateful";
-import { ToggleCode } from "../ToggleCode";
+import { ToggleCodeViewer } from "../ToggleCodeViewer";
 import raw from "raw.macro";
 
 // The Stateful wrapper can be used on form elements as well, by using `monitor="onSubmit"`
@@ -82,7 +82,7 @@ export default function FormContextExample() {
           </div>
         </div>
       </div>
-      <ToggleCode content={raw("./form-context-example.tsx")} />
+      <ToggleCodeViewer content={raw("./form-context-example.tsx")} />
     </div>
   );
 }

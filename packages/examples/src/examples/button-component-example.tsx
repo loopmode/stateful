@@ -2,7 +2,7 @@ import { Stateful } from "@loopmode/stateful";
 import React from "react";
 import cx from "classnames";
 import { StatefulProps } from "@loopmode/stateful/lib/types";
-import { ToggleCode } from "../ToggleCode";
+import { ToggleCodeViewer } from "../ToggleCodeViewer";
 import raw from "raw.macro";
 
 // Example using a custom button component.
@@ -56,7 +56,7 @@ export default function ButtonComponentExample() {
         </Button>
       </div>
 
-      <ToggleCode content={raw("./button-component-example.tsx")} />
+      <ToggleCodeViewer content={raw("./button-component-example.tsx")} />
     </div>
   );
 }
