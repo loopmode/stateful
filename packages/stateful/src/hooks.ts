@@ -54,12 +54,14 @@ export function useStateful(props: StatefulProps) {
       busyTimer.start();
     },
     onReject: () => {
+      console.log('>> onReject')
       if (!isMounted.current) return;
       setStatus(Status.ERROR);
       busyTimer.clear();
       resetTimer.start();
     },
     onResolve: (value: unknown) => {
+      console.log('>> onResolve', value)
       if (props.shouldRejectValue?.(value) === true) {
         handlers.onReject();
         return;

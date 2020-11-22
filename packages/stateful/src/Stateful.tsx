@@ -95,7 +95,13 @@ export function Stateful(
     ]);
 
     // overridden callbacks for the wrapped child. these are the monitored functions
-    const callbackOverrides = createCallbacks(childProps, props.monitor!, handlers);
+    const callbackOverrides = createCallbacks(
+      childProps,
+      props.monitor!,
+      handlers,
+      props.delimiter,
+      props.promisesOnly
+    );
 
     if (props.provideContext && props.provideProps) {
       // case "props and context": provide context, and also attach statusProps

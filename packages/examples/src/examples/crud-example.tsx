@@ -3,7 +3,7 @@ import cx from "classnames";
 import { Stateful } from "@loopmode/stateful";
 import { ToggleCodeViewer } from "../ToggleCodeViewer";
 import raw from "raw.macro";
-import { Link, Route, useHistory } from "react-router-dom";
+import { Link, Redirect, Route, Switch, useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 export type User = {
@@ -13,16 +13,27 @@ export type User = {
 };
 
 export default function CrudExample() {
-  const { users, deleteUser, createUser, updateUser } = useUsersApi();
+  return (
+    <div className="CrudExample">
+      <UsersCrudPage />
+      <ToggleCodeViewer content={raw("./crud-example.tsx")} />
+    </div>
+  );
+}
+
+function UsersCrudPage() {
   const history = useHistory();
+  const { users, deleteUser, createUser, updateUser } = useUsersApi();
+
+  // we return any errors so that Stateful detects the failure
 
   const handleCreateUser = React.useCallback(
     async (data: User) => {
       try {
         await createUser(data);
-        history.push("/crud");
+        history.push("/crud/list");
       } catch (error) {
-        console.log(error);
+        return error;
       }
     },
     [createUser, history]
@@ -32,9 +43,9 @@ export default function CrudExample() {
     async (data: User) => {
       try {
         await updateUser(data.id, data);
-        history.push("/crud");
+        history.push("/crud/list");
       } catch (error) {
-        console.log(error);
+        return error;
       }
     },
     [updateUser, history]
@@ -44,36 +55,38 @@ export default function CrudExample() {
     <div className="CrudExample">
       <nav className="container is-flex">
         <Route path="/crud/(create|edit)">
-          <Link className="button" to="/crud" children="Back to list" />
+          <Link className="button" to="/crud/list" children="Back to list" />
         </Route>
         <span className="is-flex-1" />
-        <Route path={"/crud"} exact>
+        <Route path={"/crud/list"}>
           <Link className="button" to="/crud/create" children="Create new user" />
         </Route>
       </nav>
 
       <hr />
 
-      <Route path="/crud" exact>
-        <UsersList users={users} onDeleteUser={(id) => deleteUser(id)} />
-      </Route>
+      <Redirect from="/crud" to="/crud/list" />
 
-      <Route
-        path="/crud/create"
-        render={() => {
-          return <UserForm onSubmit={(data) => handleCreateUser(data)} />;
-        }}
-      ></Route>
+      <Switch>
+        <Route path="/crud/list">
+          <UsersList users={users} onDeleteUser={(id) => deleteUser(id)} />
+        </Route>
 
-      <Route
-        path="/crud/edit/:id"
-        render={(props) => {
-          const user = users.find((user) => user.id === props.match.params.id);
-          return <UserForm onSubmit={(data) => handleUpdateUser(data)} initialUser={user} />;
-        }}
-      ></Route>
+        <Route
+          path="/crud/create"
+          render={() => {
+            return <UserForm onSubmit={(data) => handleCreateUser(data)} />;
+          }}
+        ></Route>
 
-      <ToggleCodeViewer content={raw("./crud-example.tsx")} />
+        <Route
+          path="/crud/edit/:id"
+          render={(props) => {
+            const user = users.find((user) => user.id === props.match.params.id);
+            return <UserForm onSubmit={(data) => handleUpdateUser(data)} initialUser={user} />;
+          }}
+        ></Route>
+      </Switch>
     </div>
   );
 }
@@ -89,7 +102,17 @@ function UserForm(props: {
 
   return (
     <Stateful monitor="onSubmit" provideContext>
-      <form onSubmit={handleSubmit(props.onSubmit)}>
+      <form
+        onSubmit={handleSubmit(
+          props.onSubmit,
+          (errors) => {
+            // react-hook-form invokes this callback with validation errors, e.g. {email: {message: "invalid email", ...}, password: {message: "required", ...}, ...}
+            // the internal submit function of react-hook-form doesn't return anything in this case, and thus Stateful would react with a green/success state
+            // So we throw an actual Error to make Stateful aware of the failure, and the submit button turns red
+            throw Error(Object.values(errors)[0]?.message)
+          }
+        )}
+      >
         <input type="hidden" name="id" ref={register} />
         <div className="field">
           <label className="label">Name</label>
@@ -113,8 +136,8 @@ function UserForm(props: {
             <span className="icon is-small is-left">
               <i className="fa fa-user"></i>
             </span>
+            {errors.name && <p className="help is-danger">{errors.name.message}</p>}
           </div>
-          {errors.name && <p className="help is-danger">{errors.name.message}</p>}
         </div>
         <div className="field">
           <label className="label">Email</label>
@@ -134,15 +157,29 @@ function UserForm(props: {
             <span className="icon is-small is-left">
               <i className="fa fa-envelope"></i>
             </span>
+            {errors.email && <p className="help is-danger">{errors.email.message}</p>}
           </div>
-          {errors.email && <p className="help is-danger">{errors.email.message}</p>}
         </div>
 
         <div className="field is-flex">
-          <button type="button" className="button" onClick={() => reset(props.initialUser)}>
-            Reset
-          </button>
+          {/*
+            The "reset" button triggers a local, synchronous callback.
+            We use a Stateful wrapper around it so that the button turns green after clicking.
+            In order for that to work, we make the onClick callback an async function, so that it returns a promise.
+            */}
+          <Stateful>
+            <button type="button" className="button" onClick={() => reset(props.initialUser)}>
+              Reset
+            </button>
+          </Stateful>
+
           <span className="is-flex-1" />
+
+          {/* 
+            The submit button doesn't have its own onClick callback whatsoever, it only forces the parent form to submit.
+            That's why we use Stateful.Consumer instead of a Stateful wrapper around it.
+            It connects to the parent Stateful wrapper context and applies its status to the wrapped child.
+            */}
           <Stateful.Consumer>
             <button className="button" type="submit">
               {props.initialUser ? "Save" : "Create new"} User
@@ -217,7 +254,7 @@ export function useUsersApi() {
     async (data: Omit<User, "id">) => {
       await wait(500 + Math.random() * 500);
       if (users.find((user) => user.email === data.email)) {
-        return Promise.reject(new Error("Email already exists"));
+        throw new Error("Email already exists");
       }
       const newUser: User = { ...data, id: uuid() };
       setUsers((current) => [...current, newUser]);
@@ -231,7 +268,7 @@ export function useUsersApi() {
       await wait(500 + Math.random() * 500);
       const index = users.findIndex((user) => user.id === id);
       if (index === -1) {
-        return Promise.reject(new Error("User not found"));
+        throw new Error("User not found");
       }
 
       const next = [...users];

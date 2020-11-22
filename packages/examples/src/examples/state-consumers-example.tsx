@@ -36,7 +36,7 @@ export default function StateConsumersExample() {
                 <div className="field">
                   <label className="label">Email</label>
                   <div className="control has-icons-left">
-                    <Stateful.Consumer ignore="success error">
+                    <Stateful.Consumer>
                       <input type="email" className="input" placeholder="e.g. hkakehas@cisco.com" />
                     </Stateful.Consumer>
 
@@ -47,7 +47,7 @@ export default function StateConsumersExample() {
                 </div>
 
                 <div className="field">
-                  <Stateful.Consumer ignore="busy">
+                  <Stateful.Consumer>
                     <button className="button" type="submit">
                       Login
                     </button>

@@ -52,8 +52,8 @@ export default function FormContextExample() {
                     <span className="icon is-small is-left">
                       <i className="fa fa-envelope"></i>
                     </span>
+                    {error.email && <p className="help is-danger">{error.email}</p>}
                   </div>
-                  {error.email && <p className="help is-danger">{error.email}</p>}
                 </div>
                 <div className="field">
                   <label className="label">Password</label>
@@ -62,8 +62,8 @@ export default function FormContextExample() {
                     <span className="icon is-small is-left">
                       <i className="fa fa-lock"></i>
                     </span>
+                    {error.password && <p className="help is-danger">{error.password}</p>}
                   </div>
-                  {error.password && <p className="help is-danger">{error.password}</p>}
                 </div>
                 <div className="field">
                   <label className="checkbox">
@@ -71,7 +71,7 @@ export default function FormContextExample() {
                   </label>
                 </div>
                 <div className="field">
-                  <Stateful.Consumer ignore="busy">
+                  <Stateful.Consumer busyClasses="">
                     <button className="button" type="submit">
                       Login
                     </button>

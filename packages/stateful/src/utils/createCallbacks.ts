@@ -22,23 +22,31 @@ export default function createCallbacks(
   childProps: any,
   callbackNames: string | string[],
   handlers: {
-    onPromise: (promise: Promise<any>) => void;
-    onResolve: (result?: any) => void;
-    onReject: (error?: any) => void;
+    onPromise: (promise?: Promise<unknown>) => void;
+    onResolve: (result?: unknown) => void;
+    onReject: (error?: unknown) => void;
   },
-  delimiter?: string
+  delimiter?: string,
+  promisesOnly?: boolean
 ) {
   if (!callbackNames) {
     return {};
   }
 
-  function runCallback(callback: (...args: any[]) => any, ...args: any[]) {
+  async function runCallback(callback: (...args: any[]) => any, ...args: any[]) {
     const result = callback(...args);
     if (isPromise(result)) {
       const promise = result as Promise<any>;
       promise.catch(handlers.onReject);
       promise.then(handlers.onResolve);
       handlers.onPromise(promise);
+    } else if (!promisesOnly) {
+      try {
+        handlers.onPromise();
+        handlers.onResolve(callback(...args));
+      } catch (error) {
+        handlers.onReject(error);
+      }
     }
   }
 
