@@ -21,7 +21,7 @@ const Button = ({
   return (
     <Stateful
       busyDelay={300}
-      pendingProps="disabled"
+      pendingFlags="disabled"
       busyClasses="is-loading"
       successClasses="is-success"
       errorClasses="is-error"

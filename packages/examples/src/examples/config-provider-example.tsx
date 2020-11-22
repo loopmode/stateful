@@ -9,11 +9,11 @@ import { ToggleCodeViewer } from "../ToggleCodeViewer";
 
 
 const statefulConfig = {
-  pendingProps: "disabled",
+  pendingFlags: "disabled",
   pendingClasses: "",
 
   busyDelay: 0,
-  busyProps: "disabled",
+  busyFlags: "disabled",
   busyClasses: "is-loading",
   //
   successClasses: "is-success",

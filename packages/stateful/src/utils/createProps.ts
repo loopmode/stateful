@@ -31,10 +31,10 @@ export function createStatusClassFlags(status: Status, props: StatefulProps) {
  */
 export function createStatusProps(status: Status, props: StatefulProps) {
   const flags = {
-    [Status.PENDING]: props.pendingProps,
-    [Status.BUSY]: [...asArray(props.pendingProps), ...asArray(props.busyProps)],
-    [Status.SUCCESS]: props.successProps,
-    [Status.ERROR]: props.errorProps,
+    [Status.PENDING]: props.pendingFlags,
+    [Status.BUSY]: [...asArray(props.pendingFlags), ...asArray(props.busyFlags)],
+    [Status.SUCCESS]: props.successFlags,
+    [Status.ERROR]: props.errorFlags,
   };
 
   return createProps(flags, status, props.delimiter);

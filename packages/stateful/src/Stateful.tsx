@@ -19,25 +19,25 @@ import { StatefulConfigContext, StatefulContext, StatefulProvider } from "./Cont
 import { useStateful } from "./hooks";
 import { StatefulProps } from "./types";
 
-const defaultProps = {
+const defaultProps: StatefulProps = {
   // Note that we use the keys of the defaultProps object to omit
   // our own props from propagation to children.
   // MAKE SURE TO CREATE A KEY FOR EACH SUPPORTED PROP, or that prop will be passed to wrapped children
 
   monitor: ["onClick"],
 
-  pendingProps: [],
+  pendingFlags: [],
   pendingClasses: [],
 
-  busyProps: [],
+  busyFlags: [],
   busyClasses: [],
   busyDelay: 0,
 
-  successProps: [],
+  successFlags: [],
   successClasses: [],
   successDuration: undefined,
 
-  errorProps: [],
+  errorFlags: [],
   errorClasses: [],
   errorDuration: undefined,
 

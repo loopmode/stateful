@@ -6,21 +6,21 @@ export type StatefulProps = {
   /** One or more callback names of the wrapped child to override and monitor */
   monitor?: string | string[];
   /** One or more boolean flags that are passed as props to wrapped children while status is `pending` */
-  pendingProps?: string | string[];
+  pendingFlags?: string | string[];
   /** One or more CSS class names to decorate wrapped children with, while status is `pending` */
   pendingClasses?: string | string[];
   /** Number of milliseconds before state `pending` turns to state `busy` */
   busyDelay?: number;
   /** One or more boolean flags that are passed as props to wrapped children while status is `busy` */
-  busyProps?: string | string[];
+  busyFlags?: string | string[];
   /** One or more CSS class names to decorate wrapped children with, while status is `busy` */
   busyClasses?: string | string[];
   /** One or more boolean flags that are passed as props to wrapped children while status is `success` */
-  successProps?: string | string[];
+  successFlags?: string | string[];
   /** One or more CSS class names to decorate wrapped children with, while status is `success` */
   successClasses?: string | string[];
   /** One or more boolean flags that are passed as props to wrapped children while status is `error` */
-  errorProps?: string | string[];
+  errorFlags?: string | string[];
   /** One or more CSS class names to decorate wrapped children with, while status is `error` */
   errorClasses?: string | string[];
   /** How long to display error or success state before turning back to idle. */
