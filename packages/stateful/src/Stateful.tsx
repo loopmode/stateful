@@ -1,26 +1,14 @@
 import React from "react";
-import cx from "classnames";
 
-import { AllStatuses, Status } from "./Status";
-import asArray from "./utils/asArray";
-import asFlags from "./utils/asFlags";
-import createCallbacks from "./utils/createCallbacks";
+import { RenderFunction, StatefulProps, StatefulConsumerProps, StatefulConfig } from "./types";
 
-import {
-  createStatusClassFlags,
-  createStatusProps,
-  omitProps,
-  getStatusPropKeys,
-  getStatusClassNames,
-  pickProps,
-} from "./utils/createProps";
-
-import { StatefulConfigContext, StatefulContext, StatefulProvider } from "./Context";
+import { Status } from "./Status";
+import { StatefulConfigurationContext, StatefulContext, StatefulProvider } from "./context";
 import { useStateful } from "./hooks";
-import { StatefulProps } from "./types";
+import { createChildProps } from "./utils/createProps";
 
-const defaultProps: StatefulProps = {
-  // Note that we use the keys of the defaultProps object to omit
+const defaultConfig: StatefulProps = {
+  // Note that we use the keys of the defaultConfig object to omit
   // our own props from propagation to children.
   // MAKE SURE TO CREATE A KEY FOR EACH SUPPORTED PROP, or that prop will be passed to wrapped children
 
@@ -52,129 +40,89 @@ const defaultProps: StatefulProps = {
   provideContext: false,
 };
 
-/**
- * Wraps a child component, monitors its async callbacks and provides status props and classnames to the wrapped child.
- * @param componentProps
- */
-export function Stateful(
-  componentProps: StatefulProps & {
-    provideProps?: boolean;
-    provideContext?: boolean;
-  }
-): React.ReactElement {
-  const contextProps = React.useContext(StatefulConfigContext);
-  const props = { ...defaultProps, ...contextProps, ...componentProps };
-  const { status, handlers } = useStateful(props);
+const ownPropNames = Object.keys(defaultConfig);
 
-  return React.Children.map<any, any>(props.children, (child) => {
+/**
+ * Wraps a child component, monitors its async callbacks and provides
+ * status props and classnames to the wrapped child.
+ * @param props
+ */
+export function Stateful(props: StatefulProps): React.ReactElement {
+  const parentConfig = React.useContext(StatefulConfigurationContext);
+  let { children, ...config } = { ...defaultConfig, ...parentConfig, ...props };
+  const { status, handlers } = useStateful(config);
+
+  if (typeof children === "function") {
+    children = (children as RenderFunction)({ status, handlers });
+  }
+
+  return React.Children.map<any, any>(children, (child) => {
     if (!React.isValidElement(child)) {
       return child;
     }
 
-    // all existing props we found on the wrapped child
-    const childProps = (child as React.ReactElement<any>).props;
-
-    let className = childProps.className || "";
-    if (status !== Status.IDLE) {
-      className = AllStatuses.reduce(
-        (result, current) => result.replace(current, ""),
-        className
-      ).trim();
-    }
-
-    // the props we generate and attach to the wrapped child
-    const statusProps = {
-      className: cx(className, createStatusClassFlags(status, props)),
-      ...createStatusProps(status, props),
-    };
-
-    // props of the child that we pass along because they are unknown to us
-    const foreignProps = omitProps(childProps, [
-      ...asArray(props.monitor!),
-      ...Object.keys(defaultProps),
-    ]);
-
-    // overridden callbacks for the wrapped child. these are the monitored functions
-    const callbackOverrides = createCallbacks(
-      childProps,
-      props.monitor!,
+    const { extraProps, callbackOverrides, foreignProps } = createChildProps({
+      child,
+      config,
+      status,
       handlers,
-      props.delimiter,
-      props.promisesOnly
+      omitProps: ownPropNames,
+    });
+
+    const childProps = Object.assign(
+      {},
+      foreignProps,
+      callbackOverrides,
+      config.provideProps ? extraProps : {}
     );
 
-    if (props.provideContext && props.provideProps) {
-      // case "props and context": provide context, and also attach statusProps
-      return (
-        <StatefulProvider value={{ statusProps, status, configProps: props }}>
-          {React.cloneElement(child, {
-            ...callbackOverrides,
-            ...foreignProps,
-            ...statusProps,
-          })}
-        </StatefulProvider>
-      );
-    }
-
-    if (props.provideContext) {
-      // case "context only": provide context, but do not attach statusProps
-      return (
-        <StatefulProvider value={{ statusProps, status, configProps: props }}>
-          {React.cloneElement(child, {
-            ...callbackOverrides,
-            ...foreignProps,
-          })}
-        </StatefulProvider>
-      );
-    }
-
-    // case "props only": only attach statusProps, but do not provide context
-    return React.cloneElement(child, {
-      ...callbackOverrides,
-      ...foreignProps,
-      ...statusProps,
-    });
+    return (
+      <StatefulWrapper status={status} config={config} extraProps={extraProps}>
+        {React.cloneElement(child, childProps)}
+      </StatefulWrapper>
+    );
   });
+}
+
+function StatefulWrapper({
+  children,
+  ...props
+}: {
+  children: React.ReactElement | React.ReactElement[];
+  status: Status;
+  extraProps: any;
+  config: StatefulProps;
+}): React.ReactElement {
+  if (props.config.provideContext) {
+    return <StatefulProvider value={props}>{children}</StatefulProvider>;
+  }
+  return children as React.ReactElement;
 }
 
 /**
  * Adds the stateful props of the parent context to its children
  * @param props
  */
-export function Consumer(componentProps: StatefulProps) {
-  const { status, configProps } = React.useContext(StatefulContext);
+export function StatefulConsumer(props: StatefulConsumerProps): React.ReactElement {
+  const { status, config: parentConfig } = React.useContext(StatefulContext);
 
-  const props = { ...configProps, ...componentProps };
+  const config = { ...parentConfig, ...props };
 
   return React.Children.map<any, any>(props.children, (child) => {
     if (!React.isValidElement(child)) {
       return child;
     }
 
-    // all existing props we found on the wrapped child
-    const childProps = (child as React.ReactElement<any>).props;
-
-    let className = childProps.className || "";
-    if (status !== Status.IDLE) {
-      className = AllStatuses.reduce(
-        (result, current) => result.replace(current, ""),
-        className
-      ).trim();
-    }
-
-    const statusProps = {
-      className: cx(className, createStatusClassFlags(status, props)),
-      ...createStatusProps(status, props),
-    };
-
-    const foreignProps = omitProps(childProps, [
-      ...asArray(props.monitor!),
-      ...Object.keys(defaultProps),
-    ]);
+    const { extraProps, foreignProps } = createChildProps({
+      child,
+      status,
+      config,
+      omitProps: ownPropNames,
+    });
 
     return React.cloneElement(child, {
       ...foreignProps,
-      ...statusProps,
+      ...extraProps,
     });
   });
 }
@@ -226,7 +174,7 @@ export function BusyConsumer({
   return <StatefulGate {...props} allow={exact ? Status.BUSY : [Status.BUSY, Status.PENDING]} />;
 }
 
-Stateful.Consumer = Consumer;
+Stateful.Consumer = StatefulConsumer;
 Stateful.IdleConsumer = IdleConsumer;
 Stateful.SuccessConsumer = SuccessConsumer;
 Stateful.ErrorConsumer = ErrorConsumer;

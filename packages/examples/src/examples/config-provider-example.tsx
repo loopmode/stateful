@@ -1,12 +1,11 @@
-import { Stateful, StatefulConfigProvider } from "@loopmode/stateful";
+import { Stateful, StatefulConfigurationProvider } from "@loopmode/stateful";
 import raw from "raw.macro";
 import React from "react";
 import { ToggleCodeViewer } from "../ToggleCodeViewer";
 
-// You can render a StatefulConfigProvider at high level (e.g. wrapping your app)
+// You can render a StatefulConfigurationProvider at high level (e.g. wrapping your app)
 // and provide default configuration for all nested Stateful wrappers
 // you can still use props to override config in individual cases
-
 
 const statefulConfig = {
   pendingFlags: "disabled",
@@ -25,13 +24,12 @@ const statefulConfig = {
 
 export default function ConfigProviderExample() {
   return (
-    <StatefulConfigProvider value={statefulConfig}>
+    <StatefulConfigurationProvider value={statefulConfig}>
       <SomeComponent />
       <ToggleCodeViewer content={raw("./config-provider-example.tsx")} />
-    </StatefulConfigProvider>
+    </StatefulConfigurationProvider>
   );
 }
-
 
 const wait = (time: number) => new Promise((resolve) => setTimeout(resolve, time));
 function SomeComponent() {
@@ -51,9 +49,22 @@ function SomeComponent() {
         </button>
       </Stateful>
 
-      <Stateful errorClasses="is-warning">
+      <Stateful>
         <button className="button" onClick={errorCallback}>
           Will fail
+        </button>
+      </Stateful>
+
+      {/** here's an instance that sets custom configuration */}
+      <Stateful
+        errorClasses="is-warning"
+        errorFlags={() => ({
+          title: "Something went wrong...",
+        })}
+        errorDuration={10000}
+      >
+        <button className="button" onClick={errorCallback}>
+          Will fail with warning and tooltip
         </button>
       </Stateful>
     </div>

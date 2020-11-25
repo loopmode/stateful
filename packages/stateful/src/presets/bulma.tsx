@@ -1,8 +1,8 @@
 import React from "react";
-import { StatefulProps } from "../types";
-import { StatefulConfigProvider } from "../Context";
+import { StatefulConfig, StatefulProps } from "../types";
+import { StatefulConfigurationProvider } from "../context";
 
-export const bulmaPreset: StatefulProps = {
+export const bulmaPreset: StatefulConfig = {
   pendingFlags: "disabled",
   pendingClasses: "",
 
@@ -19,7 +19,7 @@ export const bulmaPreset: StatefulProps = {
 
 export const BulmaConfigProvider = ({ children, ...props }: StatefulProps) => {
   return (
-    <StatefulConfigProvider
+    <StatefulConfigurationProvider
       value={{
         ...bulmaPreset,
         ...props,
