@@ -35,22 +35,25 @@ export default function createCallbacks(
 
   async function runCallback(callback: (...args: any[]) => any, ...args: any[]) {
     const result = callback(...args);
-    if (isPromise(result)) {
-      const promise = result as Promise<any>;
-      promise.catch(handlers.onReject);
-      promise.then(handlers.onResolve);
-      handlers.onPromise(promise);
-    } else if (!promisesOnly) {
+    if (promisesOnly) {
+      if (isPromise(result)) {
+        const promise = result as Promise<any>;
+        promise.catch(handlers.onReject);
+        promise.then(handlers.onResolve);
+        handlers.onPromise(promise);
+      }
+    } else {
+      handlers.onPromise();
       try {
-        handlers.onPromise();
-        handlers.onResolve(callback(...args));
+        const result = await callback(...args);
+        handlers.onResolve(result);
       } catch (error) {
         handlers.onReject(error);
       }
     }
   }
 
-  return asArray(callbackNames, delimiter).reduce((result, callbackName) => {
+  return asArray.simple(callbackNames, delimiter).reduce((result, callbackName) => {
     const callbackCandidate = childProps[callbackName];
     if (typeof callbackCandidate === "function") {
       result[callbackName] = (...args: any[]) => {

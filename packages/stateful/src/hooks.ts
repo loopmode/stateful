@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Status } from "./Status";
-import { StatefulProps } from "./types";
+import { StatefulConfig } from "./types";
 
 export function useTimeout(func: () => void, delay = 0) {
   const [isPending, setPending] = React.useState(false);
@@ -21,8 +21,9 @@ export function useTimeout(func: () => void, delay = 0) {
   };
 }
 
-export function useStateful(props: StatefulProps) {
+export function useStateful(props: StatefulConfig) {
   const isMounted = React.useRef(false);
+  const isRejected = React.useRef(false);
 
   const [status, setStatus] = React.useState<Status>(Status.IDLE);
 
@@ -46,24 +47,25 @@ export function useStateful(props: StatefulProps) {
     };
   }, [isMounted]);
 
+
   const handlers = {
     onPromise: () => {
       if (!isMounted.current) return;
+      isRejected.current = false;
       setStatus(Status.PENDING);
       resetTimer.clear();
       busyTimer.start();
     },
-    onReject: () => {
-      console.log('>> onReject')
+    onReject: (error?: any) => {
       if (!isMounted.current) return;
+      isRejected.current = true;
       setStatus(Status.ERROR);
       busyTimer.clear();
       resetTimer.start();
     },
     onResolve: (value: unknown) => {
-      console.log('>> onResolve', value)
-      if (props.shouldRejectValue?.(value) === true) {
-        handlers.onReject();
+      if (isRejected.current || props.shouldRejectValue?.(value) === true) {
+        handlers.onReject(value);
         return;
       }
 

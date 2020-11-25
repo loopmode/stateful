@@ -1,6 +1,9 @@
-import { StatefulProps } from "../types";
-import { Status } from "../Status";
+import cx from "classnames";
+import { StatefulConfig, StatusResolver } from "../types";
+import { AllStatuses, Status } from "../Status";
 import asArray from "./asArray";
+import { useStateful } from "../hooks";
+import createCallbacks from "./createCallbacks";
 
 /**
  * Creates an object with boolean flags for the defined CSS classNames and given `status`.
@@ -10,15 +13,19 @@ import asArray from "./asArray";
  * @param {Status} status The current status of the Stateful instance state
  * @param {Object} props The props of the Stateful instance
  */
-export function createStatusClassFlags(status: Status, props: StatefulProps) {
+export function createStatusClassFlags(status: Status, props: StatefulConfig) {
   const flags = {
+    [Status.IDLE]: undefined,
     [Status.PENDING]: props.pendingClasses,
-    [Status.BUSY]: [...asArray(props.pendingClasses), ...asArray(props.busyClasses)],
+    [Status.BUSY]: [
+      ...asArray(props.pendingClasses, status, props.delimiter),
+      ...asArray(props.busyClasses, status, props.delimiter),
+    ],
     [Status.SUCCESS]: props.successClasses,
     [Status.ERROR]: props.errorClasses,
   };
 
-  return createProps(flags, status, props.delimiter);
+  return createStatusProps(flags, status, props.delimiter);
 }
 
 /**
@@ -29,15 +36,19 @@ export function createStatusClassFlags(status: Status, props: StatefulProps) {
  * @param {Status} status The current status of the Stateful instance state
  * @param {Object} props The props of the Stateful instance
  */
-export function createStatusProps(status: Status, props: StatefulProps) {
+export function createExtraProps(status: Status, props: StatefulConfig) {
   const flags = {
+    [Status.IDLE]: undefined,
     [Status.PENDING]: props.pendingFlags,
-    [Status.BUSY]: [...asArray(props.pendingFlags), ...asArray(props.busyFlags)],
+    [Status.BUSY]: [
+      ...asArray(props.pendingFlags, status, props.delimiter),
+      ...asArray(props.busyFlags, status, props.delimiter),
+    ],
     [Status.SUCCESS]: props.successFlags,
     [Status.ERROR]: props.errorFlags,
   };
 
-  return createProps(flags, status, props.delimiter);
+  return createStatusProps(flags, status, props.delimiter);
 }
 
 /**
@@ -52,8 +63,8 @@ export function createStatusProps(status: Status, props: StatefulProps) {
  * @param {String} [delimiter] An optional delimiter by which to split `PolyType` strings
  * @return {Object} An object with props for the given `status`, e.g. `{pending: true, disabled: true}`
  */
-export function createProps(
-  flagMap: any, //Record<Status, string | ((v: Status) => string)>,
+export function createStatusProps(
+  flagMap: Record<Status, any>,
   status: Status,
   delimiter?: string
 ) {
@@ -61,7 +72,7 @@ export function createProps(
   if (typeof statusFlags === "function") {
     return statusFlags(status);
   } else if (Array.isArray(statusFlags) || typeof statusFlags === "string") {
-    return createFlags(statusFlags, delimiter);
+    return createFlags(statusFlags, status, delimiter);
   }
   return {};
 }
@@ -75,8 +86,13 @@ export function createProps(
  * @param {*} [value=true] The value to set for all properties
  * @returns {Object} An object with the specified properties. All properties have the same `value`
  */
-export function createFlags(key: string | string[], delimiter: string = " ", value = true) {
-  const keys = asArray(key, delimiter);
+export function createFlags(
+  key: string | string[],
+  status: Status,
+  delimiter: string = " ",
+  value = true
+) {
+  const keys = asArray(key, status, delimiter);
   if (!keys) {
     return {};
   }
@@ -111,18 +127,24 @@ export function pickProps(childProps: any, names: string[] = []) {
   }, {} as any);
 }
 
-export function getStatusPropKeys(statuses: Status[], props: StatefulProps) {
-  return getFlagKeys(statuses, props, createStatusProps);
+export function getStatusPropKeys(statuses: Status[], props: StatefulConfig) {
+  return getFlagKeys(statuses, props, createExtraProps);
 }
 
-export function getStatusClassNames(statuses: Status[], props: StatefulProps) {
+export function getStatusClassNames(statuses: Status[], props: StatefulConfig) {
   return getFlagKeys(statuses, props, createStatusClassFlags);
 }
 
+/**
+ * Creates a flag map for the given status and returns only the keys of that map
+ * @param statuses
+ * @param props
+ * @param createFlags
+ */
 export function getFlagKeys(
   statuses: Status[],
-  props: StatefulProps,
-  createFlags: (status: Status, props: StatefulProps) => Record<string, any>
+  props: StatefulConfig,
+  createFlags: (status: Status, props: StatefulConfig) => Record<string, any>
 ) {
   const ignoredValues = statuses.reduce((result, ignoredStatus) => {
     const values = createFlags(ignoredStatus, props);
@@ -130,4 +152,54 @@ export function getFlagKeys(
   }, [] as string[]);
 
   return Array.from(new Set(ignoredValues));
+}
+
+export function createChildProps(args: {
+  status: Status;
+  config: StatefulConfig;
+  child?: React.ReactElement<any>;
+  handlers?: ReturnType<typeof useStateful>["handlers"];
+  omitProps?: string[];
+}) {
+  const { status } = args;
+
+  // all existing props we found on the wrapped child
+  const childProps = args.child ? (args.child as React.ReactElement<any>).props : {};
+
+  let className = childProps.className || "";
+  if (status !== Status.IDLE) {
+    className = AllStatuses.reduce(
+      (result, current) => result.replace(current, ""),
+      className
+    ).trim();
+  }
+
+  // the props we generate and attach to the wrapped child
+  const extraProps = {
+    className: cx(className, createStatusClassFlags(status, args.config)),
+    ...createExtraProps(status, args.config),
+  };
+
+  // props of the child that we pass along because they are unknown to us
+  const foreignProps = omitProps(childProps, [
+    ...asArray(args.config.monitor!, status, args.config.delimiter),
+    ...(args.omitProps || []),
+  ]);
+
+  // overridden callbacks for the wrapped child. these are the monitored functions
+  const callbackOverrides = args.handlers
+    ? createCallbacks(
+        childProps,
+        args.config.monitor!,
+        args.handlers,
+        args.config.delimiter,
+        args.config.promisesOnly
+      )
+    : {};
+
+  return {
+    extraProps,
+    foreignProps,
+    callbackOverrides,
+  };
 }

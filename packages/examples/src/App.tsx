@@ -9,7 +9,7 @@ import FormContextExample from "./examples/form-context-example";
 import { Home } from "./Home";
 import StateConsumersExample from "./examples/state-consumers-example";
 import ConfigProviderExample from "./examples/config-provider-example";
-import CrudExample from "./examples/crud-example";
+import ReactHookFormCrudExample from "./examples/react-hook-form-crud-example";
 
 const Link = (props: React.ComponentProps<typeof NavLink>) => (
   <NavLink activeClassName="is-active" {...props} />
@@ -43,7 +43,7 @@ function App() {
                 <Link to="/form-context">Form</Link>
               </li>
               <li>
-                <Link to="/crud">CRUD</Link>
+                <Link to="/react-hook-form-crud">CRUD</Link>
               </li>
               <li>
                 <Link to="/state-consumers">State consumers</Link>
@@ -57,7 +57,7 @@ function App() {
               <Route path="/button-inline" component={ButtonInlineExample} />
               <Route path="/button-component" component={ButtonComponentExample} />
               <Route path="/form-context" component={FormContextExample} />
-              <Route path="/crud" component={CrudExample} />
+              <Route path="/react-hook-form-crud" component={ReactHookFormCrudExample} />
               <Route path="/state-consumers" component={StateConsumersExample} />
               <Route path="/config-provider" component={ConfigProviderExample} />
             </Switch>
