@@ -90,8 +90,7 @@ function UsersCrudPage() {
       try {
         await createUser(data);
         history.push(`${currentPath}/list`);
-      } catch (error) {
-        console.log(">NIOOOOO!");
+      } catch (error) { 
         return error;
       }
     },

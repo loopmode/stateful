@@ -1,6 +1,12 @@
 import React from "react";
 
-import { RenderFunction, StatefulProps, StatefulConsumerProps, StatefulConfig } from "./types";
+import {
+  RenderFunction,
+  StatefulProps,
+  StatefulConsumerProps,
+  StatefulConfig,
+  StatefulHandlers,
+} from "./types";
 
 import { Status } from "./Status";
 import { StatefulConfigurationContext, StatefulContext, StatefulProvider } from "./context";
@@ -37,7 +43,7 @@ const defaultConfig: StatefulProps = {
   },
 
   provideProps: true,
-  provideContext: false,
+  provideContext: true,
 };
 
 const ownPropNames = Object.keys(defaultConfig);
@@ -61,7 +67,7 @@ export function Stateful(props: StatefulProps): React.ReactElement {
       return child;
     }
 
-    const { extraProps, callbackOverrides, foreignProps } = createChildProps({
+    const { extraProps, callbacks, foreignProps } = createChildProps({
       child,
       config,
       status,
@@ -72,12 +78,12 @@ export function Stateful(props: StatefulProps): React.ReactElement {
     const childProps = Object.assign(
       {},
       foreignProps,
-      callbackOverrides,
+      callbacks,
       config.provideProps ? extraProps : {}
     );
 
     return (
-      <StatefulWrapper status={status} config={config} extraProps={extraProps}>
+      <StatefulWrapper status={status} config={config} extraProps={extraProps} handlers={handlers}>
         {React.cloneElement(child, childProps)}
       </StatefulWrapper>
     );
@@ -90,6 +96,7 @@ function StatefulWrapper({
 }: {
   children: React.ReactElement | React.ReactElement[];
   status: Status;
+  handlers: StatefulHandlers;
   extraProps: any;
   config: StatefulProps;
 }): React.ReactElement {
@@ -174,6 +181,90 @@ export function BusyConsumer({
   return <StatefulGate {...props} allow={exact ? Status.BUSY : [Status.BUSY, Status.PENDING]} />;
 }
 
+/**
+ * Renders a confirmation UI that is displayed while the parent Stateful status is "confirm".
+ *
+ * If you provide react children, they will receive two additional props that need to be invoked to
+ * confirm or cancel the operation.
+ * By default, those props are "onConfirm" and "onCancel". However, you can specify custom
+ * names using the `confirm` and `cancel` props.
+ *
+ * If you provide a render function, that render function will be invoked with an `{onConfirm, onCancel}` object
+ * containing the callbacks.
+ *
+ * @example
+ * <Stateful confirm="onClick">
+ *  <button onClick="handleDelete">Delete</button>
+ *  <Stateful.Confirm>
+ *    <Modal>
+ *      Are you sure?
+ *      (This modal supports onConfirm and onCancel props)
+ *    </Modal>
+ *  </Stateful.Confirm>
+ * </Stateful>
+
+ * @example
+ * <Stateful confirm="onClick">
+ *  <button onClick="handleDelete">Delete</button>
+ *  <Stateful.Confirm confirm="onCustomConfirm" cancel="onCustomCancel">
+ *    <Modal>
+ *      Are you sure?
+ *      (This modal supports onCustomConfirm and onCustomCancel props)
+ *    </Modal>
+ *  </Stateful.Confirm>
+ * </Stateful>
+ * 
+ * @example
+ * <Stateful confirm="onClick">
+ *  <button onClick="handleDelete">Delete</button>
+ *  <Stateful.Confirm>
+ *    {({onConfirm, onCancel}) => (
+ *      <Modal onCustomConfirm={onConfirm} onCustomAbort={onCancel}>
+ *        Are you sure?
+ *      </Modal>
+ *    )}
+ *  </Stateful.Confirm>
+ * </Stateful>
+ *
+ *
+ * @param param0
+ */
+export function Confirm({
+  confirm = "onConfirm",
+  cancel = "onCancel",
+  ...props
+}: {
+  confirm?: string;
+  cancel?: string;
+  children:
+    | React.ReactElement
+    | ((args: { onConfirm: () => void; onCancel: () => void }) => React.ReactElement);
+}) {
+  const { status, handlers } = React.useContext(StatefulContext);
+
+  if (status === Status.CONFIRM) {
+    if (typeof props.children === "function") {
+      return props.children({
+        onConfirm: handlers.onConfirmApprove,
+        onCancel: handlers.onConfirmCancel,
+      });
+    }
+
+    return React.Children.map<any, any>(props.children, (child) => {
+      if (!React.isValidElement(child)) {
+        return child;
+      }
+
+      return React.cloneElement(child, {
+        [confirm]: handlers.onConfirmApprove,
+        [cancel]: handlers.onConfirmCancel,
+      } as any);
+    });
+  }
+
+  return null;
+}
+
 Stateful.Consumer = StatefulConsumer;
 Stateful.IdleConsumer = IdleConsumer;
 Stateful.SuccessConsumer = SuccessConsumer;
@@ -181,3 +272,4 @@ Stateful.ErrorConsumer = ErrorConsumer;
 Stateful.FinishedConsumer = FinishedConsumer;
 Stateful.PendingConsumer = PendingConsumer;
 Stateful.BusyConsumer = BusyConsumer;
+Stateful.Confirm = Confirm;

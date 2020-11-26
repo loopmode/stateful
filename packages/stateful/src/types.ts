@@ -10,6 +10,8 @@ export type RenderFunction = (props: { status: Status; handlers: StatefulHandler
 export type StatefulConfig = {
   /** One or more callback names of the wrapped child to override and monitor */
   monitor?: string | string[];
+  /** One or more callback names of the wrapped child to override and intercept until confirmed via Stateful.Confirm */
+  confirm?: string | string[];
   /** One or more boolean flags that are passed as props to wrapped children while status is `pending` */
   pendingFlags?: string | StatusResolver | (string | StatusResolver)[];
   /** One or more CSS class names to decorate wrapped children with, while status is `pending` */
@@ -28,6 +30,10 @@ export type StatefulConfig = {
   errorFlags?: string | StatusResolver | (string | StatusResolver)[];
   /** One or more CSS class names to decorate wrapped children with, while status is `error` */
   errorClasses?: string | StatusResolver | (string | StatusResolver)[];
+  /** One or more boolean flags that are passed as props to wrapped children while status is `confirm` */
+  confirmFlags?: string | StatusResolver | (string | StatusResolver)[];
+  /** One or more CSS class names to decorate wrapped children with, while status is `confirm` */
+  confirmClasses?: string | StatusResolver | (string | StatusResolver)[];
   /** How long to display error or success state before turning back to idle. */
   hintDuration?: number;
   /** How long to display success state before turning back to idle state. Overrides `hintDuration` for success cases. */
@@ -59,4 +65,5 @@ export type StatefulContextValue = {
   status: Status;
   extraProps: any;
   config: StatefulConfig;
+  handlers: StatefulHandlers
 };

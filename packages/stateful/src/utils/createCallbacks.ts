@@ -1,5 +1,6 @@
 import isPromise from "./isPromise";
 import asArray from "./asArray";
+import { StatefulHandlers } from "../types";
 
 /**
  * Creates an object with handler functions for the callbacks of a given child.
@@ -18,46 +19,53 @@ import asArray from "./asArray";
  * @param {Function} handlers.onResolve - Invoked when the returned promise is resolved
  * @param {Function} handlers.onReject - Invoked when the returned promise is rejected
  */
-export default function createCallbacks(
-  childProps: any,
-  callbackNames: string | string[],
-  handlers: {
-    onPromise: (promise?: Promise<unknown>) => void;
-    onResolve: (result?: unknown) => void;
-    onReject: (error?: unknown) => void;
-  },
-  delimiter?: string,
-  promisesOnly?: boolean
-) {
-  if (!callbackNames) {
+export default function createCallbacks(options: {
+  childProps: any;
+  monitor: string | string[] | undefined;
+  confirm: string | string[] | undefined;
+  handlers: StatefulHandlers;
+  delimiter?: string;
+  promisesOnly?: boolean;
+}) {
+  if (!options.monitor) {
     return {};
   }
 
-  async function runCallback(callback: (...args: any[]) => any, ...args: any[]) {
-    const result = callback(...args);
-    if (promisesOnly) {
+  async function runCallback(
+    originalCallback: (...args: any[]) => any,
+    callbackName: string,
+    ...args: any[]
+  ) {
+    if (options.confirm?.includes(callbackName)) {
+      options.handlers.onConfirmShow(() => {
+        runCallback(originalCallback, `${callbackName}Confirmed`, ...args);
+      });
+      return;
+    }
+    const result = originalCallback(...args);
+    if (options.promisesOnly) {
       if (isPromise(result)) {
+        options.handlers.onPromise();
         const promise = result as Promise<any>;
-        promise.catch(handlers.onReject);
-        promise.then(handlers.onResolve);
-        handlers.onPromise(promise);
+        promise.catch(options.handlers.onReject);
+        promise.then(options.handlers.onResolve);
       }
     } else {
-      handlers.onPromise();
+      options.handlers.onPromise();
       try {
-        const result = await callback(...args);
-        handlers.onResolve(result);
+        const result = await originalCallback(...args);
+        options.handlers.onResolve(result);
       } catch (error) {
-        handlers.onReject(error);
+        options.handlers.onReject(error);
       }
     }
   }
 
-  return asArray.simple(callbackNames, delimiter).reduce((result, callbackName) => {
-    const callbackCandidate = childProps[callbackName];
-    if (typeof callbackCandidate === "function") {
+  return asArray.simple(options.monitor, options.delimiter).reduce((result, callbackName) => {
+    const originalCallback = options.childProps[callbackName];
+    if (typeof originalCallback === "function") {
       result[callbackName] = (...args: any[]) => {
-        return runCallback(callbackCandidate, ...args);
+        return runCallback(originalCallback, callbackName, ...args);
       };
     }
 

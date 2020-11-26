@@ -6,7 +6,7 @@ import raw from "raw.macro";
 // The Stateful wrapper can be used on form elements as well, by using `monitor="onSubmit"`
 // however, your submit button will be deeply nested, and only the wrapped form element will receive stateful props
 // in order to display success or error state on your submit button, you can use the context features
-// - in the wrapper, you set the provideContext prop
+// - in the wrapper, do not disable the provideContext prop
 // - deeply nested, you can use Stateful.Consumer to pick up the statefull props and add them to its children
 
 const wait = (time: number) => new Promise((resolve) => setTimeout(resolve, time));
@@ -43,7 +43,7 @@ export default function FormContextExample() {
       <div className="container">
         <div className="columns is-5-tablet is-4-desktop is-3-widescreen">
           <div className="column is-half">
-            <Stateful monitor="onSubmit" provideContext>
+            <Stateful monitor="onSubmit">
               <form className="box" onSubmit={handleSubmit}>
                 <div className="field">
                   <label className="label">Email</label>

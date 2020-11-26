@@ -26,7 +26,6 @@ export default function StateConsumersExample() {
         <div className="columns is-5-tablet is-4-desktop is-3-widescreen">
           <div className="column is-half">
             <Stateful
-              provideContext
               monitor="onSubmit"
               busyDelay={2000}
               successDuration={2000}

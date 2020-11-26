@@ -23,6 +23,7 @@ export function createStatusClassFlags(status: Status, props: StatefulConfig) {
     ],
     [Status.SUCCESS]: props.successClasses,
     [Status.ERROR]: props.errorClasses,
+    [Status.CONFIRM]: props.confirmClasses,
   };
 
   return createStatusProps(flags, status, props.delimiter);
@@ -46,6 +47,7 @@ export function createExtraProps(status: Status, props: StatefulConfig) {
     ],
     [Status.SUCCESS]: props.successFlags,
     [Status.ERROR]: props.errorFlags,
+    [Status.CONFIRM]: props.confirmFlags,
   };
 
   return createStatusProps(flags, status, props.delimiter);
@@ -182,24 +184,26 @@ export function createChildProps(args: {
 
   // props of the child that we pass along because they are unknown to us
   const foreignProps = omitProps(childProps, [
-    ...asArray(args.config.monitor!, status, args.config.delimiter),
+    ...asArray(args.config.monitor, status, args.config.delimiter),
+    ...asArray(args.config.confirm, status, args.config.delimiter),
     ...(args.omitProps || []),
   ]);
 
   // overridden callbacks for the wrapped child. these are the monitored functions
-  const callbackOverrides = args.handlers
-    ? createCallbacks(
+  const callbacks = args.handlers
+    ? createCallbacks({
         childProps,
-        args.config.monitor!,
-        args.handlers,
-        args.config.delimiter,
-        args.config.promisesOnly
-      )
+        monitor: args.config.monitor,
+        confirm: args.config.confirm,
+        handlers: args.handlers,
+        delimiter: args.config.delimiter,
+        promisesOnly: args.config.promisesOnly,
+      })
     : {};
 
   return {
     extraProps,
     foreignProps,
-    callbackOverrides,
+    callbacks,
   };
 }

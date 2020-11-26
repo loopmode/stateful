@@ -6,9 +6,18 @@ export const StatefulConfigurationContext = React.createContext<StatefulConfig>(
 export const StatefulConfigurationProvider = StatefulConfigurationContext.Provider;
 StatefulConfigurationContext.displayName = "StatefulConfigurationContext";
 
+const noop = () => null;
 export const StatefulContext = React.createContext<StatefulContextValue>({
   status: Status.IDLE,
   extraProps: {},
+  handlers: {
+    onConfirmShow: noop,
+    onConfirmApprove: noop,
+    onConfirmCancel: noop,
+    onPromise: noop,
+    onReject: noop,
+    onResolve: noop,
+  },
   config: {},
 });
 export const StatefulProvider = StatefulContext.Provider;

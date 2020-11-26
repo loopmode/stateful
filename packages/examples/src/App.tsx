@@ -10,6 +10,7 @@ import { Home } from "./Home";
 import StateConsumersExample from "./examples/state-consumers-example";
 import ConfigProviderExample from "./examples/config-provider-example";
 import ReactHookFormCrudExample from "./examples/react-hook-form-crud-example";
+import ConfirmExample from "./examples/confirm-example";
 
 const Link = (props: React.ComponentProps<typeof NavLink>) => (
   <NavLink activeClassName="is-active" {...props} />
@@ -48,6 +49,9 @@ function App() {
               <li>
                 <Link to="/state-consumers">State consumers</Link>
               </li>
+              <li>
+                <Link to="/confirm">Confirmation</Link>
+              </li>
             </ul>
           </div>
 
@@ -60,6 +64,7 @@ function App() {
               <Route path="/react-hook-form-crud" component={ReactHookFormCrudExample} />
               <Route path="/state-consumers" component={StateConsumersExample} />
               <Route path="/config-provider" component={ConfigProviderExample} />
+              <Route path="/confirm" component={ConfirmExample} />
             </Switch>
           </div>
         </div>

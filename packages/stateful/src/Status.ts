@@ -5,24 +5,29 @@ export enum Status {
   IDLE = "idle",
 
   /**
-   * Describes that a callback returned a promise
+   * Status when a callback was invoked and returned a promise
    */
   PENDING = "pending",
 
   /**
-   * Describes that the operation has been `PENDING` for longer than the `busyDelay` milliseconds
+   * Status when the operation has been `PENDING` for at least `busyDelay` milliseconds
    */
   BUSY = "busy",
 
   /**
-   * Describes that the promise was resolved with a non-error value
+   * Status when the promise was resolved with a non-error value
    */
   SUCCESS = "success",
 
   /**
-   * Describes that the promise was rejected, or resolved with an `Error`
+   * Status when the promise was rejected or resolved with an `Error` value
    */
   ERROR = "error",
+
+  /**
+   * Status when a callback was intercepted and awaits confirmation by the user
+   */
+  CONFIRM = "confirm"
 }
 
 export const AllStatuses = [
@@ -31,4 +36,5 @@ export const AllStatuses = [
   Status.BUSY,
   Status.SUCCESS,
   Status.ERROR,
+  Status.CONFIRM,
 ];

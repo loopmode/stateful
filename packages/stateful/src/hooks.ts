@@ -26,6 +26,7 @@ export function useStateful(props: StatefulConfig) {
   const isRejected = React.useRef(false);
 
   const [status, setStatus] = React.useState<Status>(Status.IDLE);
+  const confirmCallback = React.useRef<any>(null);
 
   const hintDurations: Partial<Record<Status, number>> = {
     [Status.SUCCESS]: props.successDuration || props.hintDuration,
@@ -46,7 +47,6 @@ export function useStateful(props: StatefulConfig) {
       isMounted.current = false;
     };
   }, [isMounted]);
-
 
   const handlers = {
     onPromise: () => {
@@ -73,6 +73,25 @@ export function useStateful(props: StatefulConfig) {
       setStatus(Status.SUCCESS);
       busyTimer.clear();
       resetTimer.start();
+    },
+    onConfirmShow: (callback: () => void) => {
+      if (status === Status.CONFIRM) {
+        confirmCallback.current();
+        confirmCallback.current = null;
+        handlers.onPromise();
+      } else {
+        confirmCallback.current = callback;
+        setStatus(Status.CONFIRM);
+      }
+    },
+    onConfirmCancel: () => {
+      confirmCallback.current = null;
+      setStatus(Status.IDLE);
+    },
+    onConfirmApprove: () => {
+      confirmCallback.current();
+      confirmCallback.current = null;
+      handlers.onPromise();
     },
   };
 
