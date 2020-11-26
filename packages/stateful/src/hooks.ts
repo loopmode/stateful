@@ -61,7 +61,9 @@ export function useStateful(props: StatefulConfig) {
       isRejected.current = true;
       setStatus(Status.ERROR);
       busyTimer.clear();
-      resetTimer.start();
+      if (Number(props.errorDuration) > -1) {
+        resetTimer.start();
+      }
     },
     onResolve: (value: unknown) => {
       if (isRejected.current || props.shouldRejectValue?.(value) === true) {
@@ -72,7 +74,9 @@ export function useStateful(props: StatefulConfig) {
       if (!isMounted.current) return;
       setStatus(Status.SUCCESS);
       busyTimer.clear();
-      resetTimer.start();
+      if (Number(props.successDuration) > -1) {
+        resetTimer.start();
+      }
     },
     onConfirmShow: (callback: () => void) => {
       if (status === Status.CONFIRM) {
