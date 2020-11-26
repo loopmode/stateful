@@ -40,14 +40,14 @@ export function createStatusClassFlags(status: Status, props: StatefulConfig) {
 export function createExtraProps(status: Status, props: StatefulConfig) {
   const flags = {
     [Status.IDLE]: undefined,
-    [Status.PENDING]: props.pendingFlags,
+    [Status.PENDING]: props.pendingProps,
     [Status.BUSY]: [
-      ...asArray(props.pendingFlags, status, props.delimiter),
-      ...asArray(props.busyFlags, status, props.delimiter),
+      ...asArray(props.pendingProps, status, props.delimiter),
+      ...asArray(props.busyProps, status, props.delimiter),
     ],
-    [Status.SUCCESS]: props.successFlags,
-    [Status.ERROR]: props.errorFlags,
-    [Status.CONFIRM]: props.confirmFlags,
+    [Status.SUCCESS]: props.successProps,
+    [Status.ERROR]: props.errorProps,
+    [Status.CONFIRM]: props.confirmProps,
   };
 
   return createStatusProps(flags, status, props.delimiter);

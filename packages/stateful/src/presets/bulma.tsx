@@ -3,11 +3,11 @@ import { StatefulConfig, StatefulProps } from "../types";
 import { StatefulConfigurationProvider } from "../context";
 
 export const bulmaPreset: StatefulConfig = {
-  pendingFlags: "disabled",
+  pendingProps: "disabled",
   pendingClasses: "",
 
   busyDelay: 0,
-  busyFlags: "disabled",
+  busyProps: "disabled",
   busyClasses: "is-loading",
   //
   successClasses: "is-success",

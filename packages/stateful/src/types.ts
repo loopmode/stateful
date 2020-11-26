@@ -13,25 +13,25 @@ export type StatefulConfig = {
   /** One or more callback names of the wrapped child to override and intercept until confirmed via Stateful.Confirm */
   confirm?: string | string[];
   /** One or more boolean flags that are passed as props to wrapped children while status is `pending` */
-  pendingFlags?: string | StatusResolver | (string | StatusResolver)[];
+  pendingProps?: string | StatusResolver | (string | StatusResolver)[];
   /** One or more CSS class names to decorate wrapped children with, while status is `pending` */
   pendingClasses?: string | StatusResolver | (string | StatusResolver)[];
   /** Number of milliseconds before state `pending` turns to state `busy` */
   busyDelay?: number;
   /** One or more boolean flags that are passed as props to wrapped children while status is `busy` */
-  busyFlags?: string | StatusResolver | (string | StatusResolver)[];
+  busyProps?: string | StatusResolver | (string | StatusResolver)[];
   /** One or more CSS class names to decorate wrapped children with, while status is `busy` */
   busyClasses?: string | StatusResolver | (string | StatusResolver)[];
   /** One or more boolean flags that are passed as props to wrapped children while status is `success` */
-  successFlags?: string | StatusResolver | (string | StatusResolver)[];
+  successProps?: string | StatusResolver | (string | StatusResolver)[];
   /** One or more CSS class names to decorate wrapped children with, while status is `success` */
   successClasses?: string | StatusResolver | (string | StatusResolver)[];
   /** One or more boolean flags that are passed as props to wrapped children while status is `error` */
-  errorFlags?: string | StatusResolver | (string | StatusResolver)[];
+  errorProps?: string | StatusResolver | (string | StatusResolver)[];
   /** One or more CSS class names to decorate wrapped children with, while status is `error` */
   errorClasses?: string | StatusResolver | (string | StatusResolver)[];
   /** One or more boolean flags that are passed as props to wrapped children while status is `confirm` */
-  confirmFlags?: string | StatusResolver | (string | StatusResolver)[];
+  confirmProps?: string | StatusResolver | (string | StatusResolver)[];
   /** One or more CSS class names to decorate wrapped children with, while status is `confirm` */
   confirmClasses?: string | StatusResolver | (string | StatusResolver)[];
   /** How long to display error or success state before turning back to idle. */

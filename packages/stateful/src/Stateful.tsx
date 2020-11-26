@@ -20,18 +20,18 @@ const defaultConfig: StatefulProps = {
 
   monitor: ["onClick"],
 
-  pendingFlags: [],
+  pendingProps: [],
   pendingClasses: [],
 
-  busyFlags: [],
+  busyProps: [],
   busyClasses: [],
   busyDelay: 0,
 
-  successFlags: [],
+  successProps: [],
   successClasses: [],
   successDuration: undefined,
 
-  errorFlags: [],
+  errorProps: [],
   errorClasses: [],
   errorDuration: undefined,
 

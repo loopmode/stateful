@@ -8,11 +8,11 @@ import { ToggleCodeViewer } from "../ToggleCodeViewer";
 // you can still use props to override config in individual cases
 
 const statefulConfig = {
-  pendingFlags: "disabled",
+  pendingProps: "disabled",
   pendingClasses: "",
 
   busyDelay: 0,
-  busyFlags: "disabled",
+  busyProps: "disabled",
   busyClasses: "is-loading",
   //
   successClasses: "is-success",
@@ -58,7 +58,7 @@ function SomeComponent() {
       {/** here's an instance that sets custom configuration */}
       <Stateful
         errorClasses="is-warning"
-        errorFlags={() => ({
+        errorProps={() => ({
           title: "Something went wrong...",
         })}
         errorDuration={10000}
