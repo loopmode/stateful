@@ -10,51 +10,68 @@ export type RenderFunction = (props: { status: Status; handlers: StatefulHandler
 export type StatefulConfig = {
   /** One or more callback names of the wrapped child to override and monitor */
   monitor?: string | string[];
-  /** One or more callback names of the wrapped child to override and intercept, then delay until confirmed */
+  /** One or more callback names of the wrapped child to intercept and delay until confirmed by the user */
   confirm?: string | string[];
 
   /** One or more boolean flags that are passed as props to wrapped children while status is `pending` */
   pendingProps?: string | StatusResolver | (string | StatusResolver)[];
-  /** One or more CSS class names to decorate wrapped children with, while status is `pending` */
+  /** One or more CSS class names to decorate wrapped children with while the status is `pending` */
   pendingClasses?: string | StatusResolver | (string | StatusResolver)[];
 
   /** Number of milliseconds before state `pending` turns to state `busy` */
   busyDelay?: number;
   /** One or more boolean flags that are passed as props to wrapped children while status is `busy` */
   busyProps?: string | StatusResolver | (string | StatusResolver)[];
-  /** One or more CSS class names to decorate wrapped children with, while status is `busy` */
+  /** One or more CSS class names to decorate wrapped children with while the status is `busy` */
   busyClasses?: string | StatusResolver | (string | StatusResolver)[];
 
   /** One or more boolean flags that are passed as props to wrapped children while status is `success` */
   successProps?: string | StatusResolver | (string | StatusResolver)[];
-  /** One or more CSS class names to decorate wrapped children with, while status is `success` */
+  /** One or more CSS class names to decorate wrapped children with while the status is `success` */
   successClasses?: string | StatusResolver | (string | StatusResolver)[];
  
   /** One or more boolean flags that are passed as props to wrapped children while status is `error` */
   errorProps?: string | StatusResolver | (string | StatusResolver)[];
-  /** One or more CSS class names to decorate wrapped children with, while status is `error` */
+  /** One or more CSS class names to decorate wrapped children with while the status is `error` */
   errorClasses?: string | StatusResolver | (string | StatusResolver)[];
  
   /** One or more boolean flags that are passed as props to wrapped children while status is `confirm` */
   confirmProps?: string | StatusResolver | (string | StatusResolver)[];
-  /** One or more CSS class names to decorate wrapped children with, while status is `confirm` */
+  /** One or more CSS class names to decorate wrapped children with while the status is `confirm` */
   confirmClasses?: string | StatusResolver | (string | StatusResolver)[];
  
-  /** How long to display error or success state before turning back to idle. */
+  /**
+   * How long to remain in error or success state before turning back to idle.
+   * Set to -1 to keep the final state indefinitely.
+   * Will be overridden by `successDuration` or `errorDuration`, if set.
+   */
   hintDuration?: number;
-  /** How long to display success state before turning back to idle state. Overrides `hintDuration` for success cases. */
+  /**
+   * How long to remain in success state before turning back to idle state.
+   * Set to -1 to keep the final state indefinitely.
+   * Overrides `hintDuration` for success cases.
+   */
   successDuration?: number;
-  /** How long to display error state before turning back to idle state. Overrides `hintDuration` for error cases. */
+  /**
+   * How long to remain in error state before turning back to idle state.
+   * Set to -1 to keep the final state indefinitely.
+   * Overrides `hintDuration` for error cases.
+   */
   errorDuration?: number;
  
-  /** Delimiter for multiple values in a single string. Defaults to space, for e.g. values like "onClick onSubmit onReset"   */
+  /**
+   * Delimiter for multiple values in a single string.
+   * Defaults to a single space character, for values like "onClick onSubmit onReset"
+   */
   delimiter?: string;
   
-  /** Ignore regular callbacks and handle only callbacks that are async or explicitly return a promise.*/
+  /**
+   * If true, callbacks are only handled if they are async (or explicitly return a promise).
+   */
   promisesOnly?: boolean;
 
   /**
-   * A function that decides whether to handle a successfully resolved promise as an error, based on the resolved value.
+   * A function that decides whether to handle a successfully resolved promise as a rejection, based on the resolved value.
    * Out of the box, any promise that resolves with an `Error` object is treated as rejected.
    */
   shouldRejectValue?: (value: unknown) => boolean;
