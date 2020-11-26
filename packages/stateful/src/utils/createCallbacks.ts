@@ -42,8 +42,8 @@ export default function createCallbacks(options: {
       });
       return;
     }
-    const result = originalCallback(...args);
     if (options.promisesOnly) {
+      const result = originalCallback(...args);
       if (isPromise(result)) {
         options.handlers.onPromise();
         const promise = result as Promise<any>;
