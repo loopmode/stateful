@@ -9,10 +9,10 @@ const wait = (time: number) => new Promise((resolve) => setTimeout(resolve, time
 
 export default function ButtonInlineExample() {
   const successCallback = async () => {
-    await wait(200 + Math.random() * 800);
+    await wait(Math.random() * 2000);
   };
   const errorCallback = async () => {
-    await wait(200 + Math.random() * 800);
+    await wait(Math.random() * 2000);
     return new Error("Nope");
   };
   const randomCallback = () => {

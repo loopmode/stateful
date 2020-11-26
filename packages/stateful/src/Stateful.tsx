@@ -19,6 +19,7 @@ const defaultConfig: StatefulProps = {
   // MAKE SURE TO CREATE A KEY FOR EACH SUPPORTED PROP, or that prop will be passed to wrapped children
 
   monitor: ["onClick"],
+  confirm: undefined,
 
   pendingProps: [],
   pendingClasses: [],
