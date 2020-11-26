@@ -12,47 +12,49 @@ export default function ConfirmExample() {
   };
   return (
     <div className="ConfirmExample">
-      <Stateful confirm="onClick">
-        <button className="button" onClick={handleDelete}>
-          Proceed A
-        </button>
-        <Stateful.Confirm>
-          {({ onConfirm, onCancel }) => {
-            return (
-              <ModalConfirm
-                onConfirm={onConfirm}
-                onCancel={onCancel}
-                title="Confirmation as render function"
-              >
-                <p>Do you really want to proceed?</p>
-              </ModalConfirm>
-            );
-          }}
-        </Stateful.Confirm>
-      </Stateful>
+      <div className="buttons">
+        <Stateful confirm="onClick">
+          <button className="button" onClick={handleDelete}>
+            Proceed A
+          </button>
+          <Stateful.Confirm>
+            {({ onConfirm, onCancel }) => {
+              return (
+                <ModalConfirm
+                  onConfirm={onConfirm}
+                  onCancel={onCancel}
+                  title="Confirmation as render function"
+                >
+                  <p>Do you really want to proceed?</p>
+                </ModalConfirm>
+              );
+            }}
+          </Stateful.Confirm>
+        </Stateful>
 
-      <Stateful confirm="onClick">
-        <button className="button" onClick={handleDelete}>
-          Proceed B
-        </button>
-        <Stateful.Confirm>
-          <ModalConfirm title="Confirmation as child">
-            <p>Do you really want to proceed?</p>
-          </ModalConfirm>
-        </Stateful.Confirm>
-      </Stateful>
+        <Stateful confirm="onClick">
+          <button className="button" onClick={handleDelete}>
+            Proceed B
+          </button>
+          <Stateful.Confirm>
+            <ModalConfirm title="Confirmation as child">
+              <p>Do you really want to proceed?</p>
+            </ModalConfirm>
+          </Stateful.Confirm>
+        </Stateful>
 
-      <Stateful
-        confirm="onClick"
-        confirmClasses="is-warning"
-        confirmProps={() => ({
-          children: "Are you sure?"
-        })}
-      >
-        <button className="button" onClick={handleDelete}>
-          Proceed C
-        </button>
-      </Stateful>
+        <Stateful
+          confirm="onClick"
+          confirmClasses="is-warning"
+          confirmProps={() => ({
+            children: "Are you sure?",
+          })}
+        >
+          <button className="button" onClick={handleDelete}>
+            Proceed C
+          </button>
+        </Stateful>
+      </div>
 
       <ToggleCodeViewer content={raw("./confirm-example.tsx")} />
     </div>
