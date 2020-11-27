@@ -1,4 +1,5 @@
 import React from "react";
+import { createPortal } from 'react-dom';
 import { Stateful } from "@loopmode/stateful";
 import { ToggleCodeViewer } from "../../ToggleCodeViewer";
 import raw from "raw.macro";
@@ -68,7 +69,7 @@ type ModalConfirmProps = {
   onConfirm?: () => void;
 };
 function ModalConfirm(props: React.PropsWithChildren<ModalConfirmProps>) {
-  return (
+  return createPortal(
     <div className="modal is-active">
       <div className="modal-background"></div>
       <div className="modal-card">
@@ -88,5 +89,5 @@ function ModalConfirm(props: React.PropsWithChildren<ModalConfirmProps>) {
         </footer>
       </div>
     </div>
-  );
+  , document.body);
 }
