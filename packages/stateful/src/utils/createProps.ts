@@ -11,22 +11,22 @@ import createCallbacks from "./createCallbacks";
  * names provided for the current status.
  *
  * @param {Status} status The current status of the Stateful instance state
- * @param {Object} props The props of the Stateful instance
+ * @param {Object} config The Stateful configuration
  */
-export function createStatusClassFlags(status: Status, props: StatefulConfig) {
+export function createStatusClassFlags(status: Status, config: StatefulConfig) {
   const flags = {
     [Status.IDLE]: undefined,
-    [Status.PENDING]: props.pendingClasses,
+    [Status.PENDING]: config.pendingClasses,
     [Status.BUSY]: [
-      ...asArray(props.pendingClasses, status, props.delimiter),
-      ...asArray(props.busyClasses, status, props.delimiter),
+      ...asArray(config.pendingClasses, status, config.delimiter),
+      ...asArray(config.busyClasses, status, config.delimiter),
     ],
-    [Status.SUCCESS]: props.successClasses,
-    [Status.ERROR]: props.errorClasses,
-    [Status.CONFIRM]: props.confirmClasses,
+    [Status.SUCCESS]: config.successClasses,
+    [Status.ERROR]: config.errorClasses,
+    [Status.CONFIRM]: config.confirmClasses,
   };
 
-  return createStatusProps(flags, status, props.delimiter);
+  return createStatusProps(flags, status, config.delimiter);
 }
 
 /**
@@ -35,22 +35,22 @@ export function createStatusClassFlags(status: Status, props: StatefulConfig) {
  * that was defined for the matching state.
  *
  * @param {Status} status The current status of the Stateful instance state
- * @param {Object} props The props of the Stateful instance
+ * @param {Object} config The Stateful configuration
  */
-export function createExtraProps(status: Status, props: StatefulConfig) {
+export function createExtraProps(status: Status, config: StatefulConfig) {
   const flags = {
     [Status.IDLE]: undefined,
-    [Status.PENDING]: props.pendingProps,
+    [Status.PENDING]: config.pendingProps,
     [Status.BUSY]: [
-      ...asArray(props.pendingProps, status, props.delimiter),
-      ...asArray(props.busyProps, status, props.delimiter),
+      ...asArray(config.pendingProps, status, config.delimiter),
+      ...asArray(config.busyProps, status, config.delimiter),
     ],
-    [Status.SUCCESS]: props.successProps,
-    [Status.ERROR]: props.errorProps,
-    [Status.CONFIRM]: props.confirmProps,
+    [Status.SUCCESS]: config.successProps,
+    [Status.ERROR]: config.errorProps,
+    [Status.CONFIRM]: config.confirmProps,
   };
 
-  return createStatusProps(flags, status, props.delimiter);
+  return createStatusProps(flags, status, config.delimiter);
 }
 
 /**
@@ -147,11 +147,11 @@ export function pickProps(childProps: any, names: string[] = []) {
 }
 
 export function getStatusPropKeys(statuses: Status[], props: StatefulConfig) {
-  return getFlagKeys(statuses, props, createExtraProps);
+  return getKeys(statuses, props, createExtraProps);
 }
 
 export function getStatusClassNames(statuses: Status[], props: StatefulConfig) {
-  return getFlagKeys(statuses, props, createStatusClassFlags);
+  return getKeys(statuses, props, createStatusClassFlags);
 }
 
 /**
@@ -160,7 +160,7 @@ export function getStatusClassNames(statuses: Status[], props: StatefulConfig) {
  * @param props
  * @param createValues
  */
-export function getFlagKeys(
+export function getKeys(
   statuses: Status[],
   props: StatefulConfig,
   createValues: (status: Status, props: StatefulConfig) => Record<string, any>
@@ -175,8 +175,8 @@ export function getFlagKeys(
 
 export function createChildProps(args: {
   status: Status;
-  config: StatefulConfig;
   child?: React.ReactElement<any>;
+  config: StatefulConfig;
   handlers?: ReturnType<typeof useStateful>["handlers"];
   omitProps?: string[];
 }) {
