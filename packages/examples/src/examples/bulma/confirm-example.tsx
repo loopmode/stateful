@@ -1,6 +1,6 @@
 import React from "react";
 import { Stateful } from "@loopmode/stateful";
-import { ToggleCodeViewer } from "../ToggleCodeViewer";
+import { ToggleCodeViewer } from "../../ToggleCodeViewer";
 import raw from "raw.macro";
 
 const wait = (time: number) => new Promise((resolve) => setTimeout(resolve, time));
@@ -11,7 +11,7 @@ export default function ConfirmExample() {
     console.trace("done");
   };
   return (
-    <div className="ConfirmExample">
+    <>
       <div className="buttons">
         <Stateful confirm="onClick">
           <button className="button" onClick={handleDelete}>
@@ -57,7 +57,7 @@ export default function ConfirmExample() {
       </div>
 
       <ToggleCodeViewer content={raw("./confirm-example.tsx")} />
-    </div>
+    </>
   );
 }
 

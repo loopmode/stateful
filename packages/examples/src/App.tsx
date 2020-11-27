@@ -1,80 +1,110 @@
-import React from "react";
-import { BrowserRouter as Router, Switch, Route, NavLink } from "react-router-dom";
-import { BulmaConfigProvider } from "@loopmode/stateful/lib/presets";
-
-import ButtonComponentExample from "./examples/button-component-example";
-import ButtonInlineExample from "./examples/button-inline-example";
-import FormContextExample from "./examples/form-context-example";
+import React, { lazy } from "react";
+import cx from "classnames";
+import { HelmetProvider } from "react-helmet-async";
+import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 
 import { Home } from "./Home";
-import StateConsumersExample from "./examples/state-consumers-example";
-import ConfigProviderExample from "./examples/config-provider-example";
-import ReactHookFormCrudExample from "./examples/react-hook-form-crud-example";
-import ConfirmExample from "./examples/confirm-example";
-import ButtonStickyExample from "./examples/button-sticky-example";
 
-const Link = (props: React.ComponentProps<typeof NavLink>) => (
-  <NavLink activeClassName="is-active" {...props} />
-);
+import "./App.scss";
+import LoadingOverlay from "./components/LoadingOverlay";
+import { BulmaAssetsProvider } from "./frameworks/bulma/BulmaAssetsProvider";
+import { BulmaStatefulConfig } from "./frameworks/bulma/BulmaStatefulConfig";
+import { BootstrapStatefulConfig } from "./frameworks/bootstrap/BootstrapStatefulConfig";
+import { BootstrapAssetsProvider } from "./frameworks/bootstrap/BootstrapAssetsProvider";
+
+const AppHeader = lazy(() => import("./components/AppHeader"));
+const AppMenu = lazy(() => import("./components/AppMenu"));
 
 function App() {
-  return (
-    <BulmaConfigProvider>
-      <Router>
-        <div className="App columns">
-          <div className="menu column is-one-fifth">
-            <ul className="menu-list">
-              <li>
-                <Link exact to="/">
-                  Home
-                </Link>
-              </li>
-            </ul>
-            <p className="menu-label">Examples</p>
-            <ul className="menu-list">
-              <li>
-                <Link to="/config-provider">Config provider</Link>
-              </li>
-              <li>
-                <Link to="/button-inline">Button inline</Link>
-              </li>
-              <li>
-                <Link to="/button-component">Button component</Link>
-              </li>
-              <li>
-                <Link to="/button-sticky">Button sticky</Link>
-              </li>
-              <li>
-                <Link to="/form-context">Form</Link>
-              </li>
-              <li>
-                <Link to="/react-hook-form-crud">CRUD</Link>
-              </li>
-              <li>
-                <Link to="/state-consumers">State consumers</Link>
-              </li>
-              <li>
-                <Link to="/confirm">Confirmation</Link>
-              </li>
-            </ul>
-          </div>
+  const [isMobileMenuVisible, setMobileMenuVisible] = React.useState(false);
+  const showMenu = React.useCallback(() => setMobileMenuVisible(true), []);
+  const hideMenu = React.useCallback(() => setMobileMenuVisible(false), []);
 
-          <div className="container content column">
-            <Switch>
-              <Route path="/" exact component={Home} />
-              <Route path="/button-inline" component={ButtonInlineExample} />
-              <Route path="/button-component" component={ButtonComponentExample} />
-              <Route path="/button-sticky" component={ButtonStickyExample} />
-              <Route path="/form-context" component={FormContextExample} />
-              <Route path="/react-hook-form-crud" component={ReactHookFormCrudExample} />
-              <Route path="/state-consumers" component={StateConsumersExample} />
-              <Route path="/config-provider" component={ConfigProviderExample} />
-              <Route path="/confirm" component={ConfirmExample} />
-            </Switch>
+  return (
+    <HelmetProvider>
+      <React.Suspense fallback={<LoadingOverlay />}>
+        <Router basename={process.env.REACT_APP_BASENAME}>
+          <div className={cx("App")}>
+            <AppHeader onShowMenu={showMenu} />
+            <div className="App--body">
+              <AppMenu onHideMenu={hideMenu} mobileMenuVisible={isMobileMenuVisible}>
+                <h4>Bulma</h4>
+                <NavLink to="/bulma/config-provider" children="Config provider" />
+                <NavLink to="/bulma/button-inline" children="Button inline" />
+                <NavLink to="/bulma/button-component" children="Button component" />
+                <NavLink to="/bulma/button-sticky" children="Button sticky" />
+                <NavLink to="/bulma/form-context" children="Form" />
+                <NavLink to="/bulma/react-hook-form-crud" children="CRUD" />
+                <NavLink to="/bulma/state-consumers" children="State consumers" />
+                <NavLink to="/bulma/confirm" children="Confirmation" />
+                <h4>Bootstrap</h4>
+                <NavLink to="/bootstrap/button-inline" children="Button inline" />
+              </AppMenu>
+              <main>
+                <React.Suspense fallback={<LoadingOverlay />}>
+                  <Route path="/" exact component={Home} />
+                  <Route path="/bulma">
+                    <BulmaStatefulConfig>
+                      <BulmaAssetsProvider>
+                        <Route
+                          path="/bulma/button-inline"
+                          component={lazy(() => import("./examples/bulma/button-inline-example"))}
+                        />
+                        <Route
+                          path="/bulma/button-component"
+                          component={lazy(
+                            () => import("./examples/bulma/button-component-example")
+                          )}
+                        />
+                        <Route
+                          path="/bulma/button-sticky"
+                          component={lazy(() => import("./examples/bulma/button-sticky-example"))}
+                        />
+                        <Route
+                          path="/bulma/form-context"
+                          component={lazy(() => import("./examples/bulma/form-context-example"))}
+                        />
+                        <Route
+                          path="/bulma/react-hook-form-crud"
+                          component={lazy(
+                            () => import("./examples/bulma/react-hook-form-crud-example")
+                          )}
+                        />
+                        <Route
+                          path="/bulma/state-consumers"
+                          component={lazy(() => import("./examples/bulma/state-consumers-example"))}
+                        />
+                        <Route
+                          path="/bulma/config-provider"
+                          component={lazy(() => import("./examples/bulma/config-provider-example"))}
+                        />
+                        <Route
+                          path="/bulma/confirm"
+                          component={lazy(() => import("./examples/bulma/confirm-example"))}
+                        />
+                      </BulmaAssetsProvider>
+                    </BulmaStatefulConfig>
+                  </Route>
+
+                  <Route path="/bootstrap">
+                    <BootstrapStatefulConfig>
+                      <BootstrapAssetsProvider>
+                        <Route
+                          path="/bootstrap/button-inline"
+                          component={lazy(
+                            () => import("./examples/bootstrap/button-inline-example")
+                          )}
+                        />
+                      </BootstrapAssetsProvider>
+                    </BootstrapStatefulConfig>
+                  </Route>
+                </React.Suspense>
+              </main>
+            </div>
           </div>
-        </div>
-      </Router>
-    </BulmaConfigProvider>
+        </Router>
+      </React.Suspense>
+    </HelmetProvider>
   );
 }
 

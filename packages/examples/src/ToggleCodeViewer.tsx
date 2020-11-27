@@ -10,12 +10,11 @@ export function ToggleCodeViewer({
 }) {
   const [showCode, setShowCode] = React.useState(false);
   return (
-    <div className="container">
+    <>
       <hr />
-      <button className="button is-small" onClick={() => setShowCode(!showCode)}>
-        {showCode ? "Hide" : "Show"} example code
-      </button>
+      {/* eslint-disable-next-line */}
+      <a href="#" onClick={() => setShowCode(!showCode)}>{showCode ? "Hide" : "Show"} example code</a>
       {showCode && <Codeblock language={language as any} children={content} />}
-    </div>
+    </>
   );
 }

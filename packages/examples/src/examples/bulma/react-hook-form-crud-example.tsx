@@ -1,7 +1,7 @@
 import React from "react";
 import cx from "classnames";
 import { Stateful } from "@loopmode/stateful";
-import { ToggleCodeViewer } from "../ToggleCodeViewer";
+import { ToggleCodeViewer } from "../../ToggleCodeViewer";
 import raw from "raw.macro";
 import { Link, Redirect, Route, Switch, useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -90,7 +90,7 @@ function UsersCrudPage() {
       try {
         await createUser(data);
         history.push(`${currentPath}/list`);
-      } catch (error) { 
+      } catch (error) {
         return error;
       }
     },
@@ -110,7 +110,7 @@ function UsersCrudPage() {
   );
 
   return (
-    <div className="CrudExample">
+    <>
       <nav className="container is-flex">
         <Route path={`${currentPath}/(create|edit)`}>
           <Link className="button" to={`${currentPath}/list`} children="Back to list" />
@@ -144,7 +144,7 @@ function UsersCrudPage() {
           }}
         ></Route>
       </Switch>
-    </div>
+    </>
   );
 }
 

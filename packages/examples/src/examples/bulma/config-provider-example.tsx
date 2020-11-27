@@ -1,11 +1,12 @@
 import { Stateful, StatefulConfigurationProvider } from "@loopmode/stateful";
 import raw from "raw.macro";
 import React from "react";
-import { ToggleCodeViewer } from "../ToggleCodeViewer";
+import { ToggleCodeViewer } from "../../ToggleCodeViewer";
 
 // You can render a StatefulConfigurationProvider at high level (e.g. wrapping your app)
-// and provide default configuration for all nested Stateful wrappers
-// you can still use props to override config in individual cases
+// and provide default configuration for all nested Stateful wrappers.
+// You can still use props on individual components to override those defaults.
+// This way, you can create a configuration for your specific UI framework.
 
 const statefulConfig = {
   pendingProps: "disabled",
@@ -49,13 +50,6 @@ function SomeComponent() {
         </button>
       </Stateful>
 
-      <Stateful>
-        <button className="button" onClick={errorCallback}>
-          Will fail
-        </button>
-      </Stateful>
-
-      {/** here's an instance that sets custom configuration */}
       <Stateful
         errorClasses="is-warning"
         errorProps={() => ({
@@ -64,7 +58,7 @@ function SomeComponent() {
         errorDuration={10000}
       >
         <button className="button" onClick={errorCallback}>
-          Will fail with warning and tooltip
+          Will fail
         </button>
       </Stateful>
     </div>

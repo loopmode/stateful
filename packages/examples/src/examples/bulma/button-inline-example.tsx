@@ -1,7 +1,7 @@
 import { Stateful } from "@loopmode/stateful";
 import raw from "raw.macro";
 import React from "react";
-import { ToggleCodeViewer } from "../ToggleCodeViewer";
+import { ToggleCodeViewer } from "../../ToggleCodeViewer";
 
 // You can wrap any JSX children in Stateful wrappers.
 
@@ -13,20 +13,20 @@ export default function ButtonInlineExample() {
   };
   const errorCallback = async () => {
     await wait(Math.random() * 2000);
-    return new Error("Nope");
+    return new Error("failed");
   };
   const randomCallback = () => {
     return Math.random() > 0.5 ? successCallback() : errorCallback();
   };
   return (
-    <div className="">
+    <>
       <div className="buttons">
-        <Stateful busyDelay={500}>
+        <Stateful>
           <button className="button" onClick={successCallback}>
             Will succeed
           </button>
         </Stateful>
-        
+
         <Stateful>
           <button className="button" onClick={errorCallback}>
             Will fail
@@ -49,6 +49,6 @@ export default function ButtonInlineExample() {
         </Stateful>
       </div>
       <ToggleCodeViewer content={raw("./button-inline-example.tsx")} />
-    </div>
+    </>
   );
 }

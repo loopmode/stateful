@@ -11,10 +11,12 @@
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.53",
     "@types/react-dom": "^16.9.8",
+    "@types/react-helmet-async": "^1.0.3",
     "@types/react-router-dom": "^5.1.6",
     "bulma": "^0.9.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-helmet-async": "^1.0.7",
     "react-hook-form": "^6.11.3",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.0",
@@ -46,6 +48,7 @@
     ]
   },
   "devDependencies": {
+    "@types/prismjs": "^1.16.2",
     "node-sass": "4.14.1",
     "raw.macro": "^0.4.2"
   }

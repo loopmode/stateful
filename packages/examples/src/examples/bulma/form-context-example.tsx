@@ -1,6 +1,6 @@
 import React from "react";
 import { Stateful } from "@loopmode/stateful";
-import { ToggleCodeViewer } from "../ToggleCodeViewer";
+import { ToggleCodeViewer } from "../../ToggleCodeViewer";
 import raw from "raw.macro";
 
 // The Stateful wrapper can be used on form elements as well, by using `monitor="onSubmit"`
@@ -39,7 +39,7 @@ export default function FormContextExample() {
     }
   };
   return (
-    <div className="">
+    <>
       <div className="container">
         <div className="columns is-5-tablet is-4-desktop is-3-widescreen">
           <div className="column is-half">
@@ -83,6 +83,6 @@ export default function FormContextExample() {
         </div>
       </div>
       <ToggleCodeViewer content={raw("./form-context-example.tsx")} />
-    </div>
+    </>
   );
 }

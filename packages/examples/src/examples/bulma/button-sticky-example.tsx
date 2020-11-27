@@ -1,7 +1,7 @@
 import { Stateful } from "@loopmode/stateful";
 import raw from "raw.macro";
 import React from "react";
-import { ToggleCodeViewer } from "../ToggleCodeViewer";
+import { ToggleCodeViewer } from "../../ToggleCodeViewer";
 
 const wait = (time: number) => new Promise((resolve) => setTimeout(resolve, time));
 
@@ -15,7 +15,7 @@ export default function ButtonStickyExample() {
   };
 
   return (
-    <div className="ButtonStickyExample">
+    <>
       <div className="buttons">
         <Stateful successDuration={-1}>
           <button className="button" onClick={successCallback}>
@@ -30,6 +30,6 @@ export default function ButtonStickyExample() {
         </Stateful>
       </div>
       <ToggleCodeViewer content={raw("./button-sticky-example.tsx")} />
-    </div>
+    </>
   );
 }
