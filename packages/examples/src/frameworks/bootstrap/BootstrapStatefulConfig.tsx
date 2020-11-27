@@ -7,12 +7,20 @@ export function BootstrapStatefulConfig({ children, ...props }: StatefulProps) {
   return (
     <StatefulConfigurationProvider
       value={{
-        pendingProps: () => ({ children: "Loading...", disabled: true }),
+        pendingProps: (status, childProps) => ({
+          children: (
+            <>
+              <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true" />{" "}
+              {childProps.children}
+            </>
+          ),
+          disabled: true,
+        }),
 
-        successProps: () => ({ variant: "success" }),
+        successClasses: "btn-success",
         successDuration: 1000,
 
-        errorProps: () => ({ variant: "danger" }),
+        errorClasses: "btn-danger",
         errorDuration: 2000,
         //
         ...props,
