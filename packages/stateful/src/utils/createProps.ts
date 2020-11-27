@@ -74,7 +74,7 @@ export function createStatusProps(
   if (typeof statusFlags === "function") {
     return statusFlags(status);
   } else if (Array.isArray(statusFlags) || typeof statusFlags === "string") {
-    return createFlags(statusFlags, status, delimiter);
+    return createValues(statusFlags, status, delimiter);
   }
   return {};
 }
@@ -88,20 +88,37 @@ export function createStatusProps(
  * @param {*} [value=true] The value to set for all properties
  * @returns {Object} An object with the specified properties. All properties have the same `value`
  */
-export function createFlags(
+export function createValues(
   key: string | string[],
   status: Status,
   delimiter: string = " ",
-  value = true
+  defaultValue = true
 ) {
-  const keys = asArray(key, status, delimiter);
+  const keys = asArray(key, status, delimiter) as any[];
+
   if (!keys) {
     return {};
   }
-  return keys.reduce((result, propName) => {
+
+  return keys.reduce((result, current) => {
+    if (typeof current === "function") {
+      return {
+        ...result,
+        ...current(status),
+      };
+    }
+
+    if (Object(current) === current) {
+      return {
+        ...result,
+        ...current,
+      };
+    }
+
+    const [currentKey, currentValue] = current.split(":");
     return {
       ...result,
-      [propName]: value,
+      [currentKey]: currentValue || defaultValue,
     };
   }, {});
 }
@@ -141,15 +158,15 @@ export function getStatusClassNames(statuses: Status[], props: StatefulConfig) {
  * Creates a flag map for the given status and returns only the keys of that map
  * @param statuses
  * @param props
- * @param createFlags
+ * @param createValues
  */
 export function getFlagKeys(
   statuses: Status[],
   props: StatefulConfig,
-  createFlags: (status: Status, props: StatefulConfig) => Record<string, any>
+  createValues: (status: Status, props: StatefulConfig) => Record<string, any>
 ) {
   const ignoredValues = statuses.reduce((result, ignoredStatus) => {
-    const values = createFlags(ignoredStatus, props);
+    const values = createValues(ignoredStatus, props);
     return result.concat(Object.keys(values));
   }, [] as string[]);
 
