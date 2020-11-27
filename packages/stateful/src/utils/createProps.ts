@@ -16,23 +16,25 @@ import createCallbacks from "./createCallbacks";
 export function createStatusClassFlags({
   status,
   config,
+  childProps,
 }: {
   status: Status;
   config: StatefulConfig;
+  childProps: React.PropsWithChildren<any>;
 }) {
   const flags = {
     [Status.IDLE]: undefined,
     [Status.PENDING]: config.pendingClasses,
     [Status.BUSY]: [
-      ...asArray(config.pendingClasses, status, config.delimiter),
-      ...asArray(config.busyClasses, status, config.delimiter),
+      ...asArray({ value: config.pendingClasses, status, delimiter: config.delimiter, childProps }),
+      ...asArray({ value: config.busyClasses, status, delimiter: config.delimiter, childProps }),
     ],
     [Status.SUCCESS]: config.successClasses,
     [Status.ERROR]: config.errorClasses,
     [Status.CONFIRM]: config.confirmClasses,
   };
 
-  return createStatusProps({ flags, status, delimiter: config.delimiter });
+  return createStatusProps({ flags, status, delimiter: config.delimiter, childProps: {} });
 }
 
 /**
@@ -43,20 +45,28 @@ export function createStatusClassFlags({
  * @param {Status} status The current status of the Stateful instance state
  * @param {Object} config The Stateful configuration
  */
-export function createExtraProps({ status, config }: { status: Status; config: StatefulConfig }) {
+export function createExtraProps({
+  status,
+  config,
+  childProps,
+}: {
+  status: Status;
+  config: StatefulConfig;
+  childProps: React.PropsWithChildren<any>;
+}) {
   const flags = {
     [Status.IDLE]: undefined,
     [Status.PENDING]: config.pendingProps,
     [Status.BUSY]: [
-      ...asArray(config.pendingProps, status, config.delimiter),
-      ...asArray(config.busyProps, status, config.delimiter),
+      ...asArray({ value: config.pendingProps, status, delimiter: config.delimiter, childProps }),
+      ...asArray({ value: config.busyProps, status, delimiter: config.delimiter, childProps }),
     ],
     [Status.SUCCESS]: config.successProps,
     [Status.ERROR]: config.errorProps,
     [Status.CONFIRM]: config.confirmProps,
   };
 
-  return createStatusProps({ flags, status, delimiter: config.delimiter });
+  return createStatusProps({ flags, status, delimiter: config.delimiter, childProps });
 }
 
 /**
@@ -75,16 +85,18 @@ export function createStatusProps({
   flags,
   status,
   delimiter,
+  childProps,
 }: {
   flags: Record<Status, any>;
   status: Status;
   delimiter?: string;
+  childProps: React.PropsWithChildren<any>;
 }) {
   const statusFlags = flags[status];
   if (typeof statusFlags === "function") {
-    return statusFlags(status);
+    return statusFlags(status, childProps);
   } else if (Array.isArray(statusFlags) || typeof statusFlags === "string") {
-    return createValues({ key: statusFlags, status, delimiter });
+    return createValues({ key: statusFlags, status, delimiter, childProps });
   }
   return {};
 }
@@ -103,13 +115,15 @@ export function createValues({
   status,
   delimiter = " ",
   defaultValue = true,
+  childProps,
 }: {
   key: string | string[];
   status: Status;
   delimiter?: string;
   defaultValue?: any;
+  childProps: React.PropsWithChildren<any>;
 }) {
-  const keys = asArray(key, status, delimiter) as any[];
+  const keys = asArray({ value: key, status, delimiter, childProps }) as any[];
 
   if (!keys) {
     return {};
@@ -119,7 +133,7 @@ export function createValues({
     if (typeof current === "function") {
       return {
         ...result,
-        ...current(status),
+        ...current(status, childProps),
       };
     }
 
@@ -161,12 +175,12 @@ export function pickProps(childProps: any, names: string[] = []) {
   }, {} as any);
 }
 
-export function getStatusPropKeys(statuses: Status[], props: StatefulConfig) {
-  return getKeys(statuses, props, createExtraProps);
+export function getStatusPropKeys(statuses: Status[], config: StatefulConfig) {
+  return getKeys(statuses, config, createExtraProps);
 }
 
-export function getStatusClassNames(statuses: Status[], props: StatefulConfig) {
-  return getKeys(statuses, props, createStatusClassFlags);
+export function getStatusClassNames(statuses: Status[], config: StatefulConfig) {
+  return getKeys(statuses, config, createStatusClassFlags);
 }
 
 /**
@@ -178,10 +192,14 @@ export function getStatusClassNames(statuses: Status[], props: StatefulConfig) {
 export function getKeys(
   statuses: Status[],
   config: StatefulConfig,
-  createValues: (args: { status: Status; config: StatefulConfig }) => Record<string, any>
+  createValues: (args: {
+    status: Status;
+    config: StatefulConfig;
+    childProps: React.PropsWithChildren<any>;
+  }) => Record<string, any>
 ) {
   const ignoredValues = statuses.reduce((result, ignoredStatus) => {
-    const values = createValues({ status: ignoredStatus, config });
+    const values = createValues({ status: ignoredStatus, config, childProps: {} });
     return result.concat(Object.keys(values));
   }, [] as string[]);
 
@@ -210,14 +228,24 @@ export function createChildProps(args: {
 
   // the props we generate and attach to the wrapped child
   const extraProps = {
-    className: cx(className, createStatusClassFlags({ status, config: args.config })),
-    ...createExtraProps({ status, config: args.config }),
+    className: cx(className, createStatusClassFlags({ status, config: args.config, childProps })),
+    ...createExtraProps({ status, config: args.config, childProps }),
   };
 
   // props of the child that we pass along because they are unknown to us
   const foreignProps = omitProps(childProps, [
-    ...asArray(args.config.monitor, status, args.config.delimiter),
-    ...asArray(args.config.confirm, status, args.config.delimiter),
+    ...asArray({
+      value: args.config.monitor,
+      status,
+      delimiter: args.config.delimiter,
+      childProps,
+    }),
+    ...asArray({
+      value: args.config.confirm,
+      status,
+      delimiter: args.config.delimiter,
+      childProps,
+    }),
     ...(args.omitProps || []),
   ]);
 

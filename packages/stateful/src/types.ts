@@ -1,11 +1,14 @@
 import { useStateful } from "./hooks";
 import { Status } from "./Status";
 
-export type StatusResolver = (status?: Status) => any;
+export type StatusResolver = (status: Status, childProps: React.PropsWithChildren<any>) => any;
 
 export type StatefulHandlers = Pick<ReturnType<typeof useStateful>, "handlers">["handlers"];
 
-export type RenderFunction = (props: { status: Status; handlers: StatefulHandlers }) => React.ReactElement;
+export type RenderFunction = (props: {
+  status: Status;
+  handlers: StatefulHandlers;
+}) => React.ReactElement;
 
 export type StatefulConfig = {
   /** One or more callback names of the wrapped child to override and monitor */
@@ -29,17 +32,17 @@ export type StatefulConfig = {
   successProps?: string | StatusResolver | (string | StatusResolver)[];
   /** One or more CSS class names to decorate wrapped children with while the status is `success` */
   successClasses?: string | StatusResolver | (string | StatusResolver)[];
- 
+
   /** One or more boolean flags that are passed as props to wrapped children while status is `error` */
   errorProps?: string | StatusResolver | (string | StatusResolver)[];
   /** One or more CSS class names to decorate wrapped children with while the status is `error` */
   errorClasses?: string | StatusResolver | (string | StatusResolver)[];
- 
+
   /** One or more boolean flags that are passed as props to wrapped children while status is `confirm` */
   confirmProps?: string | StatusResolver | (string | StatusResolver)[];
   /** One or more CSS class names to decorate wrapped children with while the status is `confirm` */
   confirmClasses?: string | StatusResolver | (string | StatusResolver)[];
- 
+
   /**
    * How long to remain in error or success state before turning back to idle.
    * Set to -1 to keep the final state indefinitely.
@@ -58,13 +61,13 @@ export type StatefulConfig = {
    * Overrides `hintDuration` for error cases.
    */
   errorDuration?: number;
- 
+
   /**
    * Delimiter for multiple values in a single string.
    * Defaults to a single space character, for values like "onClick onSubmit onReset"
    */
   delimiter?: string;
-  
+
   /**
    * If true, callbacks are only handled if they are async (or explicitly return a promise).
    */
@@ -91,5 +94,5 @@ export type StatefulContextValue = {
   status: Status;
   extraProps: any;
   config: StatefulConfig;
-  handlers: StatefulHandlers
+  handlers: StatefulHandlers;
 };
