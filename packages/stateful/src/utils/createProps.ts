@@ -13,7 +13,13 @@ import createCallbacks from "./createCallbacks";
  * @param {Status} status The current status of the Stateful instance state
  * @param {Object} config The Stateful configuration
  */
-export function createStatusClassFlags(status: Status, config: StatefulConfig) {
+export function createStatusClassFlags({
+  status,
+  config,
+}: {
+  status: Status;
+  config: StatefulConfig;
+}) {
   const flags = {
     [Status.IDLE]: undefined,
     [Status.PENDING]: config.pendingClasses,
@@ -26,7 +32,7 @@ export function createStatusClassFlags(status: Status, config: StatefulConfig) {
     [Status.CONFIRM]: config.confirmClasses,
   };
 
-  return createStatusProps(flags, status, config.delimiter);
+  return createStatusProps({ flags, status, delimiter: config.delimiter });
 }
 
 /**
@@ -37,7 +43,7 @@ export function createStatusClassFlags(status: Status, config: StatefulConfig) {
  * @param {Status} status The current status of the Stateful instance state
  * @param {Object} config The Stateful configuration
  */
-export function createExtraProps(status: Status, config: StatefulConfig) {
+export function createExtraProps({ status, config }: { status: Status; config: StatefulConfig }) {
   const flags = {
     [Status.IDLE]: undefined,
     [Status.PENDING]: config.pendingProps,
@@ -50,7 +56,7 @@ export function createExtraProps(status: Status, config: StatefulConfig) {
     [Status.CONFIRM]: config.confirmProps,
   };
 
-  return createStatusProps(flags, status, config.delimiter);
+  return createStatusProps({ flags, status, delimiter: config.delimiter });
 }
 
 /**
@@ -60,21 +66,25 @@ export function createExtraProps(status: Status, config: StatefulConfig) {
  * Its keys should be `Status` values, while its values should be a `PolyType` list of prop names
  * or functions that return a props object themselves.
  *
- * @param {Object} flagMap A mapping of status values and prop names, e.g. `{[Status.PENDING]: 'pending disabled'}`. The value can also be afunction that receives the current status and returns prop names.
+ * @param {Object} flags A mapping of status values and prop names, e.g. `{[Status.PENDING]: 'pending disabled'}`. The value can also be afunction that receives the current status and returns prop names.
  * @param {Number} status The active `Status` value
  * @param {String} [delimiter] An optional delimiter by which to split `PolyType` strings
  * @return {Object} An object with props for the given `status`, e.g. `{pending: true, disabled: true}`
  */
-export function createStatusProps(
-  flagMap: Record<Status, any>,
-  status: Status,
-  delimiter?: string
-) {
-  const statusFlags = flagMap[status];
+export function createStatusProps({
+  flags,
+  status,
+  delimiter,
+}: {
+  flags: Record<Status, any>;
+  status: Status;
+  delimiter?: string;
+}) {
+  const statusFlags = flags[status];
   if (typeof statusFlags === "function") {
     return statusFlags(status);
   } else if (Array.isArray(statusFlags) || typeof statusFlags === "string") {
-    return createValues(statusFlags, status, delimiter);
+    return createValues({ key: statusFlags, status, delimiter });
   }
   return {};
 }
@@ -88,12 +98,17 @@ export function createStatusProps(
  * @param {*} [value=true] The value to set for all properties
  * @returns {Object} An object with the specified properties. All properties have the same `value`
  */
-export function createValues(
-  key: string | string[],
-  status: Status,
-  delimiter: string = " ",
-  defaultValue = true
-) {
+export function createValues({
+  key,
+  status,
+  delimiter = " ",
+  defaultValue = true,
+}: {
+  key: string | string[];
+  status: Status;
+  delimiter?: string;
+  defaultValue?: any;
+}) {
   const keys = asArray(key, status, delimiter) as any[];
 
   if (!keys) {
@@ -157,16 +172,16 @@ export function getStatusClassNames(statuses: Status[], props: StatefulConfig) {
 /**
  * Creates a flag map for the given status and returns only the keys of that map
  * @param statuses
- * @param props
+ * @param config
  * @param createValues
  */
 export function getKeys(
   statuses: Status[],
-  props: StatefulConfig,
-  createValues: (status: Status, props: StatefulConfig) => Record<string, any>
+  config: StatefulConfig,
+  createValues: (args: { status: Status; config: StatefulConfig }) => Record<string, any>
 ) {
   const ignoredValues = statuses.reduce((result, ignoredStatus) => {
-    const values = createValues(ignoredStatus, props);
+    const values = createValues({ status: ignoredStatus, config });
     return result.concat(Object.keys(values));
   }, [] as string[]);
 
@@ -195,8 +210,8 @@ export function createChildProps(args: {
 
   // the props we generate and attach to the wrapped child
   const extraProps = {
-    className: cx(className, createStatusClassFlags(status, args.config)),
-    ...createExtraProps(status, args.config),
+    className: cx(className, createStatusClassFlags({ status, config: args.config })),
+    ...createExtraProps({ status, config: args.config }),
   };
 
   // props of the child that we pass along because they are unknown to us
