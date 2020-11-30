@@ -38,6 +38,17 @@ export default function ConfirmExample() {
           <button className="button" onClick={handleProceed}>
             Proceed B
           </button>
+          <Stateful.Confirm exit="finished">
+            <ModalConfirm title="Confirmation as child">
+              <p>Do you really want to proceed?</p>
+            </ModalConfirm>
+          </Stateful.Confirm>
+        </Stateful>
+
+        <Stateful confirm="onClick" confirmExit="idle">
+          <button className="button" onClick={handleProceed}>
+            Proceed C
+          </button>
           <Stateful.Confirm>
             <ModalConfirm title="Confirmation as child">
               <p>Do you really want to proceed?</p>
@@ -53,19 +64,8 @@ export default function ConfirmExample() {
           })}
         >
           <button className="button" onClick={handleProceed}>
-            Proceed C
-          </button>
-        </Stateful>
-
-        <Stateful confirm="onClick">
-          <button className="button" onClick={handleProceed}>
             Proceed D
           </button>
-          <Stateful.Confirm>
-            <ModalConfirm title="Confirmation as child">
-              <p>Do you really want to proceed?</p>
-            </ModalConfirm>
-          </Stateful.Confirm>
         </Stateful>
       </div>
 
@@ -95,9 +95,11 @@ function ModalConfirm(props: React.PropsWithChildren<ModalConfirmProps>) {
             Cancel
           </button>
           <span style={{ flex: 1 }} />
-          <button className="button is-info" onClick={props.onConfirm}>
-            Proceed
-          </button>
+          <Stateful.Consumer>
+            <button className="button is-info" onClick={props.onConfirm}>
+              Proceed
+            </button>
+          </Stateful.Consumer>
         </footer>
       </div>
     </div>,

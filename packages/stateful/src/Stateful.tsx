@@ -1,6 +1,12 @@
 import React from "react";
 
-import { RenderFunction, StatefulProps, StatefulConsumerProps, StatefulHandlers } from "./types";
+import {
+  RenderFunction,
+  StatefulProps,
+  StatefulConsumerProps,
+  StatefulHandlers,
+  ConfirmExitMode,
+} from "./types";
 
 import { Status } from "./Status";
 import { StatefulConfigurationContext, StatefulContext, StatefulProvider } from "./context";
@@ -17,6 +23,7 @@ const defaultConfig: StatefulProps = {
   confirm: undefined,
   confirmProps: [],
   confirmClasses: undefined,
+  confirmExit: "started",
 
   pendingProps: [],
   pendingClasses: [],
@@ -227,37 +234,78 @@ export function BusyConsumer({
 export function Confirm({
   confirm = "onConfirm",
   cancel = "onCancel",
+  exit,
   ...props
 }: {
+  /**
+   * The name of the callback that gets called when the user confirms
+   */
   confirm?: string;
+
+  /**
+   * The name of the callback that gets called when the user dismisses
+   */
   cancel?: string;
+
+  /**
+   * The mode of exit
+   *
+   * - `early`: confirm state exits when confirm callback is invoked
+   * - `normal`: confirm state exits when confirm callback has finished
+   * - `late`: confirm state exits when confirm callback and its result indicator have finished
+   */
+  exit?: ConfirmExitMode;
+
   children:
     | React.ReactElement
     | ((args: { onConfirm: () => void; onCancel: () => void }) => React.ReactElement);
 }) {
-  const { status, handlers } = React.useContext(StatefulContext);
+  const { status, handlers, config } = React.useContext(StatefulContext);
 
-  if (status === Status.CONFIRM) {
-    if (typeof props.children === "function") {
-      return props.children({
-        onConfirm: handlers.onConfirmApprove,
-        onCancel: handlers.onConfirmCancel,
-      });
-    }
+  if (!shouldRenderConfirm(status, exit || config.confirmExit)) {
+    return null;
+  }
 
-    return React.Children.map<any, any>(props.children, (child) => {
-      if (!React.isValidElement(child)) {
-        return child;
-      }
-
-      return React.cloneElement(child, {
-        [confirm]: handlers.onConfirmApprove,
-        [cancel]: handlers.onConfirmCancel,
-      } as any);
+  if (typeof props.children === "function") {
+    return props.children({
+      onConfirm: handlers.onConfirmApprove,
+      onCancel: handlers.onConfirmCancel,
     });
   }
 
-  return null;
+  return React.Children.map<any, any>(props.children, (child) => {
+    if (!React.isValidElement(child)) {
+      return child;
+    }
+
+    return React.cloneElement(child, {
+      [confirm]: handlers.onConfirmApprove,
+      [cancel]: handlers.onConfirmCancel,
+    } as any);
+  });
+}
+
+function shouldRenderConfirm(status: Status, exitMode?: ConfirmExitMode) {
+  const isCurrentStatus = (value: Status[]) => value.some((v) => v === status);
+  switch (exitMode) {
+    case "started":
+      return isCurrentStatus([Status.CONFIRM]);
+
+    case "finished":
+      return isCurrentStatus([Status.CONFIRM, Status.PENDING, Status.BUSY]);
+
+    case "idle":
+      return isCurrentStatus([
+        Status.CONFIRM,
+        Status.PENDING,
+        Status.BUSY,
+        Status.SUCCESS,
+        Status.ERROR,
+      ]);
+
+    default:
+      return false;
+  }
 }
 
 Stateful.Consumer = StatefulConsumer;

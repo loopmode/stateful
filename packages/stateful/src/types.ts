@@ -10,6 +10,8 @@ export type RenderFunction = (props: {
   handlers: StatefulHandlers;
 }) => React.ReactElement;
 
+export type ConfirmExitMode = "started" | "finished" | "idle";
+
 export type StatefulConfig = {
   /** One or more callback names to override and monitor */
   monitor?: string | string[];
@@ -18,6 +20,15 @@ export type StatefulConfig = {
    * intercept and delay until confirmed by the user.
    * A boolean `true` will use the value defined in `monitor` (confirm all callbacks) */
   confirm?: boolean | string | string[];
+
+  /**
+   * The mode of confirm exit
+   *
+   * - `early`: confirm state exits when confirm callback is invoked
+   * - `normal`: confirm state exits when confirm callback has finished
+   * - `late`: confirm state exits when confirm callback and its result indicator have finished
+   */
+  confirmExit?: ConfirmExitMode;
 
   /** One or more boolean flags that are passed as props to wrapped children while status is `pending` */
   pendingProps?: string | StatusResolver | (string | StatusResolver)[];
