@@ -17,7 +17,7 @@ export type StatefulConfig = {
    * Either a boolean flag or one or more callback names to
    * intercept and delay until confirmed by the user.
    * A boolean `true` will use the value defined in `monitor` (confirm all callbacks) */
-  confirm?: string | string[];
+  confirm?: boolean | string | string[];
 
   /** One or more boolean flags that are passed as props to wrapped children while status is `pending` */
   pendingProps?: string | StatusResolver | (string | StatusResolver)[];

@@ -1,5 +1,5 @@
 import React from "react";
-import { createPortal } from 'react-dom';
+import { createPortal } from "react-dom";
 import { Stateful } from "@loopmode/stateful";
 import { ToggleCodeViewer } from "../../ToggleCodeViewer";
 import raw from "raw.macro";
@@ -7,15 +7,16 @@ import raw from "raw.macro";
 const wait = (time: number) => new Promise((resolve) => setTimeout(resolve, time));
 
 export default function ConfirmExample() {
-  const handleDelete = async () => {
+  const handleProceed = async () => {
+    console.log("handleProceed");
     await wait(2500);
-    console.trace("done");
+    console.log("handleProceed done");
   };
   return (
     <>
       <div className="buttons">
         <Stateful confirm="onClick">
-          <button className="button" onClick={handleDelete}>
+          <button className="button" onClick={handleProceed}>
             Proceed A
           </button>
           <Stateful.Confirm>
@@ -34,7 +35,7 @@ export default function ConfirmExample() {
         </Stateful>
 
         <Stateful confirm="onClick">
-          <button className="button" onClick={handleDelete}>
+          <button className="button" onClick={handleProceed}>
             Proceed B
           </button>
           <Stateful.Confirm>
@@ -51,9 +52,20 @@ export default function ConfirmExample() {
             children: "Are you sure?",
           })}
         >
-          <button className="button" onClick={handleDelete}>
+          <button className="button" onClick={handleProceed}>
             Proceed C
           </button>
+        </Stateful>
+
+        <Stateful confirm="onClick">
+          <button className="button" onClick={handleProceed}>
+            Proceed D
+          </button>
+          <Stateful.Confirm>
+            <ModalConfirm title="Confirmation as child">
+              <p>Do you really want to proceed?</p>
+            </ModalConfirm>
+          </Stateful.Confirm>
         </Stateful>
       </div>
 
@@ -88,6 +100,7 @@ function ModalConfirm(props: React.PropsWithChildren<ModalConfirmProps>) {
           </button>
         </footer>
       </div>
-    </div>
-  , document.body);
+    </div>,
+    document.body
+  );
 }

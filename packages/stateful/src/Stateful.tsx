@@ -13,7 +13,10 @@ const defaultConfig: StatefulProps = {
   // MAKE SURE TO CREATE A KEY FOR EACH SUPPORTED PROP, or that prop will be passed to wrapped children
 
   monitor: ["onClick"],
+
   confirm: undefined,
+  confirmProps: [],
+  confirmClasses: undefined,
 
   pendingProps: [],
   pendingClasses: [],
@@ -70,7 +73,7 @@ export function Stateful(props: StatefulProps): React.ReactElement {
       status,
       handlers,
       parentProps: props,
-      omitProps: ownPropNames,
+      ownPropNames,
     });
 
     const clonedElement = React.cloneElement(
@@ -116,7 +119,7 @@ export function StatefulConsumer(props: StatefulConsumerProps): React.ReactEleme
       status,
       parentProps: props,
       config,
-      omitProps: ownPropNames,
+      ownPropNames,
     });
 
     return React.cloneElement(child, {

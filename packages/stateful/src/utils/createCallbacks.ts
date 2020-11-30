@@ -31,33 +31,44 @@ export default function createCallbacks(options: {
     return {};
   }
 
-  async function runCallback(
-    originalCallback: (...args: any[]) => any,
-    callbackName: string,
-    ...args: any[]
-  ) {
-    if (shouldConfirm(callbackName, options)) {
-      options.handlers.onConfirmShow(() => {
-        runCallback(originalCallback, callbackName, ...args);
-      });
+  async function runCallback(args: {
+    callback: (...args: any[]) => any;
+    callbackName: string;
+    callbackArgs: any[];
+    isConfirmed?: boolean;
+  }) {
+    const { callback, callbackName, callbackArgs, isConfirmed } = args;
+
+    if (!isConfirmed && shouldConfirm(callbackName, options)) {
+      const onConfirmApprove = () => {
+        runCallback({
+          isConfirmed: true,
+          callback,
+          callbackName: callbackName,
+          callbackArgs,
+        });
+      };
+      options.handlers.onConfirmShow(onConfirmApprove);
       return;
     }
+
     if (options.promisesOnly) {
-      const result = originalCallback(...args);
+      const result = callback(...callbackArgs);
       if (isPromise(result)) {
         options.handlers.onPromise();
         const promise = result as Promise<any>;
         promise.catch(options.handlers.onReject);
         promise.then(options.handlers.onResolve);
       }
-    } else {
-      options.handlers.onPromise();
-      try {
-        const result = await originalCallback(...args);
-        options.handlers.onResolve(result);
-      } catch (error) {
-        options.handlers.onReject(error);
-      }
+      return;
+    }
+
+    options.handlers.onPromise();
+    try {
+      const result = await callback(...callbackArgs);
+      options.handlers.onResolve(result);
+    } catch (error) {
+      options.handlers.onReject(error);
     }
   }
 
@@ -65,7 +76,7 @@ export default function createCallbacks(options: {
     const originalCallback = options.childProps[callbackName];
     if (typeof originalCallback === "function") {
       result[callbackName] = (...args: any[]) => {
-        return runCallback(originalCallback, callbackName, ...args);
+        return runCallback({ callback: originalCallback, callbackName, callbackArgs: args });
       };
     }
 
