@@ -2,6 +2,21 @@ import React from "react";
 import { Status } from "../Status";
 import { StatusResolver } from "../types";
 
+/**
+ * Resolves one or more values that will to an array.
+ *
+ * If the given value is a string, it is treated as a delimiter list,
+ * e.g. `"one two"` becomes `["one", "two"]`
+ *
+ * If the given value is a resolver function, that function is invoked with `value(status, childProps)`,
+ * and its return value is returned as an array,
+ * e.g. `() => ("one two")` becomes `["one", "two"]`
+ *
+ * If the given value is an array, each of its elements will be treated recursively,
+ * e.g. `["0 1", "2", () => ("3 4"), ["5 6"]]` becomes  `["0", "1", "2", "3", "4", "5", "6"]`
+ *
+ *  TODO: write tests dammit!
+ */
 export default function asArray<T = string>({
   value,
   status,
@@ -10,7 +25,10 @@ export default function asArray<T = string>({
 }: {
   value: string | StatusResolver | (string | StatusResolver)[] | undefined;
   status: Status;
-  childProps: React.PropsWithChildren<any>;
+  /**
+   * The childProps are only needed when `value` is a resolver function.
+   */
+  childProps?: React.PropsWithChildren<any>;
   delimiter?: string;
 }): T[] {
   if (!value) {
@@ -18,11 +36,12 @@ export default function asArray<T = string>({
   }
 
   if (typeof value === "function") {
-    const result = value(status, childProps);
-    if (Array.isArray(result)) {
-      return result;
-    }
-    return [result];
+    return asArray({
+      value: value(status, childProps),
+      status,
+      childProps,
+      delimiter,
+    });
   }
 
   if (typeof value === "string") {

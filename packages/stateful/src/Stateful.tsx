@@ -1,17 +1,11 @@
 import React from "react";
 
-import {
-  RenderFunction,
-  StatefulProps,
-  StatefulConsumerProps,
-  StatefulConfig,
-  StatefulHandlers,
-} from "./types";
+import { RenderFunction, StatefulProps, StatefulConsumerProps, StatefulHandlers } from "./types";
 
 import { Status } from "./Status";
 import { StatefulConfigurationContext, StatefulContext, StatefulProvider } from "./context";
 import { useStateful } from "./hooks";
-import { createChildProps } from "./utils/createProps";
+import { createProps } from "./utils/createProps";
 
 const defaultConfig: StatefulProps = {
   // Note that we use the keys of the defaultConfig object to omit
@@ -56,7 +50,9 @@ const ownPropNames = Object.keys(defaultConfig);
  */
 export function Stateful(props: StatefulProps): React.ReactElement {
   const parentConfig = React.useContext(StatefulConfigurationContext);
+
   let { children, ...config } = { ...defaultConfig, ...parentConfig, ...props };
+
   const { status, handlers } = useStateful(config);
 
   if (typeof children === "function") {
@@ -68,43 +64,37 @@ export function Stateful(props: StatefulProps): React.ReactElement {
       return child;
     }
 
-    const { extraProps, callbacks, foreignProps } = createChildProps({
+    const { additionalProps, callbacks, otherProps } = createProps({
       child,
       config,
       status,
       handlers,
+      parentProps: props,
       omitProps: ownPropNames,
     });
 
-    const childProps = Object.assign(
-      {},
-      foreignProps,
-      callbacks,
-      config.provideProps ? extraProps : {}
+    const clonedElement = React.cloneElement(
+      child,
+      Object.assign({}, otherProps, callbacks, config.provideProps ? additionalProps : {})
     );
+
+    if (!config.provideContext) {
+      return clonedElement;
+    }
 
     return (
-      <StatefulWrapper status={status} config={config} extraProps={extraProps} handlers={handlers}>
-        {React.cloneElement(child, childProps)}
-      </StatefulWrapper>
+      <StatefulProvider
+        value={{
+          status,
+          config,
+          additionalProps,
+          handlers,
+        }}
+      >
+        {clonedElement}
+      </StatefulProvider>
     );
   });
-}
-
-function StatefulWrapper({
-  children,
-  ...props
-}: {
-  children: React.ReactElement | React.ReactElement[];
-  status: Status;
-  handlers: StatefulHandlers;
-  extraProps: any;
-  config: StatefulProps;
-}): React.ReactElement {
-  if (props.config.provideContext) {
-    return <StatefulProvider value={props}>{children}</StatefulProvider>;
-  }
-  return children as React.ReactElement;
 }
 
 /**
@@ -121,16 +111,17 @@ export function StatefulConsumer(props: StatefulConsumerProps): React.ReactEleme
       return child;
     }
 
-    const { extraProps, foreignProps } = createChildProps({
+    const { additionalProps, otherProps } = createProps({
       child,
       status,
+      parentProps: props,
       config,
       omitProps: ownPropNames,
     });
 
     return React.cloneElement(child, {
-      ...foreignProps,
-      ...extraProps,
+      ...otherProps,
+      ...additionalProps,
     });
   });
 }

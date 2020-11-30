@@ -11,9 +11,12 @@ export type RenderFunction = (props: {
 }) => React.ReactElement;
 
 export type StatefulConfig = {
-  /** One or more callback names of the wrapped child to override and monitor */
+  /** One or more callback names to override and monitor */
   monitor?: string | string[];
-  /** One or more callback names of the wrapped child to intercept and delay until confirmed by the user */
+  /**
+   * Either a boolean flag or one or more callback names to
+   * intercept and delay until confirmed by the user.
+   * A boolean `true` will use the value defined in `monitor` (confirm all callbacks) */
   confirm?: string | string[];
 
   /** One or more boolean flags that are passed as props to wrapped children while status is `pending` */
@@ -92,7 +95,7 @@ export type StatefulConsumerProps = StatefulConfig & {
 
 export type StatefulContextValue = {
   status: Status;
-  extraProps: any;
+  additionalProps: any;
   config: StatefulConfig;
   handlers: StatefulHandlers;
 };

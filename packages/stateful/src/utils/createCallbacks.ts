@@ -22,7 +22,7 @@ import { StatefulHandlers } from "../types";
 export default function createCallbacks(options: {
   childProps: any;
   monitor: string | string[] | undefined;
-  confirm: string | string[] | undefined;
+  confirm: boolean | string | string[] | undefined;
   handlers: StatefulHandlers;
   delimiter?: string;
   promisesOnly?: boolean;
@@ -36,9 +36,9 @@ export default function createCallbacks(options: {
     callbackName: string,
     ...args: any[]
   ) {
-    if (options.confirm?.includes(callbackName)) {
+    if (shouldConfirm(callbackName, options)) {
       options.handlers.onConfirmShow(() => {
-        runCallback(originalCallback, `${callbackName}Confirmed`, ...args);
+        runCallback(originalCallback, callbackName, ...args);
       });
       return;
     }
@@ -71,4 +71,21 @@ export default function createCallbacks(options: {
 
     return result;
   }, {} as any);
+}
+
+function shouldConfirm(
+  callbackName: string,
+  options: {
+    monitor: string | string[] | undefined;
+    confirm: boolean | string | string[] | undefined;
+  }
+) {
+  if (!options.confirm) {
+    return false;
+  }
+  if (typeof options.confirm === "boolean") {
+    return options.monitor?.includes(callbackName);
+  }
+
+  return (options.confirm as string | string[]).includes(callbackName);
 }

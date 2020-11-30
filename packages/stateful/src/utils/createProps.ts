@@ -6,153 +6,6 @@ import { useStateful } from "../hooks";
 import createCallbacks from "./createCallbacks";
 
 /**
- * Creates an object with boolean flags for the defined CSS classNames and given `status`.
- * The object has a property and the value `true` for each of the class
- * names provided for the current status.
- *
- * @param {Status} status The current status of the Stateful instance state
- * @param {Object} config The Stateful configuration
- */
-export function createStatusClassFlags({
-  status,
-  config,
-  childProps,
-}: {
-  status: Status;
-  config: StatefulConfig;
-  childProps: React.PropsWithChildren<any>;
-}) {
-  const flags = {
-    [Status.IDLE]: undefined,
-    [Status.PENDING]: config.pendingClasses,
-    [Status.BUSY]: [
-      ...asArray({ value: config.pendingClasses, status, delimiter: config.delimiter, childProps }),
-      ...asArray({ value: config.busyClasses, status, delimiter: config.delimiter, childProps }),
-    ],
-    [Status.SUCCESS]: config.successClasses,
-    [Status.ERROR]: config.errorClasses,
-    [Status.CONFIRM]: config.confirmClasses,
-  };
-
-  return createStatusProps({ flags, status, delimiter: config.delimiter, childProps: {} });
-}
-
-/**
- * Creates an object with boolean flags for the defined props and given `status`.
- * The object has a property and the value `true` for each propName
- * that was defined for the matching state.
- *
- * @param {Status} status The current status of the Stateful instance state
- * @param {Object} config The Stateful configuration
- */
-export function createExtraProps({
-  status,
-  config,
-  childProps,
-}: {
-  status: Status;
-  config: StatefulConfig;
-  childProps: React.PropsWithChildren<any>;
-}) {
-  const flags = {
-    [Status.IDLE]: undefined,
-    [Status.PENDING]: config.pendingProps,
-    [Status.BUSY]: [
-      ...asArray({ value: config.pendingProps, status, delimiter: config.delimiter, childProps }),
-      ...asArray({ value: config.busyProps, status, delimiter: config.delimiter, childProps }),
-    ],
-    [Status.SUCCESS]: config.successProps,
-    [Status.ERROR]: config.errorProps,
-    [Status.CONFIRM]: config.confirmProps,
-  };
-
-  return createStatusProps({ flags, status, delimiter: config.delimiter, childProps });
-}
-
-/**
- * Creates a props object given the current status and a mapping of status values to prop names.
- *
- * The `flagMap` object should define a mapping between status values and prop names.
- * Its keys should be `Status` values, while its values should be a `PolyType` list of prop names
- * or functions that return a props object themselves.
- *
- * @param {Object} flags A mapping of status values and prop names, e.g. `{[Status.PENDING]: 'pending disabled'}`. The value can also be afunction that receives the current status and returns prop names.
- * @param {Number} status The active `Status` value
- * @param {String} [delimiter] An optional delimiter by which to split `PolyType` strings
- * @return {Object} An object with props for the given `status`, e.g. `{pending: true, disabled: true}`
- */
-export function createStatusProps({
-  flags,
-  status,
-  delimiter,
-  childProps,
-}: {
-  flags: Record<Status, any>;
-  status: Status;
-  delimiter?: string;
-  childProps: React.PropsWithChildren<any>;
-}) {
-  const statusFlags = flags[status];
-  if (typeof statusFlags === "function") {
-    return statusFlags(status, childProps);
-  } else if (Array.isArray(statusFlags) || typeof statusFlags === "string") {
-    return createValues({ key: statusFlags, status, delimiter, childProps });
-  }
-  return {};
-}
-
-/**
- * Takes one or more string keys and returns an object with boolean flags for each key.
- * If `key` contains multiple values, the returned object contains a property for each key.
- *
- * @param {String | String[]} key One or more names for properties in the returned object
- * @param {String} delimiter A string for splitting multi-value `key` strings into an array
- * @param {*} [value=true] The value to set for all properties
- * @returns {Object} An object with the specified properties. All properties have the same `value`
- */
-export function createValues({
-  key,
-  status,
-  delimiter = " ",
-  defaultValue = true,
-  childProps,
-}: {
-  key: string | string[];
-  status: Status;
-  delimiter?: string;
-  defaultValue?: any;
-  childProps: React.PropsWithChildren<any>;
-}) {
-  const keys = asArray({ value: key, status, delimiter, childProps }) as any[];
-
-  if (!keys) {
-    return {};
-  }
-
-  return keys.reduce((result, current) => {
-    if (typeof current === "function") {
-      return {
-        ...result,
-        ...current(status, childProps),
-      };
-    }
-
-    if (Object(current) === current) {
-      return {
-        ...result,
-        ...current,
-      };
-    }
-
-    const [currentKey, currentValue] = current.split(":");
-    return {
-      ...result,
-      [currentKey]: currentValue || defaultValue,
-    };
-  }, {});
-}
-
-/**
  * Creates an object with only foreign properties.
  *
  * @param {*} childProps A child's props object
@@ -168,86 +21,49 @@ export function omitProps(childProps: Record<string, unknown>, omittedNames: str
   }, {} as Record<string, unknown>);
 }
 
-export function pickProps(childProps: any, names: string[] = []) {
-  return names.reduce((result, name) => {
-    result[name] = childProps[name];
-    return result;
-  }, {} as any);
+function withoutStatusClasses(className: string = "") {
+  if (status === Status.IDLE) {
+    return className;
+  }
+  // remove any pre-existing classes that exactly match our generated status classes
+  return AllStatuses.reduce((result, current) => result.replace(current, ""), className).trim();
 }
-
-export function getStatusPropKeys(statuses: Status[], config: StatefulConfig) {
-  return getKeys(statuses, config, createExtraProps);
-}
-
-export function getStatusClassNames(statuses: Status[], config: StatefulConfig) {
-  return getKeys(statuses, config, createStatusClassFlags);
-}
-
-/**
- * Creates a flag map for the given status and returns only the keys of that map
- * @param statuses
- * @param config
- * @param createValues
- */
-export function getKeys(
-  statuses: Status[],
-  config: StatefulConfig,
-  createValues: (args: {
-    status: Status;
-    config: StatefulConfig;
-    childProps: React.PropsWithChildren<any>;
-  }) => Record<string, any>
-) {
-  const ignoredValues = statuses.reduce((result, ignoredStatus) => {
-    const values = createValues({ status: ignoredStatus, config, childProps: {} });
-    return result.concat(Object.keys(values));
-  }, [] as string[]);
-
-  return Array.from(new Set(ignoredValues));
-}
-
-export function createChildProps(args: {
+export function createProps(args: {
   status: Status;
   child?: React.ReactElement<any>;
   config: StatefulConfig;
+  parentProps: any;
   handlers?: ReturnType<typeof useStateful>["handlers"];
   omitProps?: string[];
 }) {
   const { status } = args;
 
-  // all existing props we found on the wrapped child
-  const childProps = args.child ? (args.child as React.ReactElement<any>).props : {};
+  // all existing props we found for the wrapped child,
+  // (either on it, or passed down from our parent)
+  const childProps = Object.assign(
+    {},
+    args.child ? (args.child as React.ReactElement<any>).props : {},
+    args.parentProps
+  );
 
-  let className = childProps.className || "";
-  if (status !== Status.IDLE) {
-    className = AllStatuses.reduce(
-      (result, current) => result.replace(current, ""),
-      className
-    ).trim();
-  }
-
-  // the props we generate and attach to the wrapped child
-  const extraProps = {
-    className: cx(className, createStatusClassFlags({ status, config: args.config, childProps })),
-    ...createExtraProps({ status, config: args.config, childProps }),
+  // the props we generate based on status and attach to the wrapped child
+  const additionalProps = {
+    className: cx(
+      withoutStatusClasses(childProps.className),
+      createStatusClasses({ status, config: args.config, childProps })
+    ),
+    ...createStatusProps({ status, config: args.config, childProps }),
   };
 
-  // props of the child that we pass along because they are unknown to us
-  const foreignProps = omitProps(childProps, [
-    ...asArray({
-      value: args.config.monitor,
-      status,
-      delimiter: args.config.delimiter,
-      childProps,
-    }),
-    ...asArray({
-      value: args.config.confirm,
-      status,
-      delimiter: args.config.delimiter,
-      childProps,
-    }),
+  // the props that we want to pass along. everything we don't know and use.
+  const { delimiter } = args.config;
+  const knownKeys = [
+    "children",
+    ...asArray({ value: args.config.monitor, childProps, status, delimiter }),
+    ...asArray({ value: args.config.confirm, childProps, status, delimiter }),
     ...(args.omitProps || []),
-  ]);
+  ];
+  const otherProps = omitProps(childProps, knownKeys);
 
   // overridden callbacks for the wrapped child. these are the monitored functions
   const callbacks = args.handlers
@@ -262,8 +78,131 @@ export function createChildProps(args: {
     : {};
 
   return {
-    extraProps,
-    foreignProps,
+    additionalProps,
+    otherProps,
     callbacks,
   };
+}
+
+// internal functions
+
+if (process.env.NODE_ENV === "test") {
+  Object.assign(module.exports, {
+    createStatusClasses,
+    createStatusProps,
+    generateProps,
+  });
+}
+
+/**
+ * Creates an object with boolean flags for the defined props and given `status`.
+ * The object has a property and the value `true` for each propName
+ * that was defined for the matching state.
+ *
+ * @param {Status} status The current status of the Stateful instance state
+ * @param {Object} config The Stateful configuration
+ */
+function createStatusProps({
+  status,
+  config,
+  childProps,
+}: {
+  status: Status;
+  config: StatefulConfig;
+  childProps: React.PropsWithChildren<any>;
+}) {
+  const valueMap = {
+    [Status.IDLE]: undefined,
+    [Status.PENDING]: config.pendingProps,
+    [Status.BUSY]: [
+      ...asArray({ value: config.pendingProps, status, delimiter: config.delimiter, childProps }),
+      ...asArray({ value: config.busyProps, status, delimiter: config.delimiter, childProps }),
+    ],
+    [Status.SUCCESS]: config.successProps,
+    [Status.ERROR]: config.errorProps,
+    [Status.CONFIRM]: config.confirmProps,
+  };
+
+  return generateProps({ valueMap, status, delimiter: config.delimiter, childProps });
+}
+
+/**
+ * Creates an object with boolean flags for the defined CSS classNames based on the given `status`.
+ * The object has a property and the value `true` for each of the class
+ * names provided for the current status.
+ *
+ * @param {Status} status The current status of the Stateful instance state
+ * @param {Object} config The Stateful configuration
+ */
+function createStatusClasses({
+  status,
+  config,
+  childProps,
+}: {
+  status: Status;
+  config: StatefulConfig;
+  childProps: React.PropsWithChildren<any>;
+}) {
+  const valueMap = {
+    [Status.IDLE]: undefined,
+    [Status.PENDING]: config.pendingClasses,
+    [Status.BUSY]: [
+      ...asArray({ value: config.pendingClasses, status, delimiter: config.delimiter, childProps }),
+      ...asArray({ value: config.busyClasses, status, delimiter: config.delimiter, childProps }),
+    ],
+    [Status.SUCCESS]: config.successClasses,
+    [Status.ERROR]: config.errorClasses,
+    [Status.CONFIRM]: config.confirmClasses,
+  };
+
+  return generateProps({ valueMap, status, delimiter: config.delimiter, childProps: {} });
+}
+
+/**
+ * Creates a props object given the current status and a mapping of status values to prop names, e.g. `{[Status.PENDING]: 'pending disabled'}`
+ */
+function generateProps({
+  valueMap,
+  status,
+  delimiter,
+  childProps,
+}: {
+  valueMap: Record<Status, any>;
+  status: Status;
+  delimiter?: string;
+  childProps: React.PropsWithChildren<any>;
+}) {
+  const value = valueMap[status];
+  if (typeof value === "function") {
+    return value(status, childProps);
+  } else if (typeof value === "string" || Array.isArray(value)) {
+    const keys = asArray({ value, status, delimiter, childProps }) as any[];
+
+    if (!keys) {
+      return {};
+    }
+
+    return keys.reduce((result, current) => {
+      if (typeof current === "function") {
+        return {
+          ...result,
+          ...current(status, childProps),
+        };
+      }
+
+      if (Object(current) === current) {
+        return {
+          ...result,
+          ...current,
+        };
+      }
+
+      const [currentKey, currentValue = true] = current.split(":");
+      return {
+        ...result,
+        [currentKey]: currentValue,
+      };
+    }, {});
+  }
+  return {};
 }

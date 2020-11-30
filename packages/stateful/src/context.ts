@@ -9,7 +9,7 @@ StatefulConfigurationContext.displayName = "StatefulConfigurationContext";
 const noop = () => null;
 export const StatefulContext = React.createContext<StatefulContextValue>({
   status: Status.IDLE,
-  extraProps: {},
+  additionalProps: {},
   handlers: {
     onConfirmShow: noop,
     onConfirmApprove: noop,
