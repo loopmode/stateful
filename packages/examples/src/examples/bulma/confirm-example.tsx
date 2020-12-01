@@ -3,6 +3,7 @@ import { createPortal } from "react-dom";
 import { Stateful } from "@loopmode/stateful";
 import { ToggleCodeViewer } from "../../ToggleCodeViewer";
 import raw from "raw.macro";
+import { Status } from "@loopmode/stateful/lib/Status";
 
 const wait = (time: number) => new Promise((resolve) => setTimeout(resolve, time));
 
@@ -17,7 +18,7 @@ export default function ConfirmExample() {
       <div className="buttons">
         <Stateful confirm="onClick">
           <button className="button" onClick={handleProceed}>
-            Proceed A
+            Confirm (exit=started)
           </button>
           <Stateful.Confirm>
             {({ onConfirm, onCancel }) => {
@@ -25,9 +26,17 @@ export default function ConfirmExample() {
                 <ModalConfirm
                   onConfirm={onConfirm}
                   onCancel={onCancel}
-                  title="Confirmation as render function"
+                  title={`Confirm using exit="started" (default)`}
                 >
-                  <p>Do you really want to proceed?</p>
+                  <p>This confirmation will disappear when the original callback has started.</p>
+                  <br />
+                  <p>
+                    That way, the pending and busy states are handled by the original button,
+                    outside the confirmation window itself.
+                  </p>
+                  <br />
+                  <br />
+                  <p>Do you want to proceed?</p>
                 </ModalConfirm>
               );
             }}
@@ -36,37 +45,68 @@ export default function ConfirmExample() {
 
         <Stateful confirm="onClick">
           <button className="button" onClick={handleProceed}>
-            Proceed B
+            Confirm (exit=finished)
           </button>
           <Stateful.Confirm exit="finished">
-            <ModalConfirm title="Confirmation as child">
-              <p>Do you really want to proceed?</p>
+            <ModalConfirm title={`Confirm using exit="finished"`}>
+              <p>This confirmation will disappear when the original callback has finished.</p>
+              <br />
+              <p>
+                That way, the pending and busy states need to be handled inside the confirmation
+                window itself.
+              </p>
+              <p>The success and error states are still handled by the original button.</p>
+              <br />
+              <p>Do you want to proceed?</p>
             </ModalConfirm>
           </Stateful.Confirm>
         </Stateful>
 
-        <Stateful confirm="onClick" confirmExit="idle">
+        <Stateful confirm="onClick">
           <button className="button" onClick={handleProceed}>
-            Proceed C
+            Confirm (exit=idle)
           </button>
-          <Stateful.Confirm>
-            <ModalConfirm title="Confirmation as child">
-              <p>Do you really want to proceed?</p>
+          <Stateful.Confirm exit="idle">
+            <ModalConfirm title={`Confirm using exit="idle"`}>
+              <p>
+                This confirmation will disappear once the Stateful state switches back to idle.
+              </p>
+              <br />
+              <p>
+                That way, all states including error and success are handled inside the confirmation.
+              </p>
+              <p>
+                Note that you would take extra steps to make sure the buttons are not clickable during error and success states.
+              </p>
+              <br />
+              <p>Do you want to proceed?</p>
             </ModalConfirm>
           </Stateful.Confirm>
         </Stateful>
 
-        <Stateful
-          confirm="onClick"
-          confirmClasses="is-warning"
-          confirmProps={{
-            title: 'Please confirm',
-            children: "Are you sure?",
+        <Stateful confirm="onClick" confirmClasses="is-warning">
+          {({ status, handlers }) => {
+            if (status === Status.CONFIRM)
+              return (
+                <div className="field has-addons">
+                  <div className="control">
+                    <button className="button" onClick={handlers.onConfirmCancel}>
+                      Cancel
+                    </button>
+                  </div>
+                  <div className="control">
+                    <button className="button is-primary" onClick={handlers.onConfirmApprove}>
+                      Confirm
+                    </button>
+                  </div>
+                </div>
+              );
+            return (
+              <button className="button" onClick={handleProceed}>
+                Confirm inline
+              </button>
+            );
           }}
-        >
-          <button className="button" onClick={handleProceed}>
-            Proceed D
-          </button>
         </Stateful>
       </div>
 
