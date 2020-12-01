@@ -23,7 +23,12 @@ export default function asArray<T = string>({
   childProps,
   delimiter = " ",
 }: {
-  value: string | StatusResolver | (string | StatusResolver)[] | undefined;
+  value:
+    | string
+    | StatusResolver
+    | (string | StatusResolver)[]
+    | Record<string, unknown>
+    | undefined;
   status: Status;
   /**
    * The childProps are only needed when `value` is a resolver function.

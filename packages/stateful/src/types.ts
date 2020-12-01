@@ -31,31 +31,31 @@ export type StatefulConfig = {
   confirmExit?: ConfirmExitMode;
 
   /** One or more boolean flags that are passed as props to wrapped children while status is `pending` */
-  pendingProps?: string | StatusResolver | (string | StatusResolver)[];
+  pendingProps?: string | StatusResolver | (string | StatusResolver)[] | Record<string, unknown>;
   /** One or more CSS class names to decorate wrapped children with while the status is `pending` */
-  pendingClasses?: string | StatusResolver | (string | StatusResolver)[];
+  pendingClasses?: string | StatusResolver | (string | StatusResolver)[] | Record<string, unknown>;
 
   /** Number of milliseconds before state `pending` turns to state `busy` */
   busyDelay?: number;
   /** One or more boolean flags that are passed as props to wrapped children while status is `busy` */
-  busyProps?: string | StatusResolver | (string | StatusResolver)[];
+  busyProps?: string | StatusResolver | (string | StatusResolver)[] | Record<string, unknown>;
   /** One or more CSS class names to decorate wrapped children with while the status is `busy` */
-  busyClasses?: string | StatusResolver | (string | StatusResolver)[];
+  busyClasses?: string | StatusResolver | (string | StatusResolver)[] | Record<string, unknown>;
 
   /** One or more boolean flags that are passed as props to wrapped children while status is `success` */
-  successProps?: string | StatusResolver | (string | StatusResolver)[];
+  successProps?: string | StatusResolver | (string | StatusResolver)[] | Record<string, unknown>;
   /** One or more CSS class names to decorate wrapped children with while the status is `success` */
-  successClasses?: string | StatusResolver | (string | StatusResolver)[];
+  successClasses?: string | StatusResolver | (string | StatusResolver)[] | Record<string, unknown>;
 
   /** One or more boolean flags that are passed as props to wrapped children while status is `error` */
-  errorProps?: string | StatusResolver | (string | StatusResolver)[];
+  errorProps?: string | StatusResolver | (string | StatusResolver)[] | Record<string, unknown>;
   /** One or more CSS class names to decorate wrapped children with while the status is `error` */
-  errorClasses?: string | StatusResolver | (string | StatusResolver)[];
+  errorClasses?: string | StatusResolver | (string | StatusResolver)[] | Record<string, unknown>;
 
   /** One or more boolean flags that are passed as props to wrapped children while status is `confirm` */
-  confirmProps?: string | StatusResolver | (string | StatusResolver)[];
+  confirmProps?: string | StatusResolver | (string | StatusResolver)[] | Record<string, unknown>;
   /** One or more CSS class names to decorate wrapped children with while the status is `confirm` */
-  confirmClasses?: string | StatusResolver | (string | StatusResolver)[];
+  confirmClasses?: string | StatusResolver | (string | StatusResolver)[] | Record<string, unknown>;
 
   /**
    * How long to remain in error or success state before turning back to idle.

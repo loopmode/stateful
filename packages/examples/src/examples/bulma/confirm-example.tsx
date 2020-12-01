@@ -59,9 +59,10 @@ export default function ConfirmExample() {
         <Stateful
           confirm="onClick"
           confirmClasses="is-warning"
-          confirmProps={() => ({
+          confirmProps={{
+            title: 'Please confirm',
             children: "Are you sure?",
-          })}
+          }}
         >
           <button className="button" onClick={handleProceed}>
             Proceed D
