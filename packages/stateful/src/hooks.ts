@@ -86,6 +86,8 @@ export function useStateful(props: StatefulConfig) {
       } else {
         confirmCallback.current = callback;
         setStatus(Status.CONFIRM);
+        resetTimer.clear();
+        busyTimer.clear();
       }
     },
     onConfirmCancel: () => {
