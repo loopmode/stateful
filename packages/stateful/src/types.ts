@@ -107,8 +107,6 @@ export type StatefulConfig = {
 
 export type StatefulProps = StatefulConfig & {
   children?: React.ReactElement | React.ReactElement[] | RenderFunction;
-  provideProps?: boolean;
-  provideContext?: boolean;
 };
 
 export type StatefulConsumerProps = StatefulConfig & {
