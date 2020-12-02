@@ -92,6 +92,17 @@ export type StatefulConfig = {
    * Out of the box, any promise that resolves with an `Error` object is treated as rejected.
    */
   shouldRejectValue?: (value: unknown) => boolean;
+
+  /**
+   * Whether to add the generated props to wrapped children. Default is true.
+   */
+  provideProps?: boolean;
+
+  
+  /**
+   * Whether to provide a Stateful context to deeply nested children. Default is true.
+   */
+  provideContext?: boolean;
 };
 
 export type StatefulProps = StatefulConfig & {
