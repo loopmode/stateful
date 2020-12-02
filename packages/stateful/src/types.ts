@@ -108,6 +108,10 @@ export type StatefulProps = StatefulConfig & {
    */
   provideContext?: boolean;
 
+  /**
+   * Renders the original children without attaching or overriding any props.
+   */
+  disabled?: boolean;
 };
 
 export type StatefulConsumerProps = StatefulConfig & {

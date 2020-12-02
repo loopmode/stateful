@@ -49,6 +49,7 @@ const defaultConfig: StatefulProps = {
 
   provideProps: true,
   provideContext: true,
+  disabled: false
 };
 
 const ownPropNames = Object.keys(defaultConfig);
@@ -67,6 +68,10 @@ export function Stateful(props: StatefulProps): React.ReactElement {
 
   if (typeof children === "function") {
     children = (children as RenderFunction)({ status, handlers });
+  }
+
+  if (props.disabled) {
+    return children as React.ReactElement;
   }
 
   return React.Children.map<any, any>(children, (child) => {
