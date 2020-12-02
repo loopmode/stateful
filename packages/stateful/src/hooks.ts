@@ -61,7 +61,7 @@ export function useStateful(props: StatefulConfig) {
       isRejected.current = true;
       setStatus(Status.ERROR);
       busyTimer.clear();
-      if (Number(props.errorDuration) > -1) {
+      if (Number(hintDurations[Status.ERROR]) > -1) {
         resetTimer.start();
       }
     },
@@ -74,7 +74,8 @@ export function useStateful(props: StatefulConfig) {
       if (!isMounted.current) return;
       setStatus(Status.SUCCESS);
       busyTimer.clear();
-      if (Number(props.successDuration) > -1) {
+
+      if (Number(hintDurations[Status.ERROR]) > -1) {
         resetTimer.start();
       }
     },
