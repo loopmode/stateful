@@ -93,20 +93,21 @@ export type StatefulConfig = {
    */
   shouldRejectValue?: (value: unknown) => boolean;
 
+};
+
+export type StatefulProps = StatefulConfig & {
+  children?: React.ReactElement | React.ReactElement[] | RenderFunction;
+  
   /**
    * Whether to add the generated props to wrapped children. Default is true.
    */
   provideProps?: boolean;
 
-  
   /**
    * Whether to provide a Stateful context to deeply nested children. Default is true.
    */
   provideContext?: boolean;
-};
 
-export type StatefulProps = StatefulConfig & {
-  children?: React.ReactElement | React.ReactElement[] | RenderFunction;
 };
 
 export type StatefulConsumerProps = StatefulConfig & {
