@@ -48,6 +48,7 @@ export default function ConfirmExample() {
           In this example, we again wrap a dialog, however, we manually assign
           the names of the dialog props for confirming or aborting via "confirm" and "cancel" props. 
           Also, we use exit mode "finished", hiding the Stateful.Confirm after the callback has finished.
+          Note that the original button displays the same states as the button inside the dialog..
         */}
         <Stateful confirm="onClick">
           <button className="button" onClick={handleProceed}>
@@ -73,8 +74,10 @@ export default function ConfirmExample() {
 
           Also, we use exit="idle". However, this time we declare it
           on the Stateful wrapper, where it's called "confirmExit" instead of just "exit"
+
+           Note that the original button does not display the because we set "provideProps" to false.
         */}
-        <Stateful confirm="onClick" confirmExit="idle">
+        <Stateful confirm="onClick" confirmExit="idle" provideProps={false}>
           <button className="button" onClick={handleProceed}>
             Confirm (exit=idle)
           </button>
