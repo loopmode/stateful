@@ -174,7 +174,9 @@ function resolveProps<T = unknown>(args: {
   } else if (Object(value) === value) {
     return value as Record<string, T>;
   }
-  console.warn("[Stateful] resolveProps - unhandled value type", value);
+  if (value) {
+    console.warn("[Stateful] resolveProps - unhandled value type", value);
+  }
   return {};
 }
 
