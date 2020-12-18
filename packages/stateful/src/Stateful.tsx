@@ -49,7 +49,7 @@ const defaultConfig: StatefulProps = {
 
   provideProps: true,
   provideContext: true,
-  disabled: false
+  disabled: false,
 };
 
 const ownPropNames = Object.keys(defaultConfig);
@@ -233,8 +233,7 @@ export function BusyConsumer({
  *  </Stateful.Confirm>
  * </Stateful>
  *
- *
- * @param param0
+*
  */
 export function Confirm({
   confirm = "onConfirm",
@@ -243,21 +242,23 @@ export function Confirm({
   ...props
 }: {
   /**
-   * The name of the callback that gets called when the user confirms
+   * The name of the wrapped child's callback prop that is invoked
+   * when the user confirms the operation, e.g. "onConfirm"
    */
   confirm?: string;
 
   /**
-   * The name of the callback that gets called when the user dismisses
+   * The name of the wrapped child's callback prop that is invoked
+   * when the user aborts the operation, e.g. "onCancel"
    */
   cancel?: string;
 
   /**
-   * The mode of exit
+   * When to remove the confirmation view
    *
-   * - `early`: confirm state exits when confirm callback is invoked
-   * - `normal`: confirm state exits when confirm callback has finished
-   * - `late`: confirm state exits when confirm callback and its result indicator have finished
+   * - `early`: as soon as the confirmed operation is invoked
+   * - `normal`: after the confirmed operation has finished
+   * - `late`: after the outcome of the confirmed operation has been indicated
    */
   exit?: ConfirmExitMode;
 
@@ -290,17 +291,31 @@ export function Confirm({
   });
 }
 
+/**
+ * Returns a boolean for whether to show the confirmation view, based on the current status and exit mode.
+ * @param status
+ * @param exitMode
+ */
 function shouldRenderConfirm(status: Status, exitMode?: ConfirmExitMode) {
   const isCurrentStatus = (value: Status[]) => value.some((v) => v === status);
   switch (exitMode) {
     case "started":
-      return isCurrentStatus([Status.CONFIRM]);
+      return isCurrentStatus([
+        // only show confirmation during CONFIRM state
+        Status.CONFIRM,
+      ]);
 
     case "finished":
-      return isCurrentStatus([Status.CONFIRM, Status.PENDING, Status.BUSY]);
+      return isCurrentStatus([
+        // keep showing the confirmation until the operation is finished
+        Status.CONFIRM,
+        Status.PENDING,
+        Status.BUSY,
+      ]);
 
     case "idle":
       return isCurrentStatus([
+        // keep showing the confirmation until the outcome has been indicated
         Status.CONFIRM,
         Status.PENDING,
         Status.BUSY,
