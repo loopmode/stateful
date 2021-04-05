@@ -75,7 +75,7 @@ export function useStateful(props: StatefulConfig) {
       setStatus(Status.SUCCESS);
       busyTimer.clear();
 
-      if (Number(hintDurations[Status.ERROR]) > -1) {
+      if (Number(hintDurations[Status.SUCCESS]) > -1) {
         resetTimer.start();
       }
     },
