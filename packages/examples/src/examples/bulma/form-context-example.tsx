@@ -24,7 +24,7 @@ export default function FormContextExample() {
     email: "",
     password: "",
   });
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = React.useCallback(async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
       setError({});
@@ -37,7 +37,8 @@ export default function FormContextExample() {
       });
       return error;
     }
-  };
+  }, []);
+
   return (
     <>
       <div className="container">
@@ -48,7 +49,9 @@ export default function FormContextExample() {
                 <div className="field">
                   <label className="label">Email</label>
                   <div className="control has-icons-left">
-                    <input type="email" className="input" placeholder="e.g. hkakehas@cisco.com" />
+                    <Stateful.Consumer>
+                      <input type="email" className="input" placeholder="e.g. hkakehas@cisco.com" />
+                    </Stateful.Consumer>
                     <span className="icon is-small is-left">
                       <i className="fa fa-envelope"></i>
                     </span>
@@ -58,7 +61,9 @@ export default function FormContextExample() {
                 <div className="field">
                   <label className="label">Password</label>
                   <div className="control has-icons-left">
-                    <input type="password" className="input" placeholder="*********" required />
+                    <Stateful.Consumer>
+                      <input type="password" className="input" placeholder="*********" required />
+                    </Stateful.Consumer>
                     <span className="icon is-small is-left">
                       <i className="fa fa-lock"></i>
                     </span>
@@ -67,11 +72,14 @@ export default function FormContextExample() {
                 </div>
                 <div className="field">
                   <label className="checkbox">
-                    <input type="checkbox" /> Remember me
+                    <Stateful.Consumer>
+                      <input type="checkbox" />
+                    </Stateful.Consumer>{" "}
+                    Remember me
                   </label>
                 </div>
                 <div className="field">
-                  <Stateful.Consumer busyClasses="">
+                  <Stateful.Consumer>
                     <button className="button" type="submit">
                       Login
                     </button>
@@ -81,8 +89,23 @@ export default function FormContextExample() {
             </Stateful>
           </div>
         </div>
+        <hr />
+        <div className="content">
+          <h3>Form example</h3>
+          <ul>
+            <li>Disable inputs and submit button while pending</li>
+            <li>Display error/success on submit button</li>
+          </ul>
+          <p>
+            While we wrap a form element and monitor its state, we want to add the resulting props
+            not to the form itself, but to some of its children instead.
+          </p>
+          <p>
+            That's why we use Stateful.Consumer around nested inout fields and the submit button
+          </p>
+        </div>
+        <ToggleCodeViewer content={raw("./form-context-example.tsx")} />
       </div>
-      <ToggleCodeViewer content={raw("./form-context-example.tsx")} />
     </>
   );
 }
