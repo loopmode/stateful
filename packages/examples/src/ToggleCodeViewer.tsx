@@ -13,7 +13,7 @@ export function ToggleCodeViewer({
     <>
       <hr />
       {/* eslint-disable-next-line */}
-      <a href="#" onClick={() => setShowCode(!showCode)}>{showCode ? "Hide" : "Show"} example code</a>
+      <a href="#" onClick={() => setShowCode(!showCode)}>{showCode ? "Hide" : "Show"} code</a>
       {showCode && <Codeblock language={language as any} children={content} />}
     </>
   );
