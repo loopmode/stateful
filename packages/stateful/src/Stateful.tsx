@@ -1,12 +1,6 @@
 import React from "react";
 
-import {
-  RenderFunction,
-  StatefulProps,
-  StatefulConsumerProps,
-  StatefulHandlers,
-  ConfirmExitMode,
-} from "./types";
+import { RenderFunction, StatefulProps, StatefulConsumerProps, ConfirmExitMode } from "./types";
 
 import { Status } from "./Status";
 import { StatefulConfigurationContext, StatefulContext, StatefulProvider } from "./context";
