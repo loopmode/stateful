@@ -1,125 +1,120 @@
 @mixin rotate($val) {
-    transform: rotate3d(0, 0, 1, $val);
+  transform: rotate3d(0, 0, 1, $val);
 }
 
-@mixin logo-rotation(
-    $direction: 1,
-    $duration: 5s,
-    $easing: cubic-bezier(0.215, 0.61, 0.355, 1)
-) {
-    @keyframes logo-keyframes-#{$direction} {
-        0% {
-            @include rotate(0deg);
-        }
-        10% {
-            @include rotate(0deg);
-        }
-        30% {
-            @include rotate(120deg * $direction);
-        }
-        40% {
-            @include rotate(120deg * $direction);
-        }
-        50% {
-            @include rotate(0deg);
-        }
-        60% {
-            @include rotate(0deg);
-        }
-        80% {
-            @include rotate(-120deg * $direction);
-        }
-        90% {
-            @include rotate(-120deg * $direction);
-        }
-        100% {
-            @include rotate(0deg);
-        }
+@mixin logo-rotation($direction: 1, $duration: 5s, $easing: cubic-bezier(0.215, 0.61, 0.355, 1)) {
+  @keyframes logo-keyframes-#{$direction} {
+    0% {
+      @include rotate(0deg);
     }
+    10% {
+      @include rotate(0deg);
+    }
+    30% {
+      @include rotate(120deg * $direction);
+    }
+    40% {
+      @include rotate(120deg * $direction);
+    }
+    50% {
+      @include rotate(0deg);
+    }
+    60% {
+      @include rotate(0deg);
+    }
+    80% {
+      @include rotate(-120deg * $direction);
+    }
+    90% {
+      @include rotate(-120deg * $direction);
+    }
+    100% {
+      @include rotate(0deg);
+    }
+  }
 
-    animation: logo-keyframes-#{$direction} $duration infinite $easing;
+  animation: logo-keyframes-#{$direction} $duration infinite $easing;
 }
+.Logo {
+  $outer-width: 120px;
+  $outer-height: 120px;
 
-:local(.Logo) {
-    $outer-width: 120px;
-    $outer-height: 120px;
+  $hex-width: 43px;
+  $hex-height: 50px;
 
-    $hex-width: 43px;
-    $hex-height: 50px;
+  $top-dist: 5px;
+  $center-dist: 28px;
+  position: relative;
 
-    $top-dist: 5px;
-    $center-dist: 28px;
-    position: relative;
-
-    &.animated {
-        .Logo-inner {
-            @include logo-rotation;
-        }
-        .rotation-inner {
-            @include logo-rotation(-1);
-        }
-    }
-    .Logo-outer {
-        width: $outer-width;
-        height: $outer-height;
-        position: relative;
-        background: #094277;
-    }
+  &.animated {
     .Logo-inner {
-        width: $outer-width;
-        height: $outer-height;
-        transform: translate3D(0, 0, 0);
-        perspective: 1000;
-        backface-visibility: hidden;
+      @include logo-rotation;
     }
-    .center-outer {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        .center-inner {
-            transform: translate3D(-$hex-width * 0.5, -$hex-height * 0.5, 0);
-        }
+    .rotation-inner {
+      @include logo-rotation(-1);
     }
+  }
+  .Logo-outer {
+    width: $outer-width;
+    height: $outer-height;
+    position: relative;
+    background: #094277;
+  }
+  .Logo-inner {
+    width: $outer-width;
+    height: $outer-height;
+    transform: translate3D(0, 0, 0);
+    perspective: 1000;
+    backface-visibility: hidden;
+  }
+  .center-outer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    .center-inner {
+      transform: translate3D(-$hex-width * 0.5, -$hex-height * 0.5, 0);
+    }
+  }
 
-    .position {
-        position: relative;
-        top: -$center-dist;
-    }
+  .position {
+    position: relative;
+    top: -$center-dist;
+  }
 
-    .hex {
-        width: $hex-width;
-        height: $hex-height;
-        polyline {
-            &:first-child {
-                fill: white;
-            }
-            &:last-child {
-                transform: translate(10%, 10%);
-            }
-        }
+  .hex {
+    width: $hex-width;
+    height: $hex-height;
+    polyline {
+      &:first-child {
+        fill: white;
+      }
+      &:last-child {
+        transform: translate(10%, 10%);
+      }
     }
-    .rotator-1 {
-        .hex polyline:last-child {
-            fill: #094277;
-        }
-        .rotation-outer {
-            @include rotate(0deg);
-        }
+  }
+  .rotator-1 {
+    .hex polyline:last-child {
+      fill: #094277;
     }
-    .rotator-2 {
-        .hex polyline:last-child {
-            fill: #bd1818;
-        }
-        .rotation-outer {
-            @include rotate(120deg);
-        }
+    .rotation-outer {
+      @include rotate(0deg);
     }
-    .rotator-3 {
-        .hex polyline:last-child {
-            fill: #139632;
-        }
-        .rotation-outer {
-            @include rotate(-120deg);
-        }
+  }
+  .rotator-2 {
+    .hex polyline:last-child {
+      fill: #bd1818;
     }
+    .rotation-outer {
+      @include rotate(120deg);
+    }
+  }
+  .rotator-3 {
+    .hex polyline:last-child {
+      fill: #139632;
+    }
+    .rotation-outer {
+      @include rotate(-120deg);
+    }
+  }
 }

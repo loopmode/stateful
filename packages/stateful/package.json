@@ -1,43 +1,24 @@
 {
-    "name": "@loopmode/stateful",
-    "description": "A react component for visual indication of async state",
-    "version": "1.1.4",
-    "main": "lib/index.js",
-    "license": "MIT",
-    "author": "Jovica Aleksic <jovica.aleksic@loopmode.de>",
-    "scripts": {
-        "build": "cross-env NODE_ENV=production babel src --out-dir lib --copy-files",
-        "watch": "yarn build --watch",
-        "lint": "eslint src"
-    },
-    "homepage": "https://loopmode.github.io/stateful/",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/loopmode/stateful",
-        "directory": "packages/stateful"
-    },
-    "eslintConfig": {
-        "extends": "@loopmode/stateful-config-eslint"
-    },
-    "babel": {
-        "extends": "@loopmode/stateful-config-babel"
-    },
-    "peerDependencies": {
-        "react": ">= 16.8.0"
-    },
-    "dependencies": {
-        "classnames": "^2.2.6"
-    },
-    "keywords": [
-        "react",
-        "wrapper",
-        "component",
-        "async",
-        "promise",
-        "indicate",
-        "pending",
-        "busy",
-        "success",
-        "error"
-    ]
+  "name": "@loopmode/stateful",
+  "version": "2.0.0",
+  "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "start": "tsc --watch",
+    "clean": "rm -rf lib",
+    "prepublishOnly": "yarn build"
+  },
+  "peerDependencies": {
+    "react": ">= 16.8.0"
+  },
+  "dependencies": {
+    "classnames": "^2.2.6"
+  },
+  "devDependencies": {
+    "@types/classnames": "^2.2.11"
+  }
 }

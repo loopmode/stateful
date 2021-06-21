@@ -1,33 +1,29 @@
-@import 'styles/mixins.scss';
+@import "../../styles/mixins.scss";
 
-:local(.LoadingOverlay) {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    max-height: 100vh;
-    background: linear-gradient(
-        to top,
-        darken(#094277, 5%) 0%,
-        lighten(#094277, 10%) 100%
-    );
-    box-shadow: inset 0px 0px 20px rgba(0, 0, 0, 0.9);
-    @include large-screen {
-        box-shadow: inset 0px 0px 20px rgba(0, 0, 0, 0.3);
-        background: linear-gradient(to top, #ccc 0%, white 100%);
-    }
+.LoadingOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  max-height: 100vh;
+  background: linear-gradient(to top, darken(#094277, 5%) 0%, lighten(#094277, 10%) 100%);
+  box-shadow: inset 0px 0px 20px rgba(0, 0, 0, 0.9);
+  @include large-screen {
+    box-shadow: inset 0px 0px 20px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(to top, #ccc 0%, white 100%);
+  }
 
-    display: flex;
-    align-items: center;
-    justify-items: center;
-    justify-content: center;
-    .Logo .Logo-outer {
-        background: transparent;
-    }
-    transition: opacity 0.5s;
-    opacity: 0;
-    &.visible {
-        opacity: 1;
-    }
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  justify-content: center;
+  .Logo .Logo-outer {
+    background: transparent;
+  }
+  transition: opacity 0.5s;
+  opacity: 0;
+  &.visible {
+    opacity: 1;
+  }
 }

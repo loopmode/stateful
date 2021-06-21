@@ -1,97 +1,104 @@
-@import 'styles/mixins.scss';
-
-:local(.App) {
-    color: #333;
-    position: relative;
+@import "./styles/mixins.scss";
+.App {
+  color: #333;
+  position: relative;
+  display: flex;
+  height: 100%;
+  .flex {
     display: flex;
-    height: 100%;
-    .flex {
-        display: flex;
-    }
-    .flex-1 {
-        flex: 1;
-    }
-    h1:first-child,
-    h2:first-child,
-    h3:first-child {
-        margin-top: 0;
-    }
+  }
+  .flex-1 {
+    flex: 1;
+  }
+  h1:first-child,
+  h2:first-child,
+  h3:first-child {
+    margin-top: 0;
+  }
+
+  code {
+    font-size: small;
+    color: #e83e8c;
+    word-break: break-all;
+  }
+  pre {
+    padding: 10px;
+    background: #333;
+    overflow-x: auto;
 
     code {
-        font-size: small;
-        color: #e83e8c;
-        word-break: break-all;
+      color: #fff;
     }
-    pre {
-        padding: 10px;
-        background: #333;
-        overflow-x: auto;
+  }
+  .relevant-code,
+  .push,
+  .Prism {
+    display: block;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
 
-        code {
-            color: #fff;
+  .push.info {
+    background: #effff9;
+    padding: 10px;
+  }
+
+  .App--body {
+    position: relative;
+    display: flex;
+    flex: 1;
+    @include medium-screen {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+  }
+
+  .LoadingOverlay {
+    @include medium-screen {
+      max-height: calc(100vh - 60px);
+    }
+  }
+
+  main {
+    z-index: 1;
+    padding: 20px;
+    position: relative;
+    flex: 1;
+    @include large-screen {
+        flex-basis: 0;
+        overflow: hidden;
+        flex-grow: 1;
+    }
+  }
+
+  .AppHeader {
+    z-index: 2;
+  }
+  .AppMenu {
+    z-index: 3;
+  }
+  main + .LoadingOverlay {
+    z-index: 2;
+  }
+
+  .ButtonsExample {
+    @include small-screen {
+      button,
+      .Button {
+        &:not(.inline) {
+          display: block;
+          width: 100%;
         }
+      }
     }
-    .relevant-code,
-    .push,
-    .Prism {
-        display: block;
-        margin-top: 20px;
-        margin-bottom: 20px;
+    button + button,
+    .Button + .Button {
+      margin-left: 10px;
+      @include small-screen {
+        margin-left: 0px;
+        margin-top: 10px;
+      }
     }
-
-    .push.info {
-        background: #effff9;
-        padding: 10px;
-    }
-
-    .App--body {
-        position: relative;
-        display: flex;
-        flex: 1;
-        @include medium-screen {
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-        }
-    }
-
-    .LoadingOverlay {
-        @include medium-screen {
-            max-height: calc(100vh - 60px);
-        }
-    }
-
-    .AppContent {
-        z-index: 1;
-    }
-
-    .AppHeader {
-        z-index: 2;
-    }
-    .AppMenu {
-        z-index: 3;
-    }
-    .AppContent + .LoadingOverlay {
-        z-index: 2;
-    }
-
-    .ButtonsExample {
-        @include small-screen {
-            button,
-            .Button {
-                &:not(.inline) {
-                    display: block;
-                    width: 100%;
-                }
-            }
-        }
-        button + button,
-        .Button + .Button {
-            margin-left: 10px;
-            @include small-screen {
-                margin-left: 0px;
-                margin-top: 10px;
-            }
-        }
-    }
+  }
 }
