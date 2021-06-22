@@ -5,39 +5,33 @@ import "./LoadingOverlay.scss";
 
 import AnimatedLogo from "../AnimatedLogo";
 
-export function useTimeout(func: () => void, delay = 0) {
-  const [isStarted, setStarted] = React.useState(false);
+function useTimeout(callback: () => void, delay: number | null) {
+  // https://usehooks-typescript.com/react-hook/use-timeout
+
+  const savedCallback = React.useRef(callback);
 
   React.useEffect(() => {
-    if (isStarted) {
-      const timeoutID = window.setTimeout(func, delay);
-      return () => {
-        window.clearTimeout(timeoutID);
-      };
+    savedCallback.current = callback;
+  }, [callback]);
+
+  React.useEffect(() => {
+    if (delay === null) {
+      return;
     }
-  }, [delay, func, isStarted]);
 
-  const clearTimer = React.useCallback(() => setStarted(false), []);
-  const startTimer = React.useCallback(() => setStarted(true), []);
+    const id = setTimeout(() => savedCallback.current(), delay);
 
-  return {
-    clearTimer,
-    startTimer,
-  };
+    return () => clearTimeout(id);
+  }, [delay]);
 }
 
 const LoadingOverlay = ({ delay = 500 }) => {
-  const [visible, setVisible] = React.useState(false);
-  const show = React.useCallback(() => setVisible(true), []);
-  const { clearTimer, startTimer } = useTimeout(show, delay);
-
-  React.useEffect(() => {
-    startTimer();
-    return () => clearTimer();
-  }, [clearTimer, startTimer]);
+  const [spinnerVisible, setSpinnerVisible] = React.useState(false);
+  const showSpinner = () => setSpinnerVisible(true);
+  useTimeout(showSpinner, delay);
 
   return (
-    <div className={cx("LoadingOverlay", { visible })}>
+    <div className={cx("LoadingOverlay", { visible: spinnerVisible })}>
       <div>
         <AnimatedLogo scale={0.5} />
       </div>
