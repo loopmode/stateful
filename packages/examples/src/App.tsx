@@ -23,7 +23,7 @@ function App() {
   return (
     <HelmetProvider>
       <React.Suspense fallback={<LoadingOverlay />}>
-        <Router basename={process.env.REACT_APP_BASENAME}>
+        <Router basename={process.env.PUBLIC_URL}>
           <div className={cx("App")}>
             <AppHeader onShowMenu={showMenu} />
             <div className="App--body">
