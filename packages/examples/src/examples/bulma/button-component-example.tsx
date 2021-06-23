@@ -5,10 +5,6 @@ import { StatefulProps } from "@loopmode/stateful/lib/types";
 import { ToggleCodeViewer } from "../../ToggleCodeViewer";
 import raw from "raw.macro";
 
-// Example using a custom button component.
-// If you have a custom Button component anyways, you can add a single Stateful wrapper and configure it there.
-// Later throughout your codebase, you don't care about importing or configuring Stateful wrappers anymore.
-
 const wait = (time: number) => new Promise((resolve) => setTimeout(resolve, time));
 
 const Button = ({
@@ -17,16 +13,18 @@ const Button = ({
 }: React.HTMLProps<HTMLButtonElement> & {
   // If you care about individual settings per instance, you can pass a stateful props object along
   stateful?: StatefulProps;
-  // latest react types workaround
+  // workaround for warnings with current react+typescript
   type?: "submit" | "reset" | "button";
 }) => {
   return (
     <Stateful
+      // set defaults here
       busyDelay={300}
       pendingProps="disabled"
       busyClasses="is-loading"
       successClasses="is-success"
-      errorClasses="is-error"
+      errorClasses="is-danger"
+      // override with individual settings
       {...stateful}
     >
       <button {...props} className={cx("button", props.className)}>
@@ -49,11 +47,18 @@ export default function ButtonComponentExample() {
   };
   return (
     <>
+      <h3> Example using a custom button component.</h3>
+      <p>
+        If you have a custom <code>Button</code> component in your project, you can add a Stateful
+        wrapper and configure inside of it. Later throughout your codebase, you won't have to care
+        about using Stateful wrappers anymore.
+      </p>
+      <p>Click a button to launch an operation of random duration.</p>
       <div className="buttons">
-        <Button onClick={handleSuccessClick}>Will succeed</Button>
-        <Button onClick={handleErrorClick}>Will fail</Button>
+        <Button onClick={handleSuccessClick}>Successfull operation</Button>
+        <Button onClick={handleErrorClick}>Failing operation</Button>
         <Button onClick={handleRandomClick} stateful={{ busyDelay: 0 }}>
-          Random fail
+          Random outcome
         </Button>
       </div>
 

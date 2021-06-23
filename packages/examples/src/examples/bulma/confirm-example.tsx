@@ -20,6 +20,13 @@ export default function ConfirmExample() {
       <p>
         A bunch of different confirm implementations using <code>Stateful</code>.
       </p>
+      <p>
+        This is a new feature in v2 and well, why not! It's all about transient micro states, and
+        "show dialog" fits into the picture neatly.
+        <br />
+        Each example contains uses a slightly different behaviour and displays an explanation of
+        that behaviour in the modal dialog.
+      </p>
 
       <div className="buttons">
         {/*
@@ -59,7 +66,7 @@ export default function ConfirmExample() {
               <p>This dialog will stay until the original callback has finished.</p>
               <br />
               <p>
-                The pending and busy states are handled inside this dialog itself.
+                The pending and busy states are handled inside this dialog.
                 <br />
                 However, the success and error states are still handled by the original button.
               </p>
@@ -98,8 +105,8 @@ export default function ConfirmExample() {
                     confirmation.
                   </p>
                   <p>
-                    Note that you would take extra steps to make sure the buttons are not clickable
-                    during error and success states.
+                    Note that you should take extra steps to make sure the buttons are not clickable
+                    during error and success states (omitted in this example).
                   </p>
                   <br />
                   <p>Do you want to proceed?</p>

@@ -42,9 +42,31 @@ export default function FormContextExample() {
   return (
     <>
       <div className="container">
+        <div className="content">
+          <h3>Form example</h3>
+          <ul>
+            <li>Disable inputs and submit button while pending</li>
+            <li>Display error/success on inputs and submit button</li>
+            <li>Monitors parent but add props to children</li>
+          </ul>
+          <p>
+            While we wrap the form element and monitor its <code>onSubmit</code> callback, we need
+            the resulting props not on the form itself, but on some nested children instead.
+            <br />
+            Note that we use <code>provideProps={`{false}`}</code> to indicate that we're not
+            interested in receiving the stateful props on the monitored component itself.
+          </p>
+          <p>
+            That's why we use <code>Stateful.Consumer</code> around the nested input fields and the
+            submit button to automagically receive the values via context.
+            <br />
+            Note that since this is context-based, it works across any depth of component nesting.
+          </p>
+        </div>
+        <hr />
         <div className="columns is-5-tablet is-4-desktop is-3-widescreen">
           <div className="column is-half">
-            <Stateful monitor="onSubmit">
+            <Stateful monitor="onSubmit" provideProps={false} provideContext={true}>
               <form className="box" onSubmit={handleSubmit}>
                 <div className="field">
                   <label className="label">Email</label>
@@ -89,21 +111,7 @@ export default function FormContextExample() {
             </Stateful>
           </div>
         </div>
-        <hr />
-        <div className="content">
-          <h3>Form example</h3>
-          <ul>
-            <li>Disable inputs and submit button while pending</li>
-            <li>Display error/success on submit button</li>
-          </ul>
-          <p>
-            While we wrap a form element and monitor its state, we want to add the resulting props
-            not to the form itself, but to some of its children instead.
-          </p>
-          <p>
-            That's why we use Stateful.Consumer around nested inout fields and the submit button
-          </p>
-        </div>
+
         <ToggleCodeViewer content={raw("./form-context-example.tsx")} />
       </div>
     </>

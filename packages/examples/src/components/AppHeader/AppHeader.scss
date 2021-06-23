@@ -60,6 +60,15 @@
     }
   }
 
+  @include small-screen {
+    .AppHeader--title {
+      font-size: 1rem;
+    }
+
+    .logo-link {
+      display: none;
+    }
+  }
   @include medium-screen {
     height: 48px;
     user-select: none;

@@ -22,13 +22,13 @@ export default function ButtonInlineExample() {
       <div>
         <Stateful busyDelay={500}>
           <button className="btn btn-primary mr-1" onClick={successCallback}>
-            Will succeed
+            Successfull operation
           </button>
         </Stateful>
 
         <Stateful>
           <button className="btn btn-info" onClick={errorCallback}>
-            Will fail
+            Failing operation
           </button>
         </Stateful>
       </div>

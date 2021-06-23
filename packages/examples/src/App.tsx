@@ -34,7 +34,7 @@ function App() {
                 <NavLink to="/bulma/button-component" children="Button component" />
                 <NavLink to="/bulma/button-sticky" children="Button sticky" />
                 <NavLink to="/bulma/form-context" children="Form" />
-                <NavLink to="/bulma/react-hook-form-crud" children="CRUD" />
+                {/*  <NavLink to="/bulma/react-hook-form-crud" children="CRUD" /> */}
                 <NavLink to="/bulma/state-consumers" children="State consumers" />
                 <NavLink to="/bulma/confirm" children="Confirmation" />
                 <h4>Bootstrap</h4>

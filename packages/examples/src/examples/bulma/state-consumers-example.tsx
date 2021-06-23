@@ -3,8 +3,6 @@ import { Stateful } from "@loopmode/stateful";
 import { ToggleCodeViewer } from "../../ToggleCodeViewer";
 import raw from "raw.macro";
 
-// When you use provideContext, you can conditionally render some children only in specific states
-
 const wait = (time: number) => new Promise((resolve) => setTimeout(resolve, time));
 
 async function randomCallback() {
@@ -23,14 +21,17 @@ export default function StateConsumersExample() {
   return (
     <>
       <div className="container">
+        <h3>Consumers / Gates</h3>
+        <p>
+          There are a bunch of utility wrappers that only display their contents when a specific
+          stateful status is currently active.
+        </p>
+        <p>
+          You could use this to display some content only while loading, or only after an error.
+        </p>
         <div className="columns is-5-tablet is-4-desktop is-3-widescreen">
           <div className="column is-half">
-            <Stateful
-              monitor="onSubmit"
-              busyDelay={2000}
-              successDuration={2000}
-              errorDuration={2000}
-            >
+            <Stateful monitor="onSubmit" busyDelay={2000} successDuration={2000} errorDuration={-1}>
               <form className="box" onSubmit={handleSubmit}>
                 <div className="field">
                   <label className="label">Email</label>

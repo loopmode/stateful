@@ -20,31 +20,41 @@ export default function ButtonInlineExample() {
   };
   return (
     <>
+      <h3>Inline buttons example</h3>
+      <p>
+        Here are a bunch of examples, where a <code>Stateful</code> wrapper is not part of e.g. your{" "}
+        <code>Button</code> component, but is instead used inline.
+      </p>
       <div className="buttons">
-        <Stateful>
+        <Stateful busyDelay={500}>
           <button className="button" onClick={successCallback}>
-            Will succeed
+            Successfull operation
           </button>
         </Stateful>
 
-        <Stateful>
+        <Stateful busyDelay={0}>
           <button className="button" onClick={errorCallback}>
-            Will fail
+            Failing operation
           </button>
         </Stateful>
 
         <Stateful errorClasses="is-warning">
           <button className="button" onClick={errorCallback}>
-            Will warn
+            Warn on error
           </button>
         </Stateful>
+      </div>
 
+      <div className="buttons">
         <Stateful>
-          <button className="button button-primary" onClick={successCallback}>
-            Grouped
+          <button className="button is-primary" onClick={successCallback}>
+            Siblings
           </button>
-          <button className="button button-primary" onClick={randomCallback}>
-            Grouped
+          <button className="button is-info" onClick={randomCallback}>
+            are
+          </button>
+          <button className="button is-dark" onClick={randomCallback}>
+            grouped
           </button>
         </Stateful>
       </div>
