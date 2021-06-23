@@ -5,6 +5,12 @@
   "files": [
     "lib"
   ],
+  "homepage": "https://loopmode.github.io/stateful/",
+  "repository": {
+      "type": "git",
+      "url": "https://github.com/loopmode/stateful",
+      "directory": "packages/stateful"
+  },
   "license": "MIT",
   "scripts": {
     "build": "tsc",
