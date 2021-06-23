@@ -10,7 +10,8 @@
   "scripts": {
     "start": "run-p start:examples start:package",
     "start:examples": "cd packages/examples && yarn start",
-    "start:package": "cd packages/stateful && yarn start"
+    "start:package": "cd packages/stateful && yarn start",
+    "deploy:examples": "cd packages/examples && yarn deploy"
   },
   "devDependencies": {
     "lerna": "^4.0.0",
