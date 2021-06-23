@@ -1,15 +1,15 @@
 {
   "name": "@loopmode/stateful",
-  "version": "2.0.0-beta.5",
+  "version": "2.0.0-beta.6",
   "main": "lib/index.js",
   "files": [
     "lib"
   ],
   "homepage": "https://loopmode.github.io/stateful/",
   "repository": {
-      "type": "git",
-      "url": "https://github.com/loopmode/stateful",
-      "directory": "packages/stateful"
+    "type": "git",
+    "url": "https://github.com/loopmode/stateful",
+    "directory": "packages/stateful"
   },
   "license": "MIT",
   "scripts": {
