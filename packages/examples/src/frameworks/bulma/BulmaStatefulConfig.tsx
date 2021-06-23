@@ -1,12 +1,12 @@
 import React from "react";
 
 import { StatefulProps } from "@loopmode/stateful/lib/types";
-import { StatefulConfigurationProvider } from "@loopmode/stateful";
+import { StatefulConfigProvider } from "@loopmode/stateful";
 
 export function BulmaStatefulConfig({ children, ...props }: StatefulProps) {
   return (
-    <StatefulConfigurationProvider
-      value={{
+    <StatefulConfigProvider
+      config={{
         pendingProps: "disabled",
         pendingClasses: "",
 

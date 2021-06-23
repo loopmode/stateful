@@ -1,9 +1,9 @@
-import { Stateful, StatefulConfigurationProvider } from "@loopmode/stateful";
+import { Stateful, StatefulConfigProvider } from "@loopmode/stateful";
 import raw from "raw.macro";
 import React from "react";
 import { ToggleCodeViewer } from "../../ToggleCodeViewer";
 
-// You can render a StatefulConfigurationProvider at high level (e.g. wrapping your app)
+// You can render a StatefulConfigProvider at high level (e.g. wrapping your app)
 // and provide default configuration for all nested Stateful wrappers.
 // You can still use props on individual components to override those defaults.
 // This way, you can create a configuration for your specific UI framework.
@@ -25,10 +25,10 @@ const statefulConfig = {
 
 export default function ConfigProviderExample() {
   return (
-    <StatefulConfigurationProvider value={statefulConfig}>
+    <StatefulConfigProvider config={statefulConfig}>
       <SomeComponent />
       <ToggleCodeViewer content={raw("./config-provider-example.tsx")} />
-    </StatefulConfigurationProvider>
+    </StatefulConfigProvider>
   );
 }
 

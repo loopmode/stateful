@@ -3,7 +3,7 @@ import React from "react";
 import { RenderFunction, StatefulProps, StatefulConsumerProps, ConfirmExitMode } from "./types";
 
 import { Status } from "./Status";
-import { StatefulConfigurationContext, StatefulContext, StatefulProvider } from "./context";
+import { StatefulConfigContext, StatefulContext, StatefulProvider } from "./context";
 import { useStateful } from "./hooks";
 import { createProps } from "./utils/createProps";
 
@@ -54,7 +54,7 @@ const ownPropNames = Object.keys(defaultConfig);
  * @param props
  */
 export function Stateful(props: StatefulProps): React.ReactElement {
-  const parentConfig = React.useContext(StatefulConfigurationContext);
+  const parentConfig = React.useContext(StatefulConfigContext);
 
   let { children, ...config } = { ...defaultConfig, ...parentConfig, ...props };
 

@@ -2,11 +2,19 @@ import React from "react";
 import { StatefulContextValue, StatefulConfig } from "./types";
 import { Status } from "./Status";
 
-export const StatefulConfigurationContext = React.createContext<StatefulConfig>({});
-export const StatefulConfigurationProvider = StatefulConfigurationContext.Provider;
-StatefulConfigurationContext.displayName = "StatefulConfigurationContext";
-
 const noop = () => null;
+
+export const StatefulConfigContext = React.createContext<StatefulConfig>({});
+StatefulConfigContext.displayName = "StatefulConfigContext";
+
+export function StatefulConfigProvider(props: React.PropsWithChildren<{ config: StatefulConfig }>) {
+  return (
+    <StatefulConfigContext.Provider value={props.config}>
+      {props.children}
+    </StatefulConfigContext.Provider>
+  );
+}
+
 export const StatefulContext = React.createContext<StatefulContextValue>({
   status: Status.IDLE,
   additionalProps: {},
@@ -20,5 +28,6 @@ export const StatefulContext = React.createContext<StatefulContextValue>({
   },
   config: {},
 });
+
 export const StatefulProvider = StatefulContext.Provider;
 StatefulContext.displayName = "StatefulContext";
