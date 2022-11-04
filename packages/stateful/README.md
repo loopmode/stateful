@@ -29,7 +29,7 @@ export default function Example() {
   return (
     <div>
       <Stateful pendingClass="btn-loading">
-        <button className="btn btn-primary" onClick={successCallback}>
+        <button className="btn btn-primary" onClick={callback}>
           Successfull operation
         </button>
       </Stateful>
