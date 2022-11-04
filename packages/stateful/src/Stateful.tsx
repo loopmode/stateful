@@ -37,7 +37,10 @@ const defaultConfig: StatefulProps = {
   hintDuration: 1000,
   delimiter: " ",
 
-  shouldRejectValue: function isErrorValue(value: unknown) {
+  shouldRejectValue: (value: unknown) => {
+    if (value instanceof Response) {
+      return value.status >= 400;
+    }
     return value instanceof Error;
   },
 
