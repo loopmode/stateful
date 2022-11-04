@@ -250,9 +250,9 @@ export function Confirm({
   /**
    * When to remove the confirmation view
    *
-   * - `early`: as soon as the confirmed operation is invoked
-   * - `normal`: after the confirmed operation has finished
-   * - `late`: after the outcome of the confirmed operation has been indicated
+   * - `started`: as soon as the confirmed operation is invoked
+   * - `finished`: after the confirmed operation has finished
+   * - `idle`: after the outcome of the confirmed operation has been indicated
    */
   exit?: ConfirmExitMode;
 

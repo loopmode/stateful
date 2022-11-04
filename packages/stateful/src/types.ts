@@ -24,9 +24,9 @@ export type StatefulConfig = {
   /**
    * The mode of confirm exit
    *
-   * - `early`: confirm state exits when confirm callback is invoked
-   * - `normal`: confirm state exits when confirm callback has finished
-   * - `late`: confirm state exits when confirm callback and its result indicator have finished
+   * - `started`: confirm state exits when confirm callback is invoked
+   * - `finished`: confirm state exits when confirm callback has finished
+   * - `idle`: confirm state exits when confirm callback and its result indicator have finished
    */
   confirmExit?: ConfirmExitMode;
 
