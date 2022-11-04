@@ -165,9 +165,10 @@ export default function ConfirmExample() {
 
 type ModalConfirmProps = {
   title?: string;
-  // onCancel and onConfirm are supported out of the box
-  onCancel?: () => void;
-  onConfirm?: () => void;
+  // onCancel and onConfirm are supported by Stateful via its default configuration.
+  // by using those names in our Modal, we can just plug&play without configuring
+  onCancel?: (e: React.MouseEvent) => void;
+  onConfirm?: (e: React.MouseEvent) => void;
 };
 function ModalConfirm(props: React.PropsWithChildren<ModalConfirmProps>) {
   return createPortal(

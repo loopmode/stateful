@@ -256,9 +256,16 @@ export function Confirm({
    */
   exit?: ConfirmExitMode;
 
+  /**
+   * Children can either be a react element, or a render function that receives
+   * an object with `onConfirm` and `onCancel` functions
+   */
   children:
     | React.ReactElement
-    | ((args: { onConfirm: () => void; onCancel: () => void }) => React.ReactElement);
+    | ((args: {
+        onConfirm: (e: React.MouseEvent) => void;
+        onCancel: (e: React.MouseEvent) => void;
+      }) => React.ReactElement);
 }) {
   const { status, handlers, config } = React.useContext(StatefulContext);
 

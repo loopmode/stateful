@@ -91,11 +91,13 @@ export function useStateful(props: StatefulConfig) {
         busyTimer.clear();
       }
     },
-    onConfirmCancel: () => {
+    onConfirmCancel: (event: React.MouseEvent) => {
+      event.stopPropagation();
       confirmCallback.current = null;
       setStatus(Status.IDLE);
     },
-    onConfirmApprove: () => {
+    onConfirmApprove: (event: React.MouseEvent) => {
+      event.stopPropagation();
       confirmCallback.current();
       confirmCallback.current = null;
       handlers.onPromise();
