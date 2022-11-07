@@ -1,6 +1,6 @@
 {
   "name": "@stateful/examples",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "private": true,
   "homepage": "http://loopmode.github.io/stateful",
   "dependencies": {
