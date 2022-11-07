@@ -1,4 +1,4 @@
-## [0.1.3](https://github.com/loopmode/stateful/compare/@stateful/examples@0.1.3...@stateful/examples@0.1.3) (2022-11-07)
+## [0.1.4](https://github.com/loopmode/stateful/compare/@stateful/examples@0.1.4...@stateful/examples@0.1.4) (2022-11-07)
 
 
 ### Bug Fixes
