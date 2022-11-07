@@ -45,7 +45,7 @@ const defaultConfig: StatefulProps = {
   },
 
   provideProps: true,
-  provideContext: true,
+  provideContext: false,
   disabled: false,
 };
 
