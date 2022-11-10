@@ -120,7 +120,7 @@ export type StatefulConsumerProps = StatefulConfig & {
 
 export type StatefulContextValue = {
   status: Status;
-  additionalProps: any;
+  statusProps: any;
   config: StatefulConfig;
   handlers: StatefulHandlers;
 };

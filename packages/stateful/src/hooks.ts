@@ -13,25 +13,32 @@ export function useTimeout(func: () => void, delay = 0) {
         window.clearTimeout(timeoutID);
       };
     }
-  }, [isPending]);
+  }, [delay, func, isPending]);
 
-  return {
+  const controller = React.useRef({
     clear: () => setPending(false),
     start: () => setPending(true),
-  };
+  });
+
+  return controller.current;
 }
 
 export function useStateful(props: StatefulConfig) {
+  const { shouldRejectValue } = props;
+
   const isMounted = React.useRef(false);
   const isRejected = React.useRef(false);
 
   const [status, setStatus] = React.useState<Status>(Status.IDLE);
   const confirmCallback = React.useRef<any>(null);
 
-  const hintDurations: Partial<Record<Status, number>> = {
-    [Status.SUCCESS]: props.successDuration || props.hintDuration,
-    [Status.ERROR]: props.errorDuration || props.hintDuration,
-  };
+  const hintDurations: Partial<Record<Status, number>> = React.useMemo(
+    () => ({
+      [Status.SUCCESS]: props.successDuration || props.hintDuration || 0,
+      [Status.ERROR]: props.errorDuration || props.hintDuration || 0,
+    }),
+    [props.errorDuration, props.hintDuration, props.successDuration]
+  );
 
   const setBusy = React.useCallback(() => setStatus(Status.BUSY), []);
   const setIdle = React.useCallback(() => setStatus(Status.IDLE), []);
@@ -46,28 +53,31 @@ export function useStateful(props: StatefulConfig) {
       busyTimer.clear();
       isMounted.current = false;
     };
-  }, [isMounted]);
+  }, [isMounted, busyTimer, resetTimer]);
 
-  const handlers = {
-    onPromise: () => {
-      if (!isMounted.current) return;
-      isRejected.current = false;
-      setStatus(Status.PENDING);
-      resetTimer.clear();
-      busyTimer.start();
-    },
-    onReject: (error?: any) => {
-      if (!isMounted.current) return;
-      isRejected.current = true;
-      setStatus(Status.ERROR);
-      busyTimer.clear();
-      if (Number(hintDurations[Status.ERROR]) > -1) {
-        resetTimer.start();
-      }
-    },
-    onResolve: (value: unknown) => {
-      if (isRejected.current || props.shouldRejectValue?.(value) === true) {
-        handlers.onReject(value);
+  const onPromise = React.useCallback(() => {
+    if (!isMounted.current) return;
+    isRejected.current = false;
+    setStatus(Status.PENDING);
+    resetTimer.clear();
+    busyTimer.start();
+  }, [busyTimer, resetTimer]);
+
+  const onReject = React.useCallback(() => {
+    if (!isMounted.current) return;
+    isRejected.current = true;
+    setStatus(Status.ERROR);
+    busyTimer.clear();
+
+    if (Number(hintDurations[Status.ERROR]) > -1) {
+      resetTimer.start();
+    }
+  }, [busyTimer, hintDurations, resetTimer]);
+
+  const onResolve = React.useCallback(
+    (value?: unknown) => {
+      if (isRejected.current || shouldRejectValue?.(value) === true) {
+        onReject();
         return;
       }
 
@@ -79,11 +89,15 @@ export function useStateful(props: StatefulConfig) {
         resetTimer.start();
       }
     },
-    onConfirmShow: (callback: () => void) => {
+    [busyTimer, hintDurations, shouldRejectValue, onReject, resetTimer]
+  );
+
+  const onConfirmShow = React.useCallback(
+    (callback: () => void) => {
       if (status === Status.CONFIRM) {
         confirmCallback.current();
         confirmCallback.current = null;
-        handlers.onPromise();
+        onPromise();
       } else {
         confirmCallback.current = callback;
         setStatus(Status.CONFIRM);
@@ -91,18 +105,36 @@ export function useStateful(props: StatefulConfig) {
         busyTimer.clear();
       }
     },
-    onConfirmCancel: (event: React.MouseEvent) => {
-      event.stopPropagation();
-      confirmCallback.current = null;
-      setStatus(Status.IDLE);
-    },
-    onConfirmApprove: (event: React.MouseEvent) => {
+    [busyTimer, onPromise, resetTimer, status]
+  );
+
+  const onConfirmCancel = React.useCallback((event: React.MouseEvent) => {
+    event.stopPropagation();
+    confirmCallback.current = null;
+    setStatus(Status.IDLE);
+  }, []);
+
+  const onConfirmApprove = React.useCallback(
+    (event: React.MouseEvent) => {
       event.stopPropagation();
       confirmCallback.current();
       confirmCallback.current = null;
-      handlers.onPromise();
+      onPromise();
     },
-  };
+    [onPromise]
+  );
+
+  const handlers = React.useMemo(
+    () => ({
+      onPromise,
+      onReject,
+      onResolve,
+      onConfirmShow,
+      onConfirmCancel,
+      onConfirmApprove,
+    }),
+    [onConfirmApprove, onConfirmCancel, onConfirmShow, onPromise, onReject, onResolve]
+  );
 
   return {
     status,

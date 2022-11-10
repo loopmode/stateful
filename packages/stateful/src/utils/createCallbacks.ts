@@ -68,7 +68,7 @@ export default function createCallbacks(options: {
       const result = await callback(...callbackArgs);
       options.handlers.onResolve(result);
     } catch (error) {
-      options.handlers.onReject(error);
+      options.handlers.onReject();
     }
   }
 

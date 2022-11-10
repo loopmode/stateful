@@ -17,7 +17,7 @@ export function StatefulConfigProvider(props: React.PropsWithChildren<{ config: 
 
 export const StatefulContext = React.createContext<StatefulContextValue>({
   status: Status.IDLE,
-  additionalProps: {},
+  statusProps: {},
   handlers: {
     onConfirmShow: noop,
     onConfirmApprove: noop,

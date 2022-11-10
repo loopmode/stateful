@@ -1,5 +1,5 @@
 import cx from "classnames";
-import { StatefulConfig, StatusResolver } from "../types";
+import { StatefulConfig } from "../types";
 import { AllStatuses, Status } from "../Status";
 import asArray from "./asArray";
 import { useStateful } from "../hooks";
@@ -32,15 +32,15 @@ export function createProps(args: {
   const { status, config, ownPropNames } = args;
 
   // all existing props we found for the wrapped child,
-  // (either on it, or passed down from our parent)
+  // (either on it, or passed down from its parent)
   const childProps = Object.assign(
     {},
     args.child ? (args.child as React.ReactElement<any>).props : {},
     args.parentProps
   );
 
-  // the props we generate based on status and attach to the wrapped child
-  const additionalProps = {
+  // the props we generate based on status
+  const statusProps = {
     className: getClassName({ config, status, childProps }),
     ...getStatusProps({ status, config, childProps }),
   };
@@ -61,7 +61,7 @@ export function createProps(args: {
     : {};
 
   return {
-    additionalProps,
+    statusProps,
     otherProps,
     callbacks,
   };
@@ -198,7 +198,7 @@ function getClassName(args: {
   }
 
   // remove any pre-existing classes that exactly match our generated status classes
-  const removeStatusClasses = (className: string = "") => {
+  const removeStatusClasses = (className = "") => {
     return AllStatuses.reduce((result, current) => {
       return result.replace(current, "");
     }, className).trim();
