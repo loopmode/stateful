@@ -16,7 +16,8 @@
     "build": "tsc",
     "start": "tsc --watch",
     "clean": "rm -rf lib",
-    "prepublishOnly": "yarn build"
+    "prepublishOnly": "yarn build",
+    "lint": "eslint src --ext ts --ext tsx"
   },
   "peerDependencies": {
     "react": ">= 16.8.0"
@@ -25,6 +26,11 @@
     "classnames": "^2.2.6"
   },
   "devDependencies": {
-    "@types/classnames": "^2.2.11"
+    "@types/classnames": "^2.2.11",
+    "@typescript-eslint/eslint-plugin": "^5.42.1",
+    "@typescript-eslint/parser": "^5.42.1",
+    "eslint": "^8.27.0",
+    "eslint-plugin-react": "^7.31.10",
+    "eslint-plugin-react-hooks": "^4.6.0"
   }
 }
