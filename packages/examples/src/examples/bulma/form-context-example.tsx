@@ -32,8 +32,8 @@ export default function FormContextExample() {
     } catch (error) {
       const random = Math.random();
       setError({
-        email: random > 0.5 ? error.message : "",
-        password: random < 0.5 ? error.message : "",
+        email: random > 0.5 ? (error as Error).message : "",
+        password: random < 0.5 ? (error as Error).message : "",
       });
       return error;
     }
@@ -53,14 +53,12 @@ export default function FormContextExample() {
             While we wrap the form element and monitor its <code>onSubmit</code> callback, we need
             the resulting props not on the form itself, but on some nested children instead.
             <br />
-            Note that we use <code>provideProps={`{false}`}</code> to indicate that we're not
-            interested in receiving the stateful props on the monitored component itself.
+            Note that we use <code>provideProps={`{false}`}</code> and{" "}
+            <code>provideContext={`{true}`}</code> to indicate that we're not interested in
+            receiving the stateful props on the monitored component itself.
           </p>
           <p>
-            That's why we use <code>Stateful.Consumer</code> around the nested input fields and the
-            submit button to automagically receive the values via context.
-            <br />
-            Note that since this is context-based, it works across any depth of component nesting.
+            Instead why we use <code>Stateful.Consumer</code> around the submit button.
           </p>
         </div>
         <hr />
@@ -71,9 +69,8 @@ export default function FormContextExample() {
                 <div className="field">
                   <label className="label">Email</label>
                   <div className="control has-icons-left">
-                    <Stateful.Consumer>
-                      <input type="email" className="input" placeholder="e.g. hkakehas@cisco.com" />
-                    </Stateful.Consumer>
+                    <input type="email" className="input" placeholder="e.g. hkakehas@cisco.com" />
+
                     <span className="icon is-small is-left">
                       <i className="fa fa-envelope"></i>
                     </span>
@@ -83,9 +80,8 @@ export default function FormContextExample() {
                 <div className="field">
                   <label className="label">Password</label>
                   <div className="control has-icons-left">
-                    <Stateful.Consumer>
-                      <input type="password" className="input" placeholder="*********" required />
-                    </Stateful.Consumer>
+                    <input type="password" className="input" placeholder="*********" required />
+
                     <span className="icon is-small is-left">
                       <i className="fa fa-lock"></i>
                     </span>
@@ -94,10 +90,7 @@ export default function FormContextExample() {
                 </div>
                 <div className="field">
                   <label className="checkbox">
-                    <Stateful.Consumer>
-                      <input type="checkbox" />
-                    </Stateful.Consumer>{" "}
-                    Remember me
+                    <input type="checkbox" /> Remember me
                   </label>
                 </div>
                 <div className="field">

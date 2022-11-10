@@ -34,6 +34,7 @@ function App() {
                 <NavLink to="/bulma/button-component" children="Button component" />
                 <NavLink to="/bulma/button-sticky" children="Button sticky" />
                 <NavLink to="/bulma/form-context" children="Form" />
+                <NavLink to="/bulma/react-hook-form" children="react-hook-form" />
                 {/*  <NavLink to="/bulma/react-hook-form-crud" children="CRUD" /> */}
                 <NavLink to="/bulma/state-consumers" children="State consumers" />
                 <NavLink to="/bulma/confirm" children="Confirmation" />
@@ -64,11 +65,15 @@ function App() {
                           path="/bulma/form-context"
                           component={lazy(() => import("./examples/bulma/form-context-example"))}
                         />
-                        <Route
+                        {/*<Route
                           path="/bulma/react-hook-form-crud"
                           component={lazy(
                             () => import("./examples/bulma/react-hook-form-crud-example")
                           )}
+                        />*/}
+                        <Route
+                          path="/bulma/react-hook-form"
+                          component={lazy(() => import("./examples/bulma/react-hook-form-example"))}
                         />
                         <Route
                           path="/bulma/state-consumers"
